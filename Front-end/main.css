@@ -1,0 +1,95 @@
+/* Impporting Google Fonts - Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', serif;
+}
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(#F1F3FF,#CBD4FF);
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 260px;
+    height: 100vh;
+    background: #151A2E;
+}
+
+.sidebar .sidebar-header {
+    display: flex;
+    position: relative;
+    align-items: center;
+    padding: 25px 20px;
+    justify-content: space-between;
+}
+
+.sidebar-header .header-logo img {
+    max-height: 100px;
+    max-width: 150px;
+    display: block;
+    object-fit: contain;
+    border-radius: 0%;
+}
+
+.sidebar-header .sidebar-toggler {
+    position: absolute;
+    right: 20px;
+    height: 35px;
+    width: 35px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: #EEF2FF;
+    transition: 0.4 ease;
+}
+
+.sidebar-header .sidebar-toggler:hover {
+    background: #D9E1FD;
+}
+
+.sidebar-header .sidebar-toggler span {
+   font-size: 1.75rem;
+}
+
+.sidebar-nav .nav-list{
+    list-style: none;
+    display: flex;
+    gap: 4px;
+    padding: 0 15px;
+    flex-direction: column;
+    transform: translateY(15px);
+}
+
+.sidebar-nav .nav-item .nav-link {
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 11px 15px;
+    text-decoration: none;
+    border-radius: 8px;
+    border: 1px solid #151A2E;
+    transition: 0.4s ease;
+}
+
+.sidebar-nav .nav-item:hover > .nav-link {
+    color: #151A2E;
+    background: #EEF2FF;
+}
+
+.sidebar-nav .secondary-nav {
+    position: absolute;
+    bottom: 30px;
+    width: 100%;
+    background: #151A2E;
+}
