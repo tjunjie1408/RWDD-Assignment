@@ -33,11 +33,11 @@ body{
 }
 
 .form-box.Login{
-    left: 0;
-    padding: 0 40px;
+    padding-left:130px;
 }
 
 .form-box.Login .animation{
+    justify-content: center;
     transform: translateX(0%);
     transition: .7s;
     opacity: 1;
@@ -73,12 +73,12 @@ body{
 .form-box h2{
     font-size: 32px;
     padding-top: 30px;
-    text-align: center;
+    text-align: left;
 }
 
 .form-box .input-box{
     position: relative;
-    width: 100%;
+    width: 70%;
     height: 50px;
     margin-top: 25px;
 }
@@ -165,8 +165,7 @@ body{
 
 .regi-link{
     font-size: 14px;
-    text-align: center;
-    margin: 20px 0 10px;
+    margin: 10px 0 10px;
 }
 
 .regi-link a{
@@ -249,7 +248,7 @@ body{
     height: 120%;
     width: 120%;
     background: linear-gradient(45deg, #fff, #2A009E);
-    transform: rotate(10deg) skewY(40deg);
+    transform: rotate(0deg) skewY(40deg);
     transform-origin: bottom right;
     transition: 1.5s ease;
     transition-delay: 1.6s;
@@ -262,15 +261,15 @@ body{
 
 .container .curved-shape2{
     position: absolute;
-    left: 550px;
+    left: 600px;
     top: 100%;
-    height: 120%;
+    height: 190%;
     width: 160%;
     background: #fff;
-    transform: rotate(0deg) skewY(0deg);
+    transform: rotate(80deg) skewY(30deg);
     transform-origin: bottom left;
     transition: 1.5s ease;
-    transition-delay: .5s;
+    transition-delay: 1.5s;
 }
 
 .container.active .curved-shape2{
