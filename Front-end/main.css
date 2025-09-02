@@ -20,6 +20,11 @@ body {
     width: 260px;
     height: 100vh;
     background: #151A2E;
+    transition: all 0.4s ease;
+}
+
+.sidebar.collapsed {
+    width: 85px;
 }
 
 .sidebar .sidebar-header {
@@ -57,8 +62,17 @@ body {
     background: #D9E1FD;
 }
 
+.sidebar.collapsed .sidebar-toggler{
+    transform: translate(-4px, 65px);
+}
+
 .sidebar-header .sidebar-toggler span {
    font-size: 1.75rem;
+   transition: 0.4s ease;
+}
+
+.sidebar.collapsed .sidebar-toggler span {
+    transform: rotate(180deg);
 }
 
 .sidebar-nav .nav-list{
@@ -68,6 +82,11 @@ body {
     padding: 0 15px;
     flex-direction: column;
     transform: translateY(15px);
+    transition: 0.4s ease;
+}
+
+.sidebar.collapsed .sidebar-nav .primary-nav {
+    transform: translateY(65px);
 }
 
 .sidebar-nav .nav-item .nav-link {
@@ -75,6 +94,7 @@ body {
     display: flex;
     align-items: center;
     gap: 15px;
+    white-space: nowrap;
     padding: 11px 15px;
     text-decoration: none;
     border-radius: 8px;
@@ -87,9 +107,60 @@ body {
     background: #EEF2FF;
 }
 
+.sidebar-nav .nav-link .nav-label {
+    transition: opacity 0.3s ease;
+}
+
+.sidebar.collapsed .nav-link .nav-label {
+    opacity: 0;
+    pointer-events: none;
+}
+
 .sidebar-nav .secondary-nav {
     position: absolute;
     bottom: 30px;
     width: 100%;
     background: #151A2E;
+}
+
+.sidebar-menu-button{
+    display: none;
+}
+
+@media (min-width: 1024px) {
+  .sidebar-header .sidebar-toggler {
+    display: none; /* 屏幕大于 1024px 时隐藏 */
+  }
+}
+
+
+@media (max-width: 1024px) {
+    .sidebar-menu-button{
+        display: block;
+        position: fixed;
+        left: 20px;
+        top: 20px;
+        border: none;
+        color: #000;
+        background-color: none;
+        border-radius: 12px;
+        cursor: pointer;
+    }
+
+    .sidebar-menu-button span{
+        font-size: 1.8rem;
+    }
+
+    .sidebar.collapsed {
+        width: 260px;
+        left: -260px;
+    }
+
+    .sidebar.collapsed .sidebar-header .sidebar-toggler{
+        transform: none;
+    }
+
+    .sidebar.collapsed .sidebar-nav .primary-nav {
+        transform: translateY(15px);
+    }
 }
