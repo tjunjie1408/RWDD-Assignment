@@ -43,6 +43,11 @@ body {
     border-radius: 0%;
 }
 
+.header-logo img:hover {
+    transform: scale(1.05);
+    transition: 0.3s ease;
+}
+
 .sidebar-header .sidebar-toggler {
     position: absolute;
     right: 20px;
@@ -127,40 +132,154 @@ body {
     display: none;
 }
 
+header {
+  position: fixed;           /* 固定在顶部 */
+  top: 0;
+  left: 260px;               /* 让出 sidebar 的宽度 */
+  width: calc(100% - 260px); /* header 只占剩下的宽度 */
+  height: 60px;              /* 你可以根据需要调整高度 */
+  background: #ffffff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;       /* ⚡这里用 center，而不是 right */
+  z-index: 10;
+}
+
+/* 左边 welcome */
+.header-left h1 {
+  font-size: 1.5rem;
+  color: #333;
+}
+
+/* 右边按钮和头像 */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* 通知按钮 */
+.notification-btn {
+  position: relative;
+  font-size: 1.2rem;
+  color: #333;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.notification-btn:hover {
+  color: #007bff;
+}
+
+/* 红色提醒小圆点 */
+.notification-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: red;
+  color: white;
+  font-size: 0.7rem;
+  padding: 2px 5px;
+  border-radius: 50%;
+}
+
+/* 用户头像 */
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+  border: 2px solid #ddd;
+  transition: border-color 0.3s;
+}
+
+.user-avatar:hover {
+  border-color: #007bff;
+}
+
+.real-time-clock {
+    width: 80%;
+    font-size: 1.2rem;        /* 字体大小 */
+    font-weight: 600;         /* 加粗 */
+    font-family: "Poppins", sans-serif;
+    color: #000;              /* 字体颜色 */
+    background: #fff;      /* 背景颜色 */
+    padding: 10px 15px;        /* 内边距 */
+    margin-top: 90px;         /* 外边距 */
+    margin-left: 280px;      /* 左侧留出 sidebar 空间 */
+    margin-right: 20px;     /* 右侧留出空间 */
+    border-radius: 8px;       /* 圆角 */
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1); /* 阴影 */
+    display: inline-block;    /* 让它不会撑满整行 */
+}
+
+
+/* 响应式 */
 @media (min-width: 1024px) {
   .sidebar-header .sidebar-toggler {
     display: none; /* 屏幕大于 1024px 时隐藏 */
   }
 }
 
-
+/* 小屏幕 sidebar 覆盖 header */
 @media (max-width: 1024px) {
-    .sidebar-menu-button{
-        display: block;
-        position: fixed;
-        left: 20px;
-        top: 20px;
-        border: none;
-        color: #000;
-        background-color: none;
-        border-radius: 12px;
-        cursor: pointer;
-    }
+  .sidebar {
+    left: -260px;   /* 默认隐藏 */
+    z-index: 200;   /* 确保覆盖 header */
+  }
 
-    .sidebar-menu-button span{
-        font-size: 1.8rem;
-    }
+  .sidebar.active {
+    left: 0;        /* 展开时显示 */
+  }
 
-    .sidebar.collapsed {
-        width: 260px;
-        left: -260px;
-    }
+  header {
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    z-index: 150;   /* 保证 header 在 sidebar 下方，但高于内容 */
+  }
 
-    .sidebar.collapsed .sidebar-header .sidebar-toggler{
-        transform: none;
-    }
+  .header-left h1 {
+    padding-left: 60px; /* 给左侧留出空间 */
+    font-size: 1.2rem;
+  }
 
-    .sidebar.collapsed .sidebar-nav .primary-nav {
-        transform: translateY(15px);
-    }
+  .header-right {
+    margin-right: 20px; /* ⚡ 避免头像和通知贴到右边 */
+    gap: 15px;
+  }
+
+  /* 始终显示 sidebar-menu-button */
+  .sidebar-menu-button {
+    width: 40px;     /* 按钮宽度 */
+    height: 40px;    /* 按钮高度 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 10px;
+    left: 15px;
+    background: #fff;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    padding: 6px 10px;
+    cursor: pointer;
+    z-index: 300; /* ⚡永远最高 */
+  }
+
+  .sidebar-menu-button span {
+    font-size: 1.8rem;
+    color: #151A2E;
+  }
+
+  .real-time-clock {
+    font-size: 16px;
+    margin-right: 30px;    /* 右侧留出空间 */
+    margin-left: 20px;      /* 小屏幕时左侧留出菜单按钮空间 */
+    width: calc(100% - 40px); /* 宽度自适应 */
+  }
 }
