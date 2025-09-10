@@ -1,0 +1,18 @@
+Home Page:
+index.html
+style.css
+script.js
+---------------------------------------------------------
+Signup Page:
+signup.html
+signup.css
+script.js       /* common js for both login and signup */
+---------------------------------------------------------
+Dashboard Page:
+dashboard.html
+analysis.html
+goal.html
+member.html
+project.html
+main.css        /* common css for all dashboard pages */
+main.js

@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Main Page</title>
+    <title>Goal</title>
     <!-- Linking Google Fonts for Icons -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0"/>
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
     <link rel="stylesheet" href="main.css">
 </head>
 <body>
@@ -30,35 +31,35 @@
             <!-- Primary Top Nav -->
             <ul class="nav-list primary-nav">
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="dashboard.html" class="nav-link">
                         <span class="material-symbols-rounded">dashboard</span>
                         <span class="nav-label">Dashboard</span>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="project.html" class="nav-link">
                         <span class="material-symbols-rounded">task</span>
                         <span class="nav-label">Project</span>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="member.html" class="nav-link">
                         <span class="material-symbols-rounded">group</span>
                         <span class="nav-label">Member</span>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="analysis.html" class="nav-link">
                         <span class="material-symbols-rounded">bar_chart_4_bars</span>
                         <span class="nav-label">Report Analysis</span>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="goal.html" class="nav-link">
                         <span class="material-symbols-rounded">task_alt</span>
                         <span class="nav-label">Goal</span>
                     </a>
@@ -87,7 +88,7 @@
 
     <header>
     <div class="header-left">
-      <h1>Welcome</h1>
+      <h1>Goal</h1>
     </div>
     <div class="header-right">
       <div class="notification-btn" id="notificationBtn">
@@ -96,13 +97,54 @@
       </div>
       <img src="https://via.placeholder.com/150" alt="User Avatar" class="user-avatar" id="userAvatar">
     </div>
-  </header>
+    </header>
 
-    <div class="real-time-clock" id="realTimeClock">
-        000000
+  <!-- 日历容器 -->
+  <div class="content">
+  <div id="calendar"></div>
+  </div>
+
+    <!-- Goal Details Modal -->
+    <div id="goalDetailsModal" class="modal hidden">
+    <div class="modal-content">
+        <h2>Goal Details</h2>
+        <p><strong>Name:</strong> <span id="detailTitle"></span></p>
+        <p><strong>Details:</strong> <span id="detailDescription"></span></p>
+        <p><strong>Start:</strong> <span id="detailStart"></span></p>
+        <p><strong>End:</strong> <span id="detailEnd"></span></p>
+
+        <div class="modal-actions">
+        <button id="markCompletedBtn">Mark as Completed</button>
+        <button id="deleteGoalBtn">Delete</button>
+        <button id="closeDetailBtn">Close</button>
+        </div>
+    </div>
     </div>
 
+    <!-- Create Goal Modal -->
+    <div id="taskModal" class="modal hidden">
+    <div class="modal-content">
+        <h2>Create New Goal</h2>
+        
+        <label>Goal Name</label>
+        <input type="text" id="taskTitle" placeholder="Enter goal name">
 
+        <label>Goal Details</label>
+        <textarea id="taskDetails" placeholder="Enter goal details"></textarea>
+
+        <label>Start Date</label>
+        <input type="date" id="taskStart">
+
+        <label>End Date</label>
+        <input type="date" id="taskEnd">
+
+        <button id="saveTaskBtn">Save</button>
+        <button id="closeModalBtn">Cancel</button>
+    </div>
+    </div>
+
+  <!-- Calendar JS -->
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
     <script src="main.js"></script>
 </body>
 </html>

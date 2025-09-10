@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <!-- Linking Google Fonts for Icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0"/>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <!-- Mobile Sidebar Menu Button -->
+    <button class="sidebar-menu-button">
+        <span class="material-symbols-rounded">menu</span>
+    </button>
+
+
+    <aside class="sidebar">
+        <!-- Sidebar Header -->
+        <nav class="sidebar-header">
+            <a href="#" class="header-logo">
+                <img src="Pictures/logo.png" alt="TaskFlow">
+            </a>
+            <button class="sidebar-toggler">
+                <span class="material-symbols-rounded">chevron_left</span>
+            </button>
+        </nav>
+
+        <nav class="sidebar-nav">
+            <!-- Primary Top Nav -->
+            <ul class="nav-list primary-nav">
+                <li class="nav-item">
+                    <a href="dashboard.html" class="nav-link">
+                        <span class="material-symbols-rounded">dashboard</span>
+                        <span class="nav-label">Dashboard</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="project.html" class="nav-link">
+                        <span class="material-symbols-rounded">task</span>
+                        <span class="nav-label">Project</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="member.html" class="nav-link">
+                        <span class="material-symbols-rounded">group</span>
+                        <span class="nav-label">Member</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="analysis.html" class="nav-link">
+                        <span class="material-symbols-rounded">bar_chart_4_bars</span>
+                        <span class="nav-label">Report Analysis</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="goal.html" class="nav-link">
+                        <span class="material-symbols-rounded">task_alt</span>
+                        <span class="nav-label">Goal</span>
+                    </a>
+                </li>
+
+            </ul>
+
+            <!-- Secondary Bottom Nav -->
+            <ul class="nav-list secondary-nav">
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <span class="material-symbols-rounded">help</span>
+                        <span class="nav-label">Support</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">
+                        <span class="material-symbols-rounded">logout</span>
+                        <span class="nav-label">Sign Out</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <header>
+    <div class="header-left">
+      <h1>Welcome</h1>
+    </div>
+    <div class="header-right">
+      <div class="notification-btn" id="notificationBtn">
+        <i class="fas fa-bell"></i>
+        <span class="notification-badge" id="notificationBadge">3</span>
+      </div>
+      <img src="https://via.placeholder.com/150" alt="User Avatar" class="user-avatar" id="userAvatar">
+    </div>
+  </header>
+
+    <div class="real-time-clock" id="realTimeClock">
+        000000
+    </div>
+
+
+    <script src="main.js"></script>
+</body>
+</html>
