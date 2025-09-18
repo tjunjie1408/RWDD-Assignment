@@ -96,6 +96,54 @@
       </div>
       <img src="https://via.placeholder.com/150" alt="User Avatar" class="user-avatar" id="userAvatar">
     </div>
+    </header>
+
+    <main class="membercontent">
+    <section class="team-section">
+      <div class="team-header">
+        <div class="team-controls">
+          <input type="text" id="searchMember" placeholder="Search team or member">
+          <button id="addMemberBtn">+ Add Member</button>
+        </div>
+      </div>
+
+      <h3>People you work with</h3>
+      <div id="memberList" class="member-list">
+        <!-- 成员卡片由 JS 渲染 -->
+      </div>
+    </section>
+  </main>
+
+  <!-- 新增成员弹窗 -->
+  <div id="addMemberModal" class="modal">
+    <div class="member-modal-content">
+      <h2>Add Member</h2>
+      
+      <button class="member-close">&times;</button>
+      <form id="addMemberForm">
+        <label>Name</label>
+        <input type="text" id="memberName" required>
+        
+        <label>Company</label>
+        <input type="text" id="memberCompany" required>
+        
+        <label>Previous Task</label>
+        <input type="text" id="memberTask" required>
+        
+        <button type="submit">Save</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 查看成员详情弹窗 -->
+  <div id="viewMemberModal" class="member modal">
+    <div class="member-modal-content">
+      <span class="member-close">&times;</span>
+      <h2>Member Details</h2>
+      <div id="memberDetails"></div>
+      <button id="deleteMemberBtn">Delete Member</button>
+    </div>
+  </div>
 
     <script src="main.js"></script>
 </body>

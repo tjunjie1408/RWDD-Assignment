@@ -16,3 +16,7 @@ member.html
 project.html
 main.css        /* common css for all dashboard pages */
 main.js
+
+18/9/25
+-goal.html variable name adjust
+-member.html add features (search bar, add and delete member, member details)

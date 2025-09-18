@@ -393,11 +393,11 @@ header {
 }
 
 /* ---Modal (Create Goal 弹窗)--- */
-.modal.hidden {
+.goal.modal.hidden {
   display: none;
 }
 
-.modal {
+.goal.modal {
   position: fixed;
   top: 0; left: 0;
   width: 100%; 
@@ -409,7 +409,7 @@ header {
   z-index: 200;
 }
 
-.modal-content {
+.goal-modal-content {
   background: #fff;
   padding: 25px;
   width: 380px;
@@ -417,7 +417,7 @@ header {
   box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
-.modal-content h2 {
+.goal-modal-content h2 {
   margin-top: 0;
   margin-bottom: 15px;
   font-size: 1.3rem;
@@ -425,14 +425,14 @@ header {
   font-weight: 600;
 }
 
-.modal-content label {
+.goal-modal-content label {
   display: block;
   margin: 10px 0 5px;
   font-weight: 500;
   color: #333;
 }
 
-.modal-content input {
+.goal-modal-content input {
   width: 100%;
   padding: 10px;
   margin-bottom: 15px;
@@ -443,12 +443,12 @@ header {
   transition: border-color 0.3s ease;
 }
 
-.modal-content input:focus {
+.goal-modal-content input:focus {
   border-color: #007bff;
 }
 
 /* 弹窗按钮 */
-.modal-content button {
+.goal-modal-content button {
   margin-right: 10px;
   padding: 10px 14px;
   border: none;
@@ -496,3 +496,205 @@ header {
   background: #b02a37;
 }
 
+/* -------- Member Page Content -------- */
+.membercontent {
+  width: calc(100% - 260px);   /* 默认 sidebar 展开 */
+  margin-left: 260px;
+  margin-top: 70px;            /* 避开 header */
+  padding: 20px;
+  transition: all 0.3s ease;
+}
+
+.sidebar.collapsed ~ .membercontent {
+  width: calc(100% - 85px);    /* sidebar 收起时 */
+  margin-left: 85px;
+}
+
+/* 小屏幕时，内容全屏 */
+@media (max-width: 1024px) {
+  .membercontent {
+    width: 100%;
+    margin-left: 0;
+    margin-top: 70px; /* header 高度 */
+    padding: 15px;
+  }
+}
+
+/* -------- Team Section -------- */
+.team-section {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.team-section h3 {
+  margin: 20px 0 15px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #151A2E;
+}
+
+/* 顶部搜索 + Add Member 按钮 */
+.team-controls {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+  flex-wrap: wrap;  /* 小屏幕自动换行 */
+}
+
+.team-controls input {
+  flex: 1;
+  min-width: 200px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.95rem;
+}
+
+.team-controls button {
+  padding: 10px 16px;
+  background: #151A2E;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.team-controls button:hover {
+  background: #2A2F4F;
+  transform: translateY(-2px);
+}
+
+/* -------- Member List (Grid) -------- */
+.member-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
+  gap: 20px;
+}
+
+/* 成员卡片 */
+.member-card {
+  background: #f9f9f9;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease;
+  cursor: pointer;
+}
+
+.member-card:hover {
+  transform: translateY(-4px);
+}
+
+.member-card h4 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.member-card p {
+  margin: 4px 0;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* -------- Modal (Add / View Member) -------- */
+.modal {
+  display: none; /* 默认隐藏，由 JS 控制 */
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.5);
+  z-index: 500;
+  justify-content: center;
+  align-items: center;
+}
+
+.member-modal-content {
+  position: relative;
+  background: #fff;
+  padding: 25px;
+  width: 90%;
+  max-width: 400px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.member-modal-content h2 {
+  margin: 0 0 15px;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #151A2E;
+}
+
+.member-modal-content label {
+  display: block;
+  margin: 10px 0 5px;
+  font-weight: 500;
+  color: #333;
+}
+
+.member-modal-content input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-bottom: 15px;
+  font-size: 0.95rem;
+}
+
+.member-modal-content button {
+  padding: 10px 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.member-modal-content button[type="submit"] {
+  background: #007bff;
+  color: #fff;
+}
+
+.member-modal-content button[type="submit"]:hover {
+  background: #0056b3;
+}
+
+.member-modal-header {
+  display: flex;
+  justify-content: space-between; /* 左右分布 */
+  align-items: center;           /* 垂直居中 */
+  margin-bottom: 15px;           /* 与表单内容保持间距 */
+}
+
+.member-modal-content .member-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.member-close {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: #ccc;
+  color: #333;
+  font-size: 20px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease;
+}
+
+.member-close:hover {
+  background: #999;
+  color: #fff;
+}
