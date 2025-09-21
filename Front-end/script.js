@@ -3,16 +3,26 @@ function toggleMenu() {
   document.querySelector('.nav').classList.toggle('show');
 }
 
-// Toggle between login and register forms
-const container = document.querySelector('.container');
-const LoginLink = document.querySelector('.SignInLink');
-const RegisterLink = document.querySelector('.SignUpLink');
+var a = document.getElementById("loginBtn");
+var b = document.getElementById("registerBtn");
+var x = document.getElementById("login");
+var y = document.getElementById("register");
 
-RegisterLink.addEventListener('click', () =>{
-    container.classList.add('active');
-})
+function login() {
+    x.style.transform = "translate(-50%, -50%) translateX(0)";
+    y.style.transform = "translate(-50%, -50%) translateX(100%)";
+    x.style.opacity = 1;
+    y.style.opacity = 0;
+    a.className += " white-btn";
+    b.className = "btn";
+}
 
-LoginLink.addEventListener('click', () => {
-    container.classList.remove('active');
-})
+function register() {
+    x.style.transform = "translate(-50%, -50%) translateX(-100%)";
+    y.style.transform = "translate(-50%, -50%) translateX(0)";
+    x.style.opacity = 0;
+    y.style.opacity = 1;
+    a.className = "btn";
+    b.className += " white-btn";
+}
 

@@ -3,82 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login and Register</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="signup.css">
+    <title>Login & Sign Up</title>
 </head>
 <body>
-    <div class="container">
-        <div class="curved-shape"></div>
-        <div class="curved-shape2"></div>
-        <div class="form-box Login">
-            <h2 class="animation" style="--D:0; --S:21">Login</h2>
-            <form action="#">
-                <div class="input-box animation" style="--D:1; --S:22">
-                    <input type="text" required="">
-                    <label for="">Username</label>
-                    <box-icon type="solid" name="user" color="gray"></box-icon>
-                </div>
+ <div class="wrapper">
 
-                <div class="input-box animation" style="--D:2; --S:23">
-                    <input type="password" required="">
-                    <label for="">Password</label>
-                    <box-icon name="lock-alt" type="solid" color="gray"></box-icon>
-                </div>
+<!----------------------------- Form box ----------------------------------->    
+    <div class="form-box">
 
-                <div class="input-box animation" style="--D:3; --S:24">
-                    <button class="btn" type="submit">Login</button>
-                </div>
+        <div class="logo-box">
+        <img src="Pictures/logo.png" alt="TaskFlow">
+        </div>
+        
+        <!------------------- login form -------------------------->
 
-                <div class="regi-link animation" style="--D:4; --S:25">
-                    <p>Don't have an account? <br> <a href="#" class="SignUpLink">Sign Up</a></p>
+        <div class="login-container" id="login">
+            <div class="top">
+                <header>Login</header>
+            </div>
+            <div class="input-box">
+                <input type="text" class="input-field" placeholder="Username or Email"required>
+                <i class="bx bx-user"></i>
+            </div>
+            <div class="input-box">
+                <input type="password" class="input-field" placeholder="Password"required>
+                <i class="bx bx-lock-alt"></i>
+            </div>
+            <div class="input-box">
+                <input type="submit" class="submit" value="Sign In">
+            </div>
+            <div class="two-col">
+                <div class="one">
+                    <input type="checkbox" id="login-check">
+                    <label for="login-check"> Remember Me</label>
                 </div>
-            </form>
+                <div class="two">
+                    <span>Don't have an account? <a href="#" onclick="register()">Sign Up</a></span>
+                </div>
+            </div>
         </div>
 
-        <div class="info-content Login">
-            <h2 class="animation" style="--D:0; --S:20">WELCOME BACK!</h2>
-            <p class="animation" style="--D:1; --S:21">We are happy to have you with us again. If you need anything, we are here to help.</p>
+        <!------------------- registration form -------------------------->
+        <div class="register-container" id="register">
+            <div class="top">
+                <header>Sign Up</header>
+            </div>
+            <div class="two-forms">
+                <div class="input-box">
+                    <input type="text" class="input-field" placeholder="Firstname"required>
+                    <i class="bx bx-user"></i>
+                </div>
+                <div class="input-box">
+                    <input type="text" class="input-field" placeholder="Lastname"required>
+                    <i class="bx bx-user"></i>
+                </div>
+            </div>
+            <div class="input-box">
+                <input type="text" class="input-field" placeholder="Email"required>
+                <i class="bx bx-envelope"></i>
+            </div>
+            <div class="input-box">
+                <input type="password" class="input-field" placeholder="Password"required>
+                <i class="bx bx-lock-alt"></i>
+            </div>
+            <div class="two-forms">
+                <div class="input-box">
+                    <input type="text" class="input-field" placeholder="Company name"required>
+                    <i class="bx bx-briefcase"></i>
+                </div>
+                <div class="input-box">
+                    <input type="text" class="input-field" placeholder="Position"required>
+                    <i class="bx bx-briefcase"></i>
+                </div>
+            </div>
+            <div class="input-box">
+                <input type="submit" class="submit" value="Register">
+            </div>
+            <div class="two-col">
+                <div class="one">
+                    <input type="checkbox" id="register-check">
+                    <label for="register-check"> Remember Me</label>
+                </div>
+                <div class="two">
+                    <span>Have an account? <a href="#" onclick="login()">Login</a></span>
+                </div>
+            </div>
         </div>
-
-        <div class="form-box Register">
-            <h2 class="animation" style="--li:17; --S:0">Register</h2>
-            <form action="#">
-                <div class="input-box animation" style="--li:18; --S:1">
-                    <input type="text" required="">
-                    <label for="">Username</label>
-                    <box-icon type="solid" name="user" color="gray"></box-icon>
-                </div>
-
-                <div class="input-box animation" style="--li:19; --S:2">
-                    <input type="email" required="">
-                    <label for="">Email</label>
-                    <box-icon name="envelope" type="solid" color="gray"></box-icon>
-                </div>
-
-                <div class="input-box animation" style="--li:19; --S:3">
-                    <input type="password" required="">
-                    <label for="">Password</label>
-                    <box-icon name="lock-alt" type="solid" color="gray"></box-icon>
-                </div>
-
-                <div class="input-box animation" style="--li:20; --S:4">
-                    <button class="btn" type="submit">Register</button>
-                </div>
-
-                <div class="regi-link animation" style="--li:21; --S:5">
-                    <p>Don't have an account? <br> <a href="#" class="SignInLink">Sign In</a></p>
-                </div>
-            </form>
-        </div>
-
-        <div class="info-content Register">
-            <h2 class="animation" style="--li:17; --S:0">WELCOME!</h2>
-            <p class="animation" style="--li:18; --S:1">We're delighted to have you here. If you need any assistance, feel free to reach out.</p>
-        </div>
-
-        <script src="./index.js"></script>
-        <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
-        <script src="./script.js"></script>
     </div>
+</div>   
+
+<script src="script.js"></script>
+
 </body>
 </html>
