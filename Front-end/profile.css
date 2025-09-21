@@ -1,0 +1,382 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+/* ---Dashboard--- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', serif;
+}
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(#F1F3FF,#CBD4FF);
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 260px;
+    height: 100vh;
+    background: #151A2E;
+    transition: all 0.4s ease;
+}
+
+.sidebar.collapsed {
+    width: 85px;
+}
+
+.sidebar .sidebar-header {
+    display: flex;
+    position: relative;
+    align-items: center;
+    padding: 25px 20px;
+    justify-content: space-between;
+}
+
+.sidebar-header .header-logo img {
+    max-height: 100px;
+    max-width: 150px;
+    display: block;
+    object-fit: contain;
+    border-radius: 0%;
+}
+
+.header-logo img:hover {
+    transform: scale(1.05);
+    transition: 0.3s ease;
+}
+
+.sidebar-header .sidebar-toggler {
+    position: absolute;
+    right: 20px;
+    height: 35px;
+    width: 35px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: #EEF2FF;
+    transition: 0.4 ease;
+}
+
+.sidebar-header .sidebar-toggler:hover {
+    background: #D9E1FD;
+}
+
+.sidebar.collapsed .sidebar-toggler{
+    transform: translate(-4px, 65px);
+}
+
+.sidebar-header .sidebar-toggler span {
+   font-size: 1.75rem;
+   transition: 0.4s ease;
+}
+
+.sidebar.collapsed .sidebar-toggler span {
+    transform: rotate(180deg);
+}
+
+.sidebar-nav .nav-list{
+    list-style: none;
+    display: flex;
+    gap: 4px;
+    padding: 0 15px;
+    flex-direction: column;
+    transform: translateY(15px);
+    transition: 0.4s ease;
+}
+
+.sidebar.collapsed .sidebar-nav .primary-nav {
+    transform: translateY(65px);
+}
+
+.sidebar-nav .nav-item .nav-link {
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    white-space: nowrap;
+    padding: 11px 15px;
+    text-decoration: none;
+    border-radius: 8px;
+    border: 1px solid #151A2E;
+    transition: 0.4s ease;
+}
+
+.sidebar-nav .nav-item:hover > .nav-link {
+    color: #151A2E;
+    background: #EEF2FF;
+}
+
+.sidebar-nav .nav-link .nav-label {
+    transition: opacity 0.3s ease;
+}
+
+.sidebar.collapsed .nav-link .nav-label {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.sidebar-nav .secondary-nav {
+    position: absolute;
+    bottom: 30px;
+    width: 100%;
+    background: #151A2E;
+}
+
+.sidebar-menu-button{
+    display: none;
+}
+
+header {
+  position: fixed;           /* 固定在顶部 */
+  top: 0;
+  left: 260px;               /* 让出 sidebar 的宽度 */
+  width: calc(100% - 260px); /* header 只占剩下的宽度 */
+  height: 60px;              /* 你可以根据需要调整高度 */
+  background: #ffffff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;       /* ⚡这里用 center，而不是 right */
+  z-index: 10;
+}
+
+/* 左边 welcome */
+.header-left h1 {
+  font-size: 1.5rem;
+  color: #333;
+}
+
+/* 右边按钮和头像 */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* 通知按钮 */
+.notification-btn {
+  position: relative;
+  font-size: 1.2rem;
+  color: #333;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.notification-btn:hover {
+  color: #007bff;
+}
+
+/* 红色提醒小圆点 */
+.notification-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: red;
+  color: white;
+  font-size: 0.7rem;
+  padding: 2px 5px;
+  border-radius: 50%;
+}
+
+/* 用户头像 */
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+  border: 2px solid #ddd;
+  transition: border-color 0.3s;
+}
+
+.user-avatar:hover {
+  border-color: #007bff;
+}
+
+.profile-box {
+    display: block ;
+    max-width: 700px;
+    margin-top: 100px;
+    margin-left: 550px;
+    padding: 20px;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+}
+
+.profile-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.viewMode {
+    font-size: 20px;
+    margin: 10px 0;
+    line-height: 3;
+}
+
+.avatar-group {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.avatar-edit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.avatar-preview {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ccc;
+}
+
+.name {
+  display: flex;
+  gap: 60px; /* 两个输入框之间的间距 */
+}
+
+.name .form-group input {
+  width: 300px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.form-actions {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.form-actions button {
+  margin: 0 5px;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.edit-btn {
+  background: #007bff;
+  color: white;
+}
+
+.save-btn {
+  background: #28a745;
+  color: white;
+}
+
+.cancel-btn {
+  background: #dc3545;
+  color: white;
+}
+
+.hidden {
+  display: none;
+}
+
+
+/* 响应式 */
+@media (min-width: 1024px) {
+  .sidebar-header .sidebar-toggler {
+    display: none; /* 屏幕大于 1024px 时隐藏 */
+  }
+}
+
+/* 小屏幕 sidebar 覆盖 header */
+@media (max-width: 1024px) {
+  .sidebar {
+    left: -260px;   /* 默认隐藏 */
+    z-index: 200;   /* 确保覆盖 header */
+  }
+
+  .sidebar.active {
+    left: 0;        /* 展开时显示 */
+  }
+
+  header {
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    z-index: 150;   /* 保证 header 在 sidebar 下方，但高于内容 */
+  }
+
+  .header-left h1 {
+    padding-left: 60px; /* 给左侧留出空间 */
+    font-size: 1.2rem;
+  }
+
+  .header-right {
+    margin-right: 20px; /* ⚡ 避免头像和通知贴到右边 */
+    gap: 15px;
+  }
+
+  /* 始终显示 sidebar-menu-button */
+  .sidebar-menu-button {
+    width: 40px;     /* 按钮宽度 */
+    height: 40px;    /* 按钮高度 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 10px;
+    left: 15px;
+    background: #fff;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    padding: 6px 10px;
+    cursor: pointer;
+    z-index: 300; /* ⚡永远最高 */
+  }
+
+  .sidebar-menu-button span {
+    font-size: 1.8rem;
+    color: #151A2E;
+  }
+
+  .profile-box {
+    margin: 80px auto;  /* 居中 */
+  }
+
+  .name .form-group input {
+    width: 300px;  /* 两个输入框各占 45% */
+    gap: 50px;
+  }
+}
+
+@media (max-width: 768px) {
+    .name {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .name .form-group input {
+        width: 100%;
+    }
+}
