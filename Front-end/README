@@ -10,12 +10,18 @@ script.js       /* common js for both login and signup */
 ---------------------------------------------------------
 Dashboard Page:
 dashboard.html
-analysis.html
-goal.html
-member.html
-project.html
-main.css        /* common css for all dashboard pages */
-main.js
+dashboard.css
+RTclock_Calendar.js
+notification_button.js
+sidebar.js
+----------------------------------------------------------
+Profile:
+profile.html
+profile.css
+profile.js
+notification_button.js
+sidebar.js
+----------------------------------------------------------
 
 18/9/25
 -goal.html variable name adjust
