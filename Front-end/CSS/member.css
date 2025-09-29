@@ -1,11 +1,6 @@
 /* Impporting Google Fonts - Poppins */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
-
-
-
-
-
 /* -------- Member Page Content -------- */
 .membercontent {
   width: calc(100% - 260px);   /* 默认 sidebar 展开 */

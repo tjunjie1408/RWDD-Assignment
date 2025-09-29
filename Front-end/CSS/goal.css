@@ -5,7 +5,7 @@
 /* 内容区域（排版） */
 .content {
   padding: 100px 20px 40px;  /* 顶部留出 header 空间 */
-  margin-left: 280px;        /* 给 sidebar 留空间 */
+  margin-left: 260px;        /* 给 sidebar 留空间 */
   transition: margin-left 0.4s ease;
 }
 
