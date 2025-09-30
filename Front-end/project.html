@@ -7,6 +7,7 @@
     <!-- Linking Google Fonts for Icons -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0"/>
     <link rel="stylesheet" href="/RWDD-Assignment/Front-end/CSS/dashboard.css">
+    <link rel="stylesheet" href="/RWDD-Assignment/Front-end/CSS/project.css">
 </head>
 <body>
     <!-- Mobile Sidebar Menu Button -->
@@ -99,9 +100,131 @@
         <img src="https://via.placeholder.com/150"  class="user-avatar" id="userAvatar">
       </a>
     </div>
+    </header>
+
+    <main class="project-content">
+    <div class="actions">
+        <div class="search">
+            <input id="searchInput" type="text" placeholder="Search tasks...">
+        </div>
+        <button id="newTaskBtn" class="primary">+ New Task</button>
+    </div>
+
+        <!-- Filters and Sorting -->
+    <div class="filter-group">
+        <label>Filter:</label>
+        <select id="statusFilter">
+            <option value="all">All Tasks</option>
+            <option value="completed">Completed</option>
+            <option value="overdue">Overdue</option>
+            <option value="progress">Progress</option>
+        </select>
+    </div>
+
+        <!-- Kanban View -->
+        <div id="kanbanView" class="kanban-view">
+            <div class="kanban-columns">
+                <div class="kanban-column">
+                    <div class="kanban-header">
+                        <span class="kanban-title">In Progress</span>
+                        <span id="inProgressCount" class="kanban-count">0</span>
+                    </div>
+                </div>
+                <div class="kanban-column">
+                    <div class="kanban-header">
+                        <span class="kanban-title">Completed</span>
+                        <span id="completedCount" class="kanban-count">0</span>
+                </div>
+                </div>
+                <div class="kanban-column">
+                    <div class="kanban-header">
+                        <span class="kanban-title">Overdue</span>
+                        <span id="overdueCount" class="kanban-count">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+        <!-- List View -->
+    <div id="listView" class="list-view">
+        <section class="card">
+            <div class="section-header">
+                <h2>All Tasks</h2>
+                <a class="view-all" href="#">View All</a>
+            </div>
+            <div id="taskGroups">
+                <!-- Task groups will be injected here -->
+            </div>
+        </section>
+    </div>
+
+    <div id="modal" class="modal" aria-hidden="true">
+        <div class="modal-content">
+            <h3>Create Task</h3>
+            <label>Title
+                <input id="taskTitle" type="text" placeholder="e.g. Proposal for new project">
+            </label>
+            <label>Category
+                <select id="taskCategory">
+                    <option>Development</option>
+                    <option>Design</option>
+                    <option>Meetings</option>
+                    <option>Research</option>
+                </select>
+            </label>
+            <label>Due Date
+                <input id="taskDate" type="date">
+            </label>
+            <label>Progress (%)
+                <input id="taskProgress" type="number" min="0" max="100" value="0" placeholder="0">
+            </label>
+            <label>Description
+                <textarea id="taskDescription" placeholder="Task description..."></textarea>
+            </label>
+            <div class="modal-actions">
+                <button id="cancelBtn">Cancel</button>
+                <button id="createBtn" class="primary">Create</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Task Detail Modal -->
+    <div id="taskDetailModal" class="modal" aria-hidden="true">
+    <div class="modal-content">
+        <h3 id="detailTitle">Task Title</h3>
+        <p><strong>Category:</strong> <span id="detailCategory"></span></p>
+        <p><strong>Due Date:</strong> <span id="detailDate"></span></p>
+        <p><strong>Progress:</strong> <span id="detailProgress"></span>%</p>
+        <p><strong>Description:</strong></p>
+        <p id="detailDescription"></p>
+        <p><strong>Members:</strong></p>
+        <ul id="detailMembers"></ul>
+
+        <!-- 提交工作内容 -->
+        <div class="submission-section">
+        <h4>Submit Your Work</h4>
+        <form id="submissionForm">
+            <label for="submissionDescription">Description:</label>
+            <textarea id="submissionDescription" rows="4" placeholder="Describe your work..." required></textarea>
+
+            <label for="submissionFile">Upload File:</label>
+            <input type="file" id="submissionFile" required>
+
+            <button type="submit">Submit</button>
+        </form>
+        </div>
+
+        <div class="modal-actions">
+        <button id="closeDetailBtn">Close</button>
+        </div>
+    </div>
+    </div>
+
+</main>
 
     <script src="/RWDD-Assignment/Front-end/JS/sidebar.js"></script>
     <script src="/RWDD-Assignment/Front-end/JS/notification_button.js"></script>
-  </header>
+    <script src="/RWDD-Assignment/Front-end/JS/project.js"></script>
 </body>
 </html>

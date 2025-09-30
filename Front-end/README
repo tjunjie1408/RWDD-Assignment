@@ -32,3 +32,12 @@ sidebar.js
 -profile.html/css/js add
 (features: view profile details, edit profile details)
 (all pages add link "profile.html")
+
+29/9/25
+-adjust sidebar size
+-notification button delete
+-analysis page add container
+
+30/9/25
+-project page completed
+(add all function, design)

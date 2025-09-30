@@ -1,0 +1,520 @@
+/* ====== 主内容区 ====== */
+.project-content {
+  padding: 20px;
+  margin-top: 70px;   /* 避开 header */
+  margin-left: 260px; /* 避开 sidebar */
+}
+
+/* ====== Actions 区域 ====== */
+.actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.search input {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  width: 1050px;
+  font-size: 14px;
+  transition: border 0.3s;
+}
+
+.search input:focus {
+  border-color: #4f46e5;
+  outline: none;
+}
+
+.primary {
+  background: #4f46e5;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.primary:hover {
+  background: #4338ca;
+}
+
+/* ====== Filter 区域 ====== */
+.filter-group {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filter-group label {
+  font-weight: 500;
+}
+
+.filter-group select {
+  padding: 6px 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+/* ====== List View ====== */
+.list-view .card {
+  background: #fff;
+  padding: 20px;
+  margin-left: 280px;
+  margin-right: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.list-view .card + .card {
+  margin-top: 16px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.section-header h2 {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.view-all {
+  font-size: 14px;
+  color: #4f46e5;
+  text-decoration: none;
+}
+
+/* ====== Task Card ====== */
+.task-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: transform 0.2s;
+}
+
+.task-card:hover {
+  transform: translateY(-3px);
+}
+
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.task-header h4 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.task-category {
+  background: #e0e7ff;
+  color: #4338ca;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+}
+
+.task-desc {
+  font-size: 14px;
+  color: #6b7280;
+  margin-bottom: 12px;
+}
+
+.task-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.task-date {
+  font-size: 13px;
+  color: #4b5563;
+}
+
+.progress-bar {
+  flex-grow: 1;
+  height: 8px;
+  background: #e5e7eb;
+  border-radius: 6px;
+  overflow: hidden;
+  margin: 0 8px;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 6px;
+  transition: width 0.3s ease, background 0.3s ease;
+}
+
+.progress-text {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* ====== Kanban View ====== */
+.kanban-view {
+  margin-top: 24px;
+}
+
+.kanban-columns {
+  display: flex;
+  gap: 16px;
+}
+
+.kanban-column {
+  flex: 1;
+  background: #f9fafb;
+  border-radius: 10px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.kanban-header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.kanban-count {
+  background: #4f46e5;
+  color: white;
+  border-radius: 50%;
+  padding: 4px 10px;
+  font-size: 13px;
+}
+
+/* ====== Modal ====== */
+.modal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.4);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal.show {
+  display: flex;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  width: 380px;
+  max-width: 90%;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.modal-content h3 {
+  margin-bottom: 16px;
+  font-size: 18px;
+}
+
+.modal-content label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.modal-content input,
+.modal-content select,
+.modal-content textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 4px;
+  margin-bottom: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.modal-content textarea {
+  resize: none;
+  height: 80px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.modal-actions button {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+.modal-actions #cancelBtn {
+  background: #e5e7eb;
+  color: #111827;
+}
+
+.modal-actions #cancelBtn:hover {
+  background: #d1d5db;
+}
+
+@media (max-width: 1024px) {
+    .project-content {
+        margin-left: 0; /* 小屏幕时内容自适应 */
+    }
+
+    .search input {
+        width: 400px; /* 小屏幕时搜索框自适应 */
+    }
+
+    .list-view .card {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+}
+
+@media (max-width: 600px) {
+    .search input {
+        width: 100%; /* 超小屏幕时搜索框全宽 */
+    }
+
+    .primary {
+        width: 20%; /* 超小屏幕时按钮全宽 */
+        height: 40px;
+        font-size: 7px;
+        text-align: center;
+    }
+
+    .kanban-columns {
+        flex-direction: column; /* Kanban 列垂直排列 */
+    }
+}
+
+/* ====== Task Detail Modal ====== */
+#taskDetailModal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.4);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+#taskDetailModal.show {
+  display: flex;
+}
+
+#taskDetailModal .modal-content {
+  background: #fff;
+  padding: 24px;
+  border-radius: 12px;
+  width: 420px;
+  max-width: 90%;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+  animation: popupFade 0.3s ease;
+}
+
+#taskDetailModal .modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+#taskDetailModal h3 {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+#closeDetailBtn {
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #6b7280;
+  transition: color 0.2s;
+}
+
+#closeDetailBtn:hover {
+  color: #111827;
+}
+
+/* 内容区域 */
+.task-detail {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.task-detail p {
+  margin: 6px 0;
+}
+
+.task-detail strong {
+  color: #374151;
+}
+
+.task-detail .members {
+  margin-top: 12px;
+}
+
+.task-detail .members ul {
+  list-style: none;
+  padding: 0;
+  margin: 6px 0 0 0;
+}
+
+.task-detail .members li {
+  background: #f3f4f6;
+  padding: 6px 10px;
+  border-radius: 6px;
+  margin-bottom: 6px;
+  font-size: 13px;
+  color: #111827;
+  display: inline-block;
+}
+
+/* ========= 通用弹窗背景 ========= */
+.modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 2000;
+}
+
+.modal.show {
+  display: flex;
+  animation: fadeIn 0.25s ease;
+}
+
+/* ========= 弹窗容器 ========= */
+.modal-content {
+  background: #fff;
+  border-radius: 12px;
+  width: 600px;
+  max-width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 24px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  animation: slideUp 0.3s ease;
+}
+
+.modal-content h3 {
+  margin-top: 0;
+  font-size: 22px;
+  font-weight: 600;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 10px;
+}
+
+/* ========= Task 信息部分 ========= */
+.modal-content p {
+  margin: 8px 0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.modal-content ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.modal-content li {
+  display: inline-block;
+  margin: 4px 6px 4px 0;
+  padding: 6px 10px;
+  font-size: 13px;
+  background: #f3f4f6;
+  border-radius: 8px;
+}
+
+/* ========= 提交表单部分 ========= */
+.submission-section {
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.submission-section h4 {
+  margin-bottom: 10px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.submission-section label {
+  display: block;
+  margin: 10px 0 5px;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.submission-section textarea,
+.submission-section input[type="file"] {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 8px;
+  font-size: 14px;
+  margin-bottom: 12px;
+  resize: vertical;
+}
+
+.submission-section button {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.submission-section button:hover {
+  background: #1e40af;
+}
+
+/* ========= 底部关闭按钮 ========= */
+.modal-actions {
+  text-align: right;
+  margin-top: 16px;
+}
+
+.modal-actions button {
+  background: #6b7280;
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.2s;
+}
+
+.modal-actions button:hover {
+  background: #374151;
+}
+
