@@ -1,12 +1,12 @@
 Home Page:
 index.html
-style.css
-script.js
+homepage.css
+homepage.js
 ---------------------------------------------------------
 Signup Page:
 signup.html
 signup.css
-script.js       /* common js for both login and signup */
+signup.js
 ---------------------------------------------------------
 Dashboard Page:
 dashboard.html

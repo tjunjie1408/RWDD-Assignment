@@ -25,4 +25,3 @@ function register() {
     a.className = "btn";
     b.className += " white-btn";
 }
-
