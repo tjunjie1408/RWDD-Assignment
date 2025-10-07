@@ -6,6 +6,8 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="/RWDD-Assignment/Front-end/CSS/signup.css">
     <title>Login & Sign Up</title>
+    <!-- * Add your site key in the data-sitekey attribute -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
  <div class="wrapper">
@@ -19,78 +21,71 @@
         
         <!------------------- login form -------------------------->
 
-        <div class="login-container" id="login">
+        <form class="login-container" id="login" action="PHP/login.php" method="POST">
             <div class="top">
                 <header>Login</header>
             </div>
             <div class="input-box">
-                <input type="text" class="input-field" placeholder="Username or Email"required>
+                <input type="text" name="login" class="input-field" placeholder="Username or Email"required>
                 <i class="bx bx-user"></i>
             </div>
             <div class="input-box">
-                <input type="password" class="input-field" placeholder="Password"required>
+                <input type="password" name="password" class="input-field" placeholder="Password"required>
                 <i class="bx bx-lock-alt"></i>
+            </div>
+            <div class="recaptcha-wrapper">
+                <div class="g-recaptcha" data-sitekey="6Lc_Xt8rAAAAAKzTskP3vJ51aMbIv5xht_l6dn3A"></div>
             </div>
             <div class="input-box">
                 <input type="submit" class="submit" value="Sign In">
             </div>
             <div class="two-col">
-                <div class="one">
-                    <input type="checkbox" id="login-check">
-                    <label for="login-check"> Remember Me</label>
-                </div>
                 <div class="two">
                     <span>Don't have an account? <a href="#" onclick="register()">Sign Up</a></span>
                 </div>
             </div>
-        </div>
+        </form>
 
         <!------------------- registration form -------------------------->
-        <div class="register-container" id="register">
+        <form class="register-container" id="register" action="PHP/signup.php" method="POST">
             <div class="top">
                 <header>Sign Up</header>
             </div>
-            <div class="two-forms">
-                <div class="input-box">
-                    <input type="text" class="input-field" placeholder="Firstname"required>
-                    <i class="bx bx-user"></i>
-                </div>
-                <div class="input-box">
-                    <input type="text" class="input-field" placeholder="Lastname"required>
-                    <i class="bx bx-user"></i>
-                </div>
+            <div class="input-box">
+                <input type="text" name="username" class="input-field" placeholder="Username"required>
+                <i class="bx bx-user"></i>
             </div>
             <div class="input-box">
-                <input type="text" class="input-field" placeholder="Email"required>
+                <input type="text" name="email" class="input-field" placeholder="Email"required>
                 <i class="bx bx-envelope"></i>
             </div>
             <div class="input-box">
-                <input type="password" class="input-field" placeholder="Password"required>
+                <input type="password" name="password" class="input-field" placeholder="Password"required>
                 <i class="bx bx-lock-alt"></i>
             </div>
             <div class="two-forms">
                 <div class="input-box">
-                    <input type="text" class="input-field" placeholder="Company name"required>
+                    <input type="text" name="company" class="input-field" placeholder="Company name"required>
                     <i class="bx bx-briefcase"></i>
                 </div>
                 <div class="input-box">
-                    <input type="text" class="input-field" placeholder="Position"required>
+                    <input type="text" name="position" class="input-field" placeholder="Position"required>
                     <i class="bx bx-briefcase"></i>
                 </div>
+            </div>
+            <!-- * Add your site key in the data-sitekey attribute -->
+            <div class="recaptcha-wrapper">
+                <div class="g-recaptcha" data-sitekey="6Lc_Xt8rAAAAAKzTskP3vJ51aMbIv5xht_l6dn3A"></div>
             </div>
             <div class="input-box">
                 <input type="submit" class="submit" value="Register">
             </div>
             <div class="two-col">
-                <div class="one">
-                    <input type="checkbox" id="register-check">
-                    <label for="register-check"> Remember Me</label>
-                </div>
                 <div class="two">
                     <span>Have an account? <a href="#" onclick="login()">Login</a></span>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
 </div>   
 
