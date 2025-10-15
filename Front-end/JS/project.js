@@ -13,34 +13,6 @@ function closeModal() {
   document.getElementById("modal").classList.remove("show");
 }
 
-// 创建任务
-document.getElementById("createBtn").addEventListener("click", () => {
-  const title = document.getElementById("taskTitle").value.trim();
-  const category = document.getElementById("taskCategory").value;
-  const dueDate = document.getElementById("taskDate").value;
-  const progress = parseInt(document.getElementById("taskProgress").value);
-  const description = document.getElementById("taskDescription").value.trim();
-
-  if (!title || !dueDate) {
-    alert("Title 和 Due Date 必须填写！");
-    return;
-  }
-
-  const task = {
-    title,
-    category,
-    dueDate,
-    progress,
-    description,
-    status: getStatus(progress, dueDate),
-    members: [] // 默认空，可以后续加上成员选择
-  };
-
-  tasks.push(task);
-  closeModal();
-  renderTasks();
-});
-
 // 根据进度和截止日自动判断状态
 function getStatus(progress, dueDate) {
   const today = new Date().toISOString().split("T")[0];
