@@ -1,3 +1,9 @@
+<?php
+    include ('Config/db_connect.php');
+    
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,7 +27,7 @@
         
         <!------------------- login form -------------------------->
 
-        <form class="login-container" id="login" action="PHP/login.php" method="POST">
+        <form class="login-container" id="login" action="Config/login.php" method="POST">
             <div class="top">
                 <header>Login</header>
             </div>
@@ -39,15 +45,18 @@
             <div class="input-box">
                 <input type="submit" class="submit" value="Sign In">
             </div>
-            <div class="two-col">
+            <div class="two-col" style="display: flex; flex-direction: column; align-items: center; gap: 15px;">
                 <div class="two">
                     <span>Don't have an account? <a href="#" onclick="register()">Sign Up</a></span>
+                </div>
+                <div class="one">
+                    <a href="forgot_password.php">Forgot password?</a>
                 </div>
             </div>
         </form>
 
         <!------------------- registration form -------------------------->
-        <form class="register-container" id="register" action="PHP/signup.php" method="POST">
+        <form class="register-container" id="register" action="Config/signup.php" method="POST">
             <div class="top">
                 <header>Sign Up</header>
             </div>
@@ -73,9 +82,10 @@
                     <i class="bx bx-briefcase"></i>
                 </div>
             </div>
-            <!-- * Add your site key in the data-sitekey attribute -->
+            <!-- Add your site key in the data-sitekey attribute -->
             <div class="recaptcha-wrapper">
-                <div class="g-recaptcha" data-sitekey="6Lc_Xt8rAAAAAKzTskP3vJ51aMbIv5xht_l6dn3A"></div>
+                <!--secret key -->
+                <div class="g-recaptcha" data-sitekey=""></div>
             </div>
             <div class="input-box">
                 <input type="submit" class="submit" value="Register">

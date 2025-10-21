@@ -1,3 +1,12 @@
+<?php
+    include 'Config/db_connect.php';
+
+    // Check if the user is logged in, if not then redirect to login page
+    if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+        header("location: signup.php");
+        exit;
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,7 +27,7 @@
     <aside class="sidebar">
         <!-- Sidebar Header -->
         <nav class="sidebar-header">
-            <a href="#" class="header-logo">
+            <a href="dashboard.php" class="header-logo">
                 <img src="Pictures/logo.png" alt="TaskFlow">
             </a>
             <button class="sidebar-toggler">
@@ -30,35 +39,35 @@
             <!-- Primary Top Nav -->
             <ul class="nav-list primary-nav">
                 <li class="nav-item">
-                    <a href="dashboard.html" class="nav-link">
+                    <a href="dashboard.php" class="nav-link">
                         <span class="material-symbols-rounded">dashboard</span>
                         <span class="nav-label">Dashboard</span>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="project.html" class="nav-link">
+                    <a href="project.php" class="nav-link">
                         <span class="material-symbols-rounded">task</span>
                         <span class="nav-label">Project</span>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="member.html" class="nav-link">
+                    <a href="member.php" class="nav-link">
                         <span class="material-symbols-rounded">group</span>
                         <span class="nav-label">Member</span>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="analysis.html" class="nav-link">
+                    <a href="analysis.php" class="nav-link">
                         <span class="material-symbols-rounded">bar_chart_4_bars</span>
                         <span class="nav-label">Report Analysis</span>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="goal.html" class="nav-link">
+                    <a href="goal.php" class="nav-link">
                         <span class="material-symbols-rounded">task_alt</span>
                         <span class="nav-label">Goal</span>
                     </a>
@@ -76,7 +85,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="index.html" class="nav-link">
+                    <a href="Config/logout.php" class="nav-link">
                         <span class="material-symbols-rounded">logout</span>
                         <span class="nav-label">Sign Out</span>
                     </a>
@@ -92,10 +101,10 @@
     <div class="header-right">
       <div class="username" id="username">
         <p class="hello">
-            Hello, User
+            Hello, <?php echo htmlspecialchars($_SESSION['username']); ?>
         </p>
       </div>
-      <a href="profile.html">
+      <a href="profile.php">
         <img src="https://via.placeholder.com/150"  class="user-avatar" id="userAvatar">
       </a>
     </div>
@@ -107,6 +116,7 @@
 
     <script src="/RWDD-Assignment/Front-end/JS/RTclock_Calendar.js"></script>
     <script src="/RWDD-Assignment/Front-end/JS/sidebar.js"></script>
+    <script src="/RWDD-Assignment/Front-end/JS/user_avatar.js"></script>
     <script src="/RWDD-Assignment/Front-end/JS/notification_button.js"></script>
 </body>
 </html>

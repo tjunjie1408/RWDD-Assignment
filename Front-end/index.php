@@ -24,8 +24,8 @@
                 <li class="nav-item"><a href="#support" class="nav-link">Support</a></li>
             </ul>
             <div class="header-actions">
-                <a href="signup.html" class="login-btn">Log in</a>
-                <a href="signup.html" class="btn btn-primary">Get Started</a>
+                <a href="signup.php" class="login-btn">Log in</a>
+                <a href="signup.php" class="btn btn-primary">Get Started</a>
             </div>
             <button class="mobile-toggle" id="mobileToggle">☰</button>
         </div>
@@ -36,7 +36,7 @@
             <div class="container">
                 <h1 class="animated-hero-text">Task Management Reimagined</h1>
                 <p>Streamline workflows, track progress, and achieve more with our all-in-one platform designed for individuals and teams.</p>
-                <a href="signup.html" class="btn btn-primary">Get Started For Free</a>
+                <a href="signup.php" class="btn btn-primary">Get Started For Free</a>
             </div>
         </section>
 
