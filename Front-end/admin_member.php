@@ -3,7 +3,13 @@
 
     // Check if the user is logged in, if not then redirect to login page
     if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-        header("location: signup.php");
+        header("location: register.php");
+        exit;
+    }
+
+    // Check if the logged-in user has admin role (assuming Role_ID 2 is admin)
+    if (!isset($_SESSION['role']) || $_SESSION['role'] !== 2) {
+        header("location: dashboard.php"); // Redirect non-admins to their dashboard
         exit;
     }
 ?>
@@ -13,9 +19,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Member</title>
-    <!-- Linking Google Fonts for Icons --> 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0"/> 
-    <link rel="stylesheet" href="CSS/member.css"> 
+    <!-- Linking Google Fonts for Icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0"/>
+    <link rel="stylesheet" href="CSS/member.css">
     <link rel="stylesheet" href="CSS/dashboard.css">
 </head>
 <body>
@@ -115,7 +121,8 @@
     <section class="team-section">
       <div class="team-header">
         <div class="team-controls">
-          <input type="text" id="searchMember" placeholder="Search team or member"> 
+          <input type="text" id="searchMember" placeholder="Search team or member">
+          <button id="addMemberBtn">+ Add Member</button>
         </div>
       </div>
 
@@ -126,18 +133,60 @@
     </section>
   </main>
 
-  <!-- 查看成员详情弹窗 -->
+  <!-- Add/Edit Member Modal -->
+  <div id="memberFormModal" class="modal">
+    <div class="member-modal-content">
+      <h2 id="memberFormModalTitle">Add Member</h2>
+      
+      <button class="member-close">&times;</button>
+      <form id="memberForm">
+        <input type="hidden" id="memberId" name="memberId">
+        <label for="memberName">Username</label>
+        <input type="text" id="memberName" name="username" required>
+        
+        <label for="memberEmail">Email</label>
+        <input type="email" id="memberEmail" name="email" required>
+        
+        <label for="memberPassword">Password (leave blank to keep current)</label>
+        <input type="password" id="memberPassword" name="password">
+        
+        <label for="memberCompany">Company</label>
+        <input type="text" id="memberCompany" name="company" required>
+        
+        <label for="memberPosition">Position</label>
+        <input type="text" id="memberPosition" name="position" required>
+        
+        <button type="submit" id="memberFormSubmitBtn">Save</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- View Member Details Modal -->
   <div id="viewMemberModal" class="member modal">
     <div class="member-modal-content">
       <span class="member-close">&times;</span>
       <h2>Member Details</h2>
       <div id="memberDetails"></div>
+      <div class="modal-actions">
+        <button id="editMemberBtn" class="action-button">Edit Member</button>
+        <button id="deleteMemberBtn" class="action-button delete-button">Delete Member</button>
+      </div>
     </div>
   </div>
 
-    <script src="JS/member_view_only.js"></script>
-    <script src="/RWDD-Assignment/Front-end/JS/sidebar.js"></script>
-    <script src="/RWDD-Assignment/Front-end/JS/user_avatar.js"></script>
-    <script src="/RWDD-Assignment/Front-end/JS/notification_button.js"></script>
+    <!-- Confirmation Modal for Deletion -->
+    <div id="confirmDeleteModal" class="modal">
+        <div class="modal-content">
+            <h2>Confirm Deletion</h2>
+            <p>Are you sure you want to delete this member?</p>
+            <button id="confirmDeleteYes">Yes</button>
+            <button id="confirmDeleteNo">No</button>
+        </div>
+    </div>
+
+    <script src="JS/admin_member.js"></script>
+    <script src="JS/sidebar.js"></script>
+    <script src="JS/user_avatar.js"></script>
+    <script src="JS/notification_button.js"></script>
 </body>
 </html>
