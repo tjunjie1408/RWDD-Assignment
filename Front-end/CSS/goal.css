@@ -101,14 +101,11 @@
 
 /* 事件样式 */
 .fc-event {
-  background: #007bff;
-  border: none;
   border-radius: 6px;
-  padding: 3px 6px;
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: #fff;
+  height: 22px; /* shorter bar for neat look */
+  margin-top: 2px;
 }
+
 
 .fc-event:hover {
   opacity: 0.85;
