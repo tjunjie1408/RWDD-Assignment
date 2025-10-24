@@ -130,37 +130,65 @@
         </section>
     </main>
 
-    <!-- Create/Edit Project Modal -->
-    <div id="modal" class="modal" aria-hidden="true">
+    <!-- Create Project Modal -->
+    <div id="projectModal" class="modal" aria-hidden="true">
         <div class="modal-content">
-            <h3 id="modalTitle">Create Project</h3>
-            <input type="hidden" id="projectId">
-            <label>Project Title
-                <input id="projectTitle" type="text" placeholder="e.g., Q4 Marketing Campaign">
-            </label>
-            <label>Description
-                <textarea id="projectDescription" placeholder="Enter a brief project description..."></textarea>
-            </label>
-            <label>Start Date
-                <input id="projectStartDate" type="date">
-            </label>
-            <label>End Date
-                <input id="projectEndDate" type="date">
-            </label>
-            <label>Status
-                <select id="projectStatus">
+            <h3>Create New Project</h3>
+            <form id="projectForm">
+                <label for="projectTitle">Title</label>
+                <input id="projectTitle" type="text" name="title" placeholder="e.g., Website Redesign" required>
+                
+                <label for="projectDescription">Description</label>
+                <textarea id="projectDescription" name="description" placeholder="A short description of the project..."></textarea>
+                
+                <label for="projectStartDate">Start Date</label>
+                <input id="projectStartDate" type="date" name="startDate" required>
+                
+                <label for="projectEndDate">End Date</label>
+                <input id="projectEndDate" type="date" name="endDate" required>
+                
+                <div class="modal-actions">
+                    <button type="button" id="cancelProjectBtn">Cancel</button>
+                    <button type="submit" class="primary">Create Project</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Project Modal -->
+    <div id="editProjectModal" class="modal" aria-hidden="true">
+        <div class="modal-content">
+            <h3>Edit Project</h3>
+            <form id="editProjectForm">
+                <input type="hidden" id="editProjectId" name="projectId">
+                <label for="editProjectTitle">Title</label>
+                <input id="editProjectTitle" type="text" name="title" required>
+                
+                <label for="editProjectDescription">Description</label>
+                <textarea id="editProjectDescription" name="description"></textarea>
+                
+                <label for="editProjectStartDate">Start Date</label>
+                <input id="editProjectStartDate" type="date" name="startDate" required>
+                
+                <label for="editProjectEndDate">End Date</label>
+                <input id="editProjectEndDate" type="date" name="endDate" required>
+                
+                <label for="editProjectStatus">Status</label>
+                <select id="editProjectStatus" name="status">
                     <option value="Not Started">Not Started</option>
                     <option value="In Progress">In Progress</option>
                     <option value="Completed">Completed</option>
                     <option value="On Hold">On Hold</option>
                 </select>
-            </label>
-            <div class="modal-actions">
-                <button id="cancelBtn">Cancel</button>
-                <button id="saveProjectBtn" class="primary">Save Project</button>
-            </div>
+
+                <div class="modal-actions">
+                    <button type="button" id="cancelEditProjectBtn">Cancel</button>
+                    <button type="submit" class="primary">Save Changes</button>
+                </div>
+            </form>
         </div>
     </div>
+
 
     <script src="/RWDD-Assignment/Front-end/JS/sidebar.js"></script>
     <script src="/RWDD-Assignment/Front-end/JS/project.js"></script>

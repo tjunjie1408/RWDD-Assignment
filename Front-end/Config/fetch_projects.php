@@ -8,9 +8,30 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     exit();
 }
 
+$user_id = $_SESSION['id'];
 $response = ['success' => false, 'projects' => []];
 
-$stmt = $conn->prepare("SELECT Project_ID, Title, Description, Project_Start_Time, Project_End_Time, Project_Status FROM projects ORDER BY Project_Start_Time DESC");
+// The query now joins with project_members to check if the current user is a member
+$sql = "
+    SELECT 
+        p.Project_ID, 
+        p.Title, 
+        p.Description, 
+        p.Project_Start_Time, 
+        p.Project_End_Time, 
+        p.Project_Status, 
+        p.Progress_Percent,
+        CASE WHEN pm.User_ID IS NOT NULL THEN 1 ELSE 0 END AS is_member
+    FROM 
+        projects p
+    LEFT JOIN 
+        project_members pm ON p.Project_ID = pm.Project_ID AND pm.User_ID = ?
+    ORDER BY 
+        p.Project_Start_Time DESC
+";
+
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $user_id);
 
 if ($stmt->execute()) {
     $result = $stmt->get_result();

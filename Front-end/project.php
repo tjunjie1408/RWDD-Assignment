@@ -113,9 +113,8 @@
     <main class="project-content">
     <div class="actions">
         <div class="search">
-            <input id="searchInput" type="text" placeholder="Search tasks...">
+            <input id="searchInput" type="text" placeholder="Search projects...">
         </div>
-        <button id="newTaskBtn" class="primary">+ New Task</button>
     </div>
 
         <!-- Filters and Sorting -->
@@ -158,44 +157,15 @@
     <div id="listView" class="list-view">
         <section class="card">
             <div class="section-header">
-                <h2>All Tasks</h2>
-                <a class="view-all" href="#">View All</a>
+                <h2>Available Projects</h2>
             </div>
-            <div id="taskGroups">
-                <!-- Task groups will be injected here -->
+            <div id="projectList">
+                <!-- Project cards will be injected here by JavaScript -->
             </div>
         </section>
     </div>
 
-    <div id="modal" class="modal" aria-hidden="true">
-        <div class="modal-content">
-            <h3>Create Task</h3>
-            <label>Title
-                <input id="taskTitle" type="text" placeholder="e.g. Proposal for new project">
-            </label>
-            <label>Category
-                <select id="taskCategory">
-                    <option>Development</option>
-                    <option>Design</option>
-                    <option>Meetings</option>
-                    <option>Research</option>
-                </select>
-            </label>
-            <label>Due Date
-                <input id="taskDate" type="date">
-            </label>
-            <label>Progress (%)
-                <input id="taskProgress" type="number" min="0" max="100" value="0" placeholder="0">
-            </label>
-            <label>Description
-                <textarea id="taskDescription" placeholder="Task description..."></textarea>
-            </label>
-            <div class="modal-actions">
-                <button id="cancelBtn">Cancel</button>
-                <button id="createBtn" class="primary">Create</button>
-            </div>
-        </div>
-    </div>
+
 
     <!-- Task Detail Modal -->
     <div id="taskDetailModal" class="modal" aria-hidden="true">
