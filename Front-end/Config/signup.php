@@ -4,7 +4,7 @@ include 'db_connect.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // reCAPTCHA verification
     // TODO: Replace with your secret key
-    $recaptcha_secret = "";
+    $recaptcha_secret = ""; // IMPORTANT: Add your Google reCAPTCHA secret key here
     $recaptcha_response = $_POST['g-recaptcha-response'];
     $response = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=$recaptcha_secret&response=$recaptcha_response");
     $response_keys = json_decode($response, true);

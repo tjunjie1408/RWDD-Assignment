@@ -47,7 +47,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="project.php" class="nav-link">
+                    <a href="project.php" class="nav-link active">
                         <span class="material-symbols-rounded">task</span>
                         <span class="nav-label">Project</span>
                     </a>
@@ -231,9 +231,7 @@
 
 </main>
 
-    <script src="/RWDD-Assignment/Front-end/JS/dashboard.js"></script>
     <script src="/RWDD-Assignment/Front-end/JS/sidebar.js"></script>
-    <script src="/RWDD-Assignment/Front-end/JS/notification_button.js"></script>
     <script src="/RWDD-Assignment/Front-end/JS/user_avatar.js"></script>
     <script src="/RWDD-Assignment/Front-end/JS/project.js"></script>
 </body>

@@ -1,3 +1,18 @@
+<?php
+    include 'Config/db_connect.php';
+
+    // Check if the user is logged in, if not then redirect to login page
+    if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+        header("location: signup.php");
+        exit;
+    }
+
+    // Check if the logged-in user has admin role (assuming Role_ID 2 is admin)
+    if (!isset($_SESSION['role']) || $_SESSION['role'] !== 2) {
+        header("location: project.php"); // Redirect non-admins to the regular project page
+        exit;
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +23,6 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0"/>
     <link rel="stylesheet" href="/RWDD-Assignment/Front-end/CSS/dashboard.css">
     <link rel="stylesheet" href="/RWDD-Assignment/Front-end/CSS/project.css">
-    <link rel="stylesheet" href="/RWDD-Assignment/Front-end/CSS/admin.css">
 </head>
 <body>
     <!-- Mobile Sidebar Menu Button -->
@@ -19,7 +33,7 @@
     <aside class="sidebar">
         <!-- Sidebar Header -->
         <nav class="sidebar-header">
-            <a href="#" class="header-logo">
+            <a href="admin_dashboard.php" class="header-logo">
                 <img src="Pictures/logo.png" alt="TaskFlow">
             </a>
             <button class="sidebar-toggler">
@@ -31,35 +45,35 @@
             <!-- Primary Top Nav -->
             <ul class="nav-list primary-nav">
                 <li class="nav-item">
-                    <a href="dashboard.html" class="nav-link">
+                    <a href="admin_dashboard.php" class="nav-link">
                         <span class="material-symbols-rounded">dashboard</span>
                         <span class="nav-label">Dashboard</span>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="project.html" class="nav-link active">
+                    <a href="admin_project.php" class="nav-link active">
                         <span class="material-symbols-rounded">task</span>
                         <span class="nav-label">Project</span>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="member.html" class="nav-link">
+                    <a href="admin_member.php" class="nav-link">
                         <span class="material-symbols-rounded">group</span>
                         <span class="nav-label">Member</span>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="analysis.html" class="nav-link">
+                    <a href="analysis.php" class="nav-link">
                         <span class="material-symbols-rounded">bar_chart_4_bars</span>
                         <span class="nav-label">Report Analysis</span>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="goal.html" class="nav-link">
+                    <a href="goal.php" class="nav-link">
                         <span class="material-symbols-rounded">task_alt</span>
                         <span class="nav-label">Goal</span>
                     </a>
@@ -76,7 +90,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="index.html" class="nav-link">
+                    <a href="Config/logout.php" class="nav-link">
                         <span class="material-symbols-rounded">logout</span>
                         <span class="nav-label">Sign Out</span>
                     </a>
@@ -87,149 +101,68 @@
 
     <header>
         <div class="header-left">
-            <h1>Project</h1>
+            <h1>Project Management</h1>
         </div>
         <div class="header-right">
             <div class="username" id="username">
-                <p class="hello">Hello, User</p>
+                <p class="hello">
+                    Hello, Admin <?php echo htmlspecialchars($_SESSION['username']); ?>
+                </p>
             </div>
-            <a href="profile.html">
+            <a href="profile.php">
                 <img src="https://via.placeholder.com/150" class="user-avatar" id="userAvatar">
             </a>
         </div>
     </header>
 
     <main class="project-content">
-        <div class="actions">
-            <div class="search">
-                <input id="searchInput" type="text" placeholder="Search tasks...">
-            </div>
-            <button id="newTaskBtn" class="primary">+ New Task</button>
-        </div>
-
-        <!-- Filters and Sorting -->
-        <div class="filter-group">
-            <label>Filter:</label>
-            <select id="statusFilter">
-                <option value="all">All Tasks</option>
-                <option value="completed">Completed</option>
-                <option value="overdue">Overdue</option>
-                <option value="progress">Progress</option>
-            </select>
-        </div>
-
-        <!-- Kanban View -->
-        <div id="kanbanView" class="kanban-view">
-            <div class="kanban-columns">
-                <div class="kanban-column">
-                    <div class="kanban-header">
-                        <span class="kanban-title">In Progress</span>
-                        <span id="inProgressCount" class="kanban-count">0</span>
-                    </div>
-                </div>
-                <div class="kanban-column">
-                    <div class="kanban-header">
-                        <span class="kanban-title">Completed</span>
-                        <span id="completedCount" class="kanban-count">0</span>
-                    </div>
-                </div>
-                <div class="kanban-column">
-                    <div class="kanban-header">
-                        <span class="kanban-title">Overdue</span>
-                        <span id="overdueCount" class="kanban-count">0</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <!-- List View -->
-    <div id="listView" class="list-view">
         <section class="card">
             <div class="section-header">
-                <h2>All Tasks</h2>
-                <a class="view-all" href="#">View All</a>
+                <h2>All Projects</h2>
+                <div class="project-actions">
+                    <input id="searchInput" type="text" placeholder="Search projects...">
+                    <button id="newProjectBtn" class="primary">+ New Project</button>
+                </div>
             </div>
-            <div id="taskGroups">
-                <!-- Task groups will be injected here -->
+            <div id="projectList">
+                <!-- Project cards will be injected here by project.js -->
             </div>
         </section>
-    </div>
+    </main>
 
-    <!-- Create Task Modal -->
+    <!-- Create/Edit Project Modal -->
     <div id="modal" class="modal" aria-hidden="true">
         <div class="modal-content">
-            <h3>Create Task</h3>
-            <label>Title
-                <input id="taskTitle" type="text" placeholder="e.g. Proposal for new project">
-            </label>
-            <label>Category
-                <select id="taskCategory">
-                    <option>Development</option>
-                    <option>Design</option>
-                    <option>Meetings</option>
-                    <option>Research</option>
-                </select>
-            </label>
-            <label>Due Date
-                <input id="taskDate" type="date">
-            </label>
-            <label>Progress (%)
-                <input id="taskProgress" type="number" min="0" max="100" value="0" placeholder="0">
-            </label>
-            <label>Members
-                <div class="member-input-group">
-                    <input id="memberInput" type="text" placeholder="Enter member name...">
-                    <button type="button" id="addMemberBtn" class="secondary">Add</button>
-                </div>
-                <ul id="memberList" class="member-list"></ul>
+            <h3 id="modalTitle">Create Project</h3>
+            <input type="hidden" id="projectId">
+            <label>Project Title
+                <input id="projectTitle" type="text" placeholder="e.g., Q4 Marketing Campaign">
             </label>
             <label>Description
-                <textarea id="taskDescription" placeholder="Task description..."></textarea>
+                <textarea id="projectDescription" placeholder="Enter a brief project description..."></textarea>
+            </label>
+            <label>Start Date
+                <input id="projectStartDate" type="date">
+            </label>
+            <label>End Date
+                <input id="projectEndDate" type="date">
+            </label>
+            <label>Status
+                <select id="projectStatus">
+                    <option value="Not Started">Not Started</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Completed">Completed</option>
+                    <option value="On Hold">On Hold</option>
+                </select>
             </label>
             <div class="modal-actions">
                 <button id="cancelBtn">Cancel</button>
-                <button id="createBtn" class="primary">Create</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Task Detail Modal -->
-    <div id="taskDetailModal" class="modal" aria-hidden="true">
-        <div class="modal-content">
-            <h3 id="detailTitle">Task Title</h3>
-            <p><strong>Category:</strong> <span id="detailCategory"></span></p>
-            <p><strong>Due Date:</strong> <span id="detailDate"></span></p>
-            <p><strong>Progress:</strong> <span id="detailProgress"></span>%</p>
-            <p><strong>Description:</strong></p>
-            <p id="detailDescription"></p>
-            <p><strong>Members:</strong></p>
-            <ul id="detailMembers"></ul>
-
-            <!-- ✅ Added Editable Members Section -->
-            <label>Edit Members
-                <div class="member-input-group">
-                    <input id="editMemberInput" type="text" placeholder="Enter member name...">
-                    <button type="button" id="editAddMemberBtn" class="secondary">Add</button>
-                </div>
-                <ul id="editMemberList" class="member-list"></ul>
-            </label>
-
-            <!-- Admin 查看提交记录 -->
-            <div class="submission-section">
-            <h4>Submitted Files</h4>
-            <div id="submissionList" class="submission-list"></div>
-            </div>
-
-            <div class="modal-actions">
-                <button id="closeDetailBtn">Close</button>
+                <button id="saveProjectBtn" class="primary">Save Project</button>
             </div>
         </div>
     </div>
 
     <script src="/RWDD-Assignment/Front-end/JS/sidebar.js"></script>
-    <script src="/RWDD-Assignment/Front-end/JS/notification_button.js"></script>
-    <script src="/RWDD-Assignment/Front-end/JS/admin.js"></script>
     <script src="/RWDD-Assignment/Front-end/JS/project.js"></script>
 </body>
 </html>
