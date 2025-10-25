@@ -32,95 +32,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (event.target === editProjectModal) editProjectModal.classList.remove('show');
     });
 
-    // --- Create Project Form Submission ---
-    if (projectForm) {
-        projectForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const formData = new FormData(projectForm);
-            try {
-                const response = await fetch('Config/create_project.php', { method: 'POST', body: formData });
-                const result = await response.json();
-                if (result.success) {
-                    alert('Project created successfully!');
-                    projectModal.classList.remove('show');
-                    projectForm.reset();
-                    fetchAndRenderProjects();
-                } else {
-                    alert(`Error: ${result.error}`);
-                }
-            } catch (error) {
-                alert('A network error occurred.');
-            }
-        });
-    }
 
-    // --- Edit Project Form Submission ---
-    if (editProjectForm) {
-        editProjectForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const formData = new FormData(editProjectForm);
-            try {
-                const response = await fetch('Config/update_project.php', { method: 'POST', body: formData });
-                const result = await response.json();
-                if (result.success) {
-                    alert('Project updated successfully!');
-                    editProjectModal.classList.remove('show');
-                    fetchAndRenderProjects();
-                } else {
-                    alert(`Error: ${result.error}`);
-                }
-            } catch (error) {
-                alert('A network error occurred.');
-            }
-        });
-    }
 
-    // --- Fetch and Render Projects ---
-    async function fetchAndRenderProjects() {
-        try {
-            const response = await fetch('Config/fetch_projects.php');
-            const data = await response.json();
-            if (data.success) {
-                renderProjects(data.projects);
-            } else {
-                projectListContainer.innerHTML = `<p>Error: ${data.error}</p>`;
-            }
-        } catch (error) {
-            projectListContainer.innerHTML = '<p>An error occurred while fetching projects.</p>';
-        }
-    }
 
-    function renderProjects(projects) {
-        projectListContainer.innerHTML = '';
-        if (projects.length === 0) {
-            projectListContainer.innerHTML = '<p>No projects found. Create one to get started!</p>';
-            return;
-        }
-        projects.forEach(project => {
-            const card = document.createElement('div');
-            card.classList.add('task-card');
-            card.dataset.projectId = project.Project_ID;
-            const progress = project.Project_Status === 'Completed' ? 100 : (project.Progress_Percent || 0);
-
-            card.innerHTML = `
-                <div class="task-header">
-                    <h4>${project.Title}</h4>
-                    <div>
-                        <button class="primary small-btn edit-project-btn">Edit</button>
-                        <button class="danger small-btn delete-project-btn">Delete</button>
-                    </div>
-                </div>
-                <p class="task-desc">${project.Description || "No description."}</p>
-                <div class="task-footer">
-                    <span class="task-date">📅 ${project.Project_Start_Time} to ${project.Project_End_Time}</span>
-                    <div class="progress-bar"><div class="progress-fill" style="width: ${progress}%;"></div></div>
-                    <span class="progress-text">${progress}%</span>
-                </div>
-            `;
-            projectListContainer.appendChild(card);
-        });
-        addProjectActionListeners();
-    }
 
     function addProjectActionListeners() {
         document.querySelectorAll('.delete-project-btn').forEach(btn => {
@@ -175,5 +89,5 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Initial load
-    fetchAndRenderProjects();
+    addProjectActionListeners();
 });

@@ -1,8 +1,32 @@
 /* ====== 主内容区 ====== */
+.message {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    font-size: 1rem;
+    text-align: center;
+}
+
+.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
 .project-content {
-  padding: 20px;
-  margin-top: 70px;   /* 避开 header */
-  margin-left: 260px; /* 避开 sidebar */
+    flex-grow: 1;
+    padding: 20px;
+    margin-left: 250px; /* Match sidebar width */
+    margin-top: 70px; /* Avoid header overlap */
+    overflow-y: auto; /* Allow scrolling in the main content */
+    height: calc(100vh - 70px); /* Full height minus header */
+    transition: margin-left 0.3s ease;
 }
 
 /* ====== Actions 区域 ====== */
@@ -39,6 +63,20 @@
 
 .primary:hover {
   background: #4338ca;
+}
+
+.danger {
+  background: #ef4444; /* red-500 */
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.danger:hover {
+  background: #dc2626; /* red-600 */
 }
 
 /* ====== Filter 区域 ====== */
@@ -517,4 +555,5 @@
 .modal-actions button:hover {
   background: #374151;
 }
+
 

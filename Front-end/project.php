@@ -15,8 +15,8 @@
     <title>Project</title>
     <!-- Linking Google Fonts for Icons -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0"/>
-    <link rel="stylesheet" href="/RWDD-Assignment/Front-end/CSS/dashboard.css">
-    <link rel="stylesheet" href="/RWDD-Assignment/Front-end/CSS/project.css">
+    <link rel="stylesheet" href="CSS/dashboard.css">
+    <link rel="stylesheet" href="CSS/project.css">
 </head>
 <body>
     <!-- Mobile Sidebar Menu Button -->
@@ -201,8 +201,8 @@
 
 </main>
 
-    <script src="/RWDD-Assignment/Front-end/JS/sidebar.js"></script>
-    <script src="/RWDD-Assignment/Front-end/JS/user_avatar.js"></script>
-    <script src="/RWDD-Assignment/Front-end/JS/project.js"></script>
+    <script src="JS/sidebar.js"></script>
+    <script src="JS/user_avatar.js"></script>
+    <script src="JS/project.js"></script>
 </body>
 </html>

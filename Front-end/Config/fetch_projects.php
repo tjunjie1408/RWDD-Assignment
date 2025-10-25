@@ -17,15 +17,15 @@ $sql = "
         p.Project_ID, 
         p.Title, 
         p.Description, 
-        p.Project_Start_Time, 
-        p.Project_End_Time, 
+        p.Project_Start_Date, 
+        p.Project_End_Date, 
         p.Project_Status, 
         p.Progress_Percent,
         CASE WHEN pm.User_ID IS NOT NULL THEN 1 ELSE 0 END AS is_member
     FROM 
         projects p
     LEFT JOIN 
-        project_members pm ON p.Project_ID = pm.Project_ID AND pm.User_ID = ?
+        project_memebers pm ON p.Project_ID = pm.Project_ID AND pm.User_ID = ?
     ORDER BY 
         p.Project_Start_Time DESC
 ";

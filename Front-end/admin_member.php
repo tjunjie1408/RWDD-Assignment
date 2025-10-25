@@ -3,7 +3,7 @@
 
     // Check if the user is logged in, if not then redirect to login page
     if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-        header("location: register.php");
+        header("location: signup.php");
         exit;
     }
 
@@ -21,7 +21,7 @@
     <title>Member</title>
     <!-- Linking Google Fonts for Icons -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0"/>
-    <link rel="stylesheet" href="CSS/member.css">
+    <link rel="stylesheet" href="CSS/member.css"> 
     <link rel="stylesheet" href="CSS/dashboard.css">
 </head>
 <body>
@@ -34,7 +34,7 @@
     <aside class="sidebar">
         <!-- Sidebar Header -->
         <nav class="sidebar-header">
-            <a href="dashboard.php" class="header-logo">
+            <a href="admin_dashboard.php" class="header-logo">
                 <img src="Pictures/logo.png" alt="TaskFlow">
             </a>
             <button class="sidebar-toggler">
@@ -46,28 +46,28 @@
             <!-- Primary Top Nav -->
             <ul class="nav-list primary-nav">
                 <li class="nav-item">
-                    <a href="dashboard.php" class="nav-link">
+                    <a href="admin_dashboard.php" class="nav-link">
                         <span class="material-symbols-rounded">dashboard</span>
                         <span class="nav-label">Dashboard</span>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="project.php" class="nav-link">
+                    <a href="admin_project.php" class="nav-link">
                         <span class="material-symbols-rounded">task</span>
                         <span class="nav-label">Project</span>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="member.php" class="nav-link">
+                    <a href="admin_member.php" class="nav-link active">
                         <span class="material-symbols-rounded">group</span>
                         <span class="nav-label">Member</span>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="analysis.php" class="nav-link">
+                    <a href="admin_analysis.php" class="nav-link">
                         <span class="material-symbols-rounded">bar_chart_4_bars</span>
                         <span class="nav-label">Report Analysis</span>
                     </a>
@@ -103,7 +103,7 @@
 
     <header>
     <div class="header-left">
-      <h1>Member</h1>
+      <h1>Member Management</h1>
     </div>
     <div class="header-right">
       <div class="username" id="username">

@@ -15,8 +15,8 @@
     <title>Profile</title>
     <!-- Linking Google Fonts for Icons -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0"/>
-    <link rel="stylesheet" href="/RWDD-Assignment/Front-end/CSS/dashboard.css">
-    <link rel="stylesheet" href="/RWDD-Assignment/Front-end/CSS/profile.css">
+    <link rel="stylesheet" href="CSS/dashboard.css">
+    <link rel="stylesheet" href="CSS/profile.css">
 </head>
 <body>
     <!-- Mobile Sidebar Menu Button -->
@@ -165,9 +165,9 @@
     </div>
   </div>
     
-    <script src="/RWDD-Assignment/Front-end/JS/dashboard.js"></script>
-    <script src="/RWDD-Assignment/Front-end/JS/sidebar.js"></script>
-    <script src="/RWDD-Assignment/Front-end/JS/notification_button.js"></script>
-    <script src="/RWDD-Assignment/Front-end/JS/profile.js"></script>
+    <script src="JS/dashboard.js"></script>
+    <script src="JS/sidebar.js"></script>
+    <script src="JS/notification_button.js"></script>
+    <script src="JS/profile.js"></script>
 </body>
 </html>

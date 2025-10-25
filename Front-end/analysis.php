@@ -15,8 +15,8 @@
     <title>Report Analysis</title>
     <!-- Linking Google Fonts for Icons -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0"/>
-    <link rel="stylesheet" href="/RWDD-Assignment/Front-end/CSS/dashboard.css">
-    <link rel="stylesheet" href="/RWDD-Assignment/Front-end/CSS/analysis.css">
+    <link rel="stylesheet" href="CSS/dashboard.css">
+    <link rel="stylesheet" href="CSS/analysis.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
@@ -129,9 +129,9 @@
         </div>
     </div>
 
-    <script src="/RWDD-Assignment/Front-end/JS/sidebar.js"></script>
+    <script src="JS/sidebar.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="/RWDD-Assignment/Front-end/JS/analysis.js"></script>
+    <script src="JS/analysis.js"></script>
 
 </body>
 </html>

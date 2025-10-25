@@ -24,8 +24,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project Tasks</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0"/>
-    <link rel="stylesheet" href="/RWDD-Assignment/Front-end/CSS/dashboard.css">
-    <link rel="stylesheet" href="/RWDD-Assignment/Front-end/CSS/project.css"> 
+    <link rel="stylesheet" href="CSS/dashboard.css">
+    <link rel="stylesheet" href="CSS/project.css"> 
 </head>
 <body>
     <button class="sidebar-menu-button">
@@ -70,8 +70,8 @@
         </div>
     </main>
 
-    <script src="/RWDD-Assignment/Front-end/JS/sidebar.js"></script>
-    <script src="/RWDD-Assignment/Front-end/JS/user_avatar.js"></script>
-    <script src="/RWDD-Assignment/Front-end/JS/tasks.js"></script>
+    <script src="JS/sidebar.js"></script>
+    <script src="JS/user_avatar.js"></script>
+    <script src="JS/tasks.js"></script>
 </body>
 </html>

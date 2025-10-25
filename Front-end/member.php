@@ -136,8 +136,8 @@
   </div>
 
     <script src="JS/member_view_only.js"></script>
-    <script src="/RWDD-Assignment/Front-end/JS/sidebar.js"></script>
-    <script src="/RWDD-Assignment/Front-end/JS/user_avatar.js"></script>
-    <script src="/RWDD-Assignment/Front-end/JS/notification_button.js"></script>
+    <script src="JS/sidebar.js"></script>
+    <script src="JS/user_avatar.js"></script>
+    <script src="JS/notification_button.js"></script>
 </body>
 </html>

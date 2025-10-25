@@ -7,7 +7,7 @@
     <meta name="description" content="Boost your productivity with our all-in-one platform for task management, time tracking, goal setting, and team collaboration.">
     
     <link rel="icon" href="Pictures/logo.png">
-    <link rel="stylesheet" href="/RWDD-Assignment/Front-end/CSS/homepage.css">
+    <link rel="stylesheet" href="CSS/homepage.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -155,6 +155,6 @@
     </main>
 
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <script src="/RWDD-Assignment/Front-end/JS/homepage.js"></script>
+    <script src="JS/homepage.js"></script>
 </body>
 </html>

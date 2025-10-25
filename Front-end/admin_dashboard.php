@@ -21,7 +21,7 @@
     <title>Admin Dashboard</title>
     <!-- Linking Google Fonts for Icons -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0"/>
-    <link rel="stylesheet" href="/RWDD-Assignment/Front-end/CSS/dashboard.css">
+    <link rel="stylesheet" href="CSS/dashboard.css">
 </head>
 <body>
     <!-- Mobile Sidebar Menu Button -->
@@ -120,9 +120,9 @@
         000000
     </div>
 
-    <script src="/RWDD-Assignment/Front-end/JS/RTclock_Calendar.js"></script>
-    <script src="/RWDD-Assignment/Front-end/JS/sidebar.js"></script>
-    <script src="/RWDD-Assignment/Front-end/JS/user_avatar.js"></script>
-    <script src="/RWDD-Assignment/Front-end/JS/notification_button.js"></script>
+    <script src="JS/RTclock_Calendar.js"></script>
+    <script src="JS/sidebar.js"></script>
+    <script src="JS/user_avatar.js"></script>
+    <script src="JS/notification_button.js"></script>
 </body>
 </html>

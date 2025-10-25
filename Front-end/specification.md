@@ -69,6 +69,7 @@ These requirements describe the underlying technical implementation details.
 - The application will implement CRUD (Create, Read, Update, Delete) functionalities.
 - **User-specific CRUD:** Each user has full CRUD control over their own personal data (e.g., profile, goals).
 - **Admin-level CRUD:** Admins have extended CRUD privileges for global resources like projects and members.
+- **Project Creation:** To maintain simplicity, project creation will be handled via traditional form submissions that trigger a page refresh. AJAX or the Fetch API should not be used for this specific action.
 - **Task Status Update:**
     - A dedicated backend script (e.g., `update_task_status.php`) will handle status changes triggered by the user's checkbox click.
     - **Authorization:** This script MUST verify that the task being updated is assigned to the currently logged-in user.
@@ -108,8 +109,8 @@ These requirements describe the underlying technical implementation details.
     1.  `Project_ID` (INT, PK, AI)
     2.  `Title` (VARCHAR)
     3.  `Description` (TEXT)
-    4.  `Project_Start_Time` (DATE)
-    5.  `Project_End_Time` (DATE)
+    4.  `Project_Start_Date` (DATE)
+    5.  `Project_End_Date` (DATE)
     6.  `Project_Status` (VARCHAR)
     7.  `Progress_Percent` (INT, DEFAULT 0)
     8.  `User_ID` (INT, FK) - The admin who created the project.
