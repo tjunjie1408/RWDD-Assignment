@@ -29,7 +29,7 @@
     <aside class="sidebar">
         <!-- Sidebar Header -->
         <nav class="sidebar-header">
-            <a href="dashboard.php" class="header-logo">
+            <a href="<?php echo (isset($_SESSION['role']) && $_SESSION['role'] === 2) ? 'admin_dashboard.php' : 'dashboard.php'; ?>" class="header-logo">
                 <img src="Pictures/logo.png" alt="TaskFlow">
             </a>
             <button class="sidebar-toggler">
@@ -40,41 +40,57 @@
         <nav class="sidebar-nav">
             <!-- Primary Top Nav -->
             <ul class="nav-list primary-nav">
-                <li class="nav-item">
-                    <a href="dashboard.php" class="nav-link">
-                        <span class="material-symbols-rounded">dashboard</span>
-                        <span class="nav-label">Dashboard</span>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a href="project.php" class="nav-link">
-                        <span class="material-symbols-rounded">task</span>
-                        <span class="nav-label">Project</span>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a href="member.php" class="nav-link">
-                        <span class="material-symbols-rounded">group</span>
-                        <span class="nav-label">Member</span>
-                    </a>
-                </li>
-
+                <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 2): ?>
+                    <li class="nav-item">
+                        <a href="admin_dashboard.php" class="nav-link">
+                            <span class="material-symbols-rounded">dashboard</span>
+                            <span class="nav-label">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="admin_project.php" class="nav-link">
+                            <span class="material-symbols-rounded">task</span>
+                            <span class="nav-label">Project</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="admin_member.php" class="nav-link">
+                            <span class="material-symbols-rounded">group</span>
+                            <span class="nav-label">Member</span>
+                        </a>
+                    </li>
+                <?php else: ?>
+                    <li class="nav-item">
+                        <a href="dashboard.php" class="nav-link">
+                            <span class="material-symbols-rounded">dashboard</span>
+                            <span class="nav-label">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="project.php" class="nav-link">
+                            <span class="material-symbols-rounded">task</span>
+                            <span class="nav-label">Project</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="member.php" class="nav-link">
+                            <span class="material-symbols-rounded">group</span>
+                            <span class="nav-label">Member</span>
+                        </a>
+                    </li>
+                <?php endif; ?>
                 <li class="nav-item">
                     <a href="analysis.php" class="nav-link">
                         <span class="material-symbols-rounded">bar_chart_4_bars</span>
                         <span class="nav-label">Report Analysis</span>
                     </a>
                 </li>
-
                 <li class="nav-item">
                     <a href="goal.php" class="nav-link">
                         <span class="material-symbols-rounded">task_alt</span>
                         <span class="nav-label">Goal</span>
                     </a>
                 </li>
-
             </ul>
 
             <!-- Secondary Bottom Nav -->
@@ -87,7 +103,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="index.php" class="nav-link">
+                    <a href="Config/logout.php" class="nav-link">
                         <span class="material-symbols-rounded">logout</span>
                         <span class="nav-label">Sign Out</span>
                     </a>

@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
             memberCard.classList.add('member-card');
             memberCard.dataset.memberId = member.user_ID;
             memberCard.innerHTML = `
-                <img src="https://via.placeholder.com/50" alt="${member.username}" class="member-avatar">
+                <img src="${member.avatar}" alt="${member.username}" class="member-avatar">
                 <div class="member-info">
                     <h4>${member.username}</h4>
                     <p>${member.position} at ${member.company}</p>

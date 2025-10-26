@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
     // Fetch the user's avatar for the header
-    fetch("PHP/get_profile.php")
+    fetch("Config/get_profile.php")
         .then(response => response.ok ? response.json() : Promise.reject('Failed to load avatar'))
         .then(data => {
             if (data.avatar) {

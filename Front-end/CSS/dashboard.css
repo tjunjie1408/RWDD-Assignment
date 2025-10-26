@@ -176,19 +176,17 @@ header {
 }
 
 .real-time-clock {
-    width: 80%;
+    width: 100%;
     font-size: 1.2rem;        /* 字体大小 */
     font-weight: 600;         /* 加粗 */
     font-family: "Poppins", sans-serif;
     color: #000;              /* 字体颜色 */
     background: #fff;      /* 背景颜色 */
     padding: 10px 15px;        /* 内边距 */
-    margin-top: 90px;         /* 外边距 */
-    margin-left: 260px;      /* 左侧留出 sidebar 空间 */
-    margin-right: 20px;     /* 右侧留出空间 */
+    margin-bottom: 20px;      /* Spacing below the clock */
     border-radius: 8px;       /* 圆角 */
     box-shadow: 0 2px 6px rgba(0,0,0,0.1); /* 阴影 */
-    display: inline-block;    /* 让它不会撑满整行 */
+    display: block;    /* 让它撑满容器 */
 }
 
 

@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    $stmt = $conn->prepare("UPDATE projects SET Title = ?, Description = ?, Project_Start_Time = ?, Project_End_Time = ?, Project_Status = ? WHERE Project_ID = ?");
+    $stmt = $conn->prepare("UPDATE projects SET Title = ?, Description = ?, Project_Start_Date = ?, Project_End_Date = ?, Project_Status = ? WHERE Project_ID = ?");
     $stmt->bind_param("sssssi", $title, $description, $start_date, $end_date, $status, $project_id);
 
     if ($stmt->execute()) {

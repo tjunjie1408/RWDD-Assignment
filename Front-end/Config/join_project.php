@@ -21,16 +21,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Check if the user is already a member
-    $stmt_check = $conn->prepare("SELECT ProjectMember_ID FROM project_members WHERE Project_ID = ? AND User_ID = ?");
+    $stmt_check = $conn->prepare("SELECT Member_ID FROM project_members WHERE Project_ID = ? AND User_ID = ?");
     $stmt_check->bind_param("ii", $project_id, $user_id);
     $stmt_check->execute();
     $stmt_check->store_result();
 
     if ($stmt_check->num_rows > 0) {
-        header('HTTP/1.1 409 Conflict');
-        $response['error'] = "You are already a member of this project.";
         $stmt_check->close();
-        echo json_encode($response);
+        header("Location: ../project.php?join_error=already_member");
         exit();
     }
     $stmt_check->close();
@@ -41,19 +39,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($stmt_insert->execute()) {
         $response['success'] = true;
+        header("Location: ../project.php?join=success");
+        exit();
     } else {
         error_log("Join Project Error: " . $stmt_insert->error);
-        header('HTTP/1.1 500 Internal Server Error');
-        $response['error'] = 'Failed to join project.';
+        header("Location: ../project.php?join_error=db_error");
+        exit();
     }
     $stmt_insert->close();
 
 } else {
-    header('HTTP/1.1 405 Method Not Allowed');
-    $response['error'] = 'Invalid request method.';
+    header("Location: ../project.php?join_error=invalid_request");
+    exit();
 }
 
 $conn->close();
-header('Content-Type: application/json');
-echo json_encode($response);
 ?>

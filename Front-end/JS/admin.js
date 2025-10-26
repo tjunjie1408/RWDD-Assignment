@@ -62,28 +62,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         document.querySelectorAll('.edit-project-btn').forEach(btn => {
-            btn.addEventListener('click', async (e) => {
+            btn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 const card = e.target.closest('.task-card');
-                const projectId = card.dataset.projectId;
-                try {
-                    const response = await fetch(`Config/fetch_project_details.php?id=${projectId}`);
-                    const result = await response.json();
-                    if (result.success) {
-                        const p = result.project;
-                        document.getElementById('editProjectId').value = p.Project_ID;
-                        document.getElementById('editProjectTitle').value = p.Title;
-                        document.getElementById('editProjectDescription').value = p.Description;
-                        document.getElementById('editProjectStartDate').value = p.Project_Start_Time;
-                        document.getElementById('editProjectEndDate').value = p.Project_End_Time;
-                        document.getElementById('editProjectStatus').value = p.Project_Status;
-                        editProjectModal.classList.add('show');
-                    } else {
-                        alert(`Error: ${result.error}`);
-                    }
-                } catch (error) {
-                    alert('A network error occurred.');
-                }
+                
+                document.getElementById('editProjectId').value = card.dataset.projectId;
+                document.getElementById('editProjectTitle').value = card.dataset.title;
+                document.getElementById('editProjectDescription').value = card.dataset.description;
+                document.getElementById('editProjectStartDate').value = card.dataset.startDate;
+                document.getElementById('editProjectEndDate').value = card.dataset.endDate;
+                document.getElementById('editProjectStatus').value = card.dataset.status;
+                
+                editProjectModal.classList.add('show');
             });
         });
     }

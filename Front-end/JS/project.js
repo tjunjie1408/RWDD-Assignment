@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             const actionButton = project.is_member
                 ? `<button class="primary small-btn view-project-btn">View Tasks</button>`
-                : `<button class="secondary small-btn join-project-btn">Join Project</button>`;
+                : `<button class="primary small-btn join-project-btn">Join Project</button>`;
 
             projectCard.innerHTML = `
                 <div class="task-header">
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
                 <p class="task-desc">${project.Description || "No description."}</p>
                 <div class="task-footer">
-                    <span class="task-date">📅 ${project.Project_Start_Time} to ${project.Project_End_Time}</span>
+                    <span class="task-date">📅 ${project.Project_Start_Date} to ${project.Project_End_Date}</span>
                     <div class="progress-bar">
                         <div class="progress-fill" style="width: ${progress}%;"></div>
                     </div>
@@ -59,48 +59,15 @@ document.addEventListener('DOMContentLoaded', () => {
             projectListContainer.appendChild(projectCard);
         });
 
-        addProjectActionListeners();
-    }
+        // addProjectActionListeners function removed as it is no longer needed.
 
-    function addProjectActionListeners() {
-        // --- Join Button Listener ---
-        document.querySelectorAll('.join-project-btn').forEach(button => {
-            button.addEventListener('click', async (e) => {
-                e.stopPropagation();
-                const card = e.target.closest('.task-card');
-                const projectId = card.dataset.projectId;
-
-                const formData = new FormData();
-                formData.append('projectId', projectId);
-
-                try {
-                    const response = await fetch('Config/join_project.php', {
-                        method: 'POST',
-                        body: formData
-                    });
-                    const result = await response.json();
-
-                    if (result.success) {
-                        alert('Successfully joined the project!');
-                        fetchAndRenderProjects(); // Refresh the list to show the 'View' button
-                    } else {
-                        alert(`Error joining project: ${result.error}`);
-                    }
-                } catch (error) {
-                    console.error('Failed to join project:', error);
-                    alert('A network error occurred.');
-                }
-            });
-        });
-
-        // --- View Button Listener (for later) ---
         document.querySelectorAll('.view-project-btn').forEach(button => {
             button.addEventListener('click', (e) => {
                 e.stopPropagation();
                 const card = e.target.closest('.task-card');
                 const projectId = card.dataset.projectId;
-                // Redirect to a new page or show tasks in a modal
-                alert(`Viewing tasks for project ID: ${projectId}`);
+                // Redirect to the tasks page for this project
+                window.location.href = `tasks.php?project_id=${projectId}`;
             });
         });
     }

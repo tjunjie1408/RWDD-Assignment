@@ -115,6 +115,11 @@ These requirements describe the underlying technical implementation details.
     7.  `Progress_Percent` (INT, DEFAULT 0)
     8.  `User_ID` (INT, FK) - The admin who created the project.
 
+- **Project Members Table:**
+    1.  `Member_ID` (INT, PK, AI)
+    2.  `Project_ID` (INT, FK)
+    3.  `User_ID` (INT, FK)
+
 - **Task Table:**
     1.  `Task_ID` (INT, PK, AI)
     2.  `Title` (VARCHAR)
@@ -122,8 +127,16 @@ These requirements describe the underlying technical implementation details.
     4.  `Status` (VARCHAR, e.g., 'Open', 'Done')
     5.  `Category` (VARCHAR)
     6.  `Priority` (VARCHAR)
-    7.  `Task_End_Time` (DATE)
-    8.  `Task_Created_Time` (TIMESTAMP, DEFAULT CURRENT_TIMESTAMP)
-    9.  `Assigner_ID` (INT, FK to users) - Who assigned the task.
-    10. `Assigned_User_ID` (INT, FK to users) - Who the task is for.
-    11. `Project_ID` (INT, FK)
+    7. Task_Start_Time (DATE)
+    8.  `Task_End_Time` (DATE)
+    9.  `Task_Created_Date` (TIMESTAMP, DEFAULT CURRENT_TIMESTAMP)
+    10. Task_Completed_Date (DATE)
+    11.  `Assigner_ID` (INT, FK to users) - Who assigned the task.
+    12. `User_ID` (INT, FK to users) - Who the task is for.
+    13. `Project_ID` (INT, FK)
+
+### 2.5. Responsiveness
+
+- The application layout must be fully responsive and functional across a range of devices, including desktops, tablets, and mobile phones.
+- UI elements should adapt gracefully to different screen sizes without breaking the layout or becoming unusable.
+- Navigation, such as the sidebar, should be collapsible or adapt for smaller screens.

@@ -67,7 +67,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="admin_analysis.php" class="nav-link">
+                    <a href="analysis.php" class="nav-link">
                         <span class="material-symbols-rounded">bar_chart_4_bars</span>
                         <span class="nav-label">Report Analysis</span>
                     </a>
@@ -108,7 +108,7 @@
     <div class="header-right">
       <div class="username" id="username">
         <p class="hello">
-            Hello, <?php echo htmlspecialchars($_SESSION['username']); ?>
+            Hello, Admin <?php echo htmlspecialchars($_SESSION['username']); ?>
         </p>
       </div>
       <a href="profile.php">

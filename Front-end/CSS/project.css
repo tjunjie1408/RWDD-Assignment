@@ -17,12 +17,12 @@
     background-color: #f8d7da;
     color: #721c24;
     border: 1px solid #f5c6cb;
-}
+n}
 
 .project-content {
     flex-grow: 1;
     padding: 20px;
-    margin-left: 250px; /* Match sidebar width */
+    margin-left: 240px; /* Match sidebar width */
     margin-top: 70px; /* Avoid header overlap */
     overflow-y: auto; /* Allow scrolling in the main content */
     height: calc(100vh - 70px); /* Full height minus header */
@@ -98,11 +98,13 @@
 }
 
 /* ====== List View ====== */
+.list-view {
+  margin-top: 40px;
+}
+
 .list-view .card {
   background: #fff;
   padding: 20px;
-  margin-left: 280px;
-  margin-right: 20px;
   border-radius: 12px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.08);
 }
@@ -557,3 +559,33 @@
 }
 
 
+/* ====== Project Search Bar Redesign ====== */
+.project-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px; /* Space between search and button */
+    flex: 1 1 40%; /* Allow it to grow but have a basis */
+    justify-content: flex-end;
+}
+
+#searchInput {
+    width: 100%;
+    max-width: 450px; /* Make it long, but not excessively so */
+    padding: 10px 20px;
+    border-radius: 25px; /* Fully rounded ends */
+    border: 1px solid #e5e7eb; /* Lighter border */
+    font-size: 1rem;
+    transition: all 0.3s ease-in-out;
+    background-color: #f9fafb; /* Slight off-white background */
+}
+
+#searchInput:focus {
+    outline: none;
+    border-color: #4f46e5;
+    background-color: #fff;
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+}
+
+#searchInput::placeholder {
+    color: #9ca3af;
+}

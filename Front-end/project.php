@@ -111,6 +111,19 @@
     </header>
 
     <main class="project-content">
+    <?php if(isset($_GET['join']) && $_GET['join'] == 'success'): ?>
+        <div class="message success">Successfully joined the project!</div>
+    <?php endif; ?>
+    <?php if(isset($_GET['join_error'])):
+        $error_message = 'An unknown error occurred.';
+        if ($_GET['join_error'] == 'already_member') {
+            $error_message = 'You are already a member of this project.';
+        } elseif ($_GET['join_error'] == 'db_error') {
+            $error_message = 'A database error occurred while trying to join the project.';
+        }
+    ?>
+        <div class="message error"><?php echo $error_message; ?></div>
+    <?php endif; ?>
     <div class="actions">
         <div class="search">
             <input id="searchInput" type="text" placeholder="Search projects...">
@@ -151,19 +164,19 @@
                 </div>
             </div>
         </div>
-    </main>
 
         <!-- List View -->
-    <div id="listView" class="list-view">
-        <section class="card">
-            <div class="section-header">
-                <h2>Available Projects</h2>
-            </div>
-            <div id="projectList">
-                <!-- Project cards will be injected here by JavaScript -->
-            </div>
-        </section>
-    </div>
+        <div id="listView" class="list-view">
+            <section class="card">
+                <div class="section-header">
+                    <h2>Available Projects</h2>
+                </div>
+                <div id="projectList">
+                    <!-- Project cards will be injected here by JavaScript -->
+                </div>
+            </section>
+        </div>
+    </main>
 
 
 

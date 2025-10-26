@@ -11,23 +11,16 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 $user_id = $_SESSION['id'];
 $response = ['success' => false, 'projects' => []];
 
-// The query now joins with project_members to check if the current user is a member
 $sql = "
     SELECT 
-        p.Project_ID, 
-        p.Title, 
-        p.Description, 
-        p.Project_Start_Date, 
-        p.Project_End_Date, 
-        p.Project_Status, 
-        p.Progress_Percent,
-        CASE WHEN pm.User_ID IS NOT NULL THEN 1 ELSE 0 END AS is_member
+        p.*,
+        pm.User_ID AS member_user_id
     FROM 
         projects p
     LEFT JOIN 
-        project_memebers pm ON p.Project_ID = pm.Project_ID AND pm.User_ID = ?
+        project_members pm ON p.Project_ID = pm.Project_ID AND pm.User_ID = ?
     ORDER BY 
-        p.Project_Start_Time DESC
+        p.Project_Start_Date DESC
 ";
 
 $stmt = $conn->prepare($sql);
@@ -37,6 +30,8 @@ if ($stmt->execute()) {
     $result = $stmt->get_result();
     $projects = [];
     while ($row = $result->fetch_assoc()) {
+        $row['is_member'] = !is_null($row['member_user_id']);
+        unset($row['member_user_id']); // Clean up the response
         $projects[] = $row;
     }
     $response['success'] = true;

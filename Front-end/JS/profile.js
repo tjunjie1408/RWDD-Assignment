@@ -1,38 +1,4 @@
-document.addEventListener("DOMContentLoaded", function() {
-    fetchUserProfile();
-});
 
-function fetchUserProfile() {
-    fetch("PHP/get_profile.php")
-        .then(response => {
-            if (!response.ok) {
-                throw new Error("Not logged in or user not found");
-            }
-            return response.json();
-        })
-        .then(data => {
-            // Populate view mode
-            document.getElementById("v-username").textContent = data.username;
-            document.getElementById("v-email").textContent = data.email;
-            document.getElementById("v-password").textContent = "********";
-            document.getElementById("v-company").textContent = data.company;
-            document.getElementById("v-position").textContent = data.position;
-            document.getElementById("viewAvatar").src = data.avatar;
-            document.getElementById("userAvatar").src = data.avatar; // Update header avatar
-
-            // Populate edit mode
-            document.getElementById("e-username").value = data.username;
-            document.getElementById("e-email").value = data.email;
-            document.getElementById("e-company").value = data.company;
-            document.getElementById("e-position").value = data.position;
-            document.getElementById("editAvatarPreview").src = data.avatar;
-        })
-        .catch(error => {
-            console.error("Error fetching or populating profile:", error);
-            // Redirect to login if not authenticated
-            window.location.href = "signup.php";
-        });
-}
 
 function switchToEdit() {
     document.getElementById("viewMode").classList.add("hidden");
@@ -52,7 +18,7 @@ function saveChanges() {
         position: document.getElementById("e-position").value,
     };
 
-    fetch("PHP/update_profile.php", {
+    fetch("Config/update_profile.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(profileData),
@@ -60,7 +26,7 @@ function saveChanges() {
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            fetchUserProfile(); // Refresh profile data
+            location.reload(); // Refresh page to show updated data
             cancelEdit(); // Switch back to view mode
         } else {
             alert("Error updating profile: " .concat(data.error));

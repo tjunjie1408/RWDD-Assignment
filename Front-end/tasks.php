@@ -15,7 +15,38 @@
         exit;
     }
 
-    // TODO: Add a check to ensure the user is a member of this project before showing tasks.
+    // Security Check: Ensure the user is a member of this project.
+    $user_id = $_SESSION['id'];
+    $check_stmt = $conn->prepare("SELECT Member_ID FROM project_members WHERE Project_ID = ? AND User_ID = ?");
+    $check_stmt->bind_param("ii", $project_id, $user_id);
+    $check_stmt->execute();
+    $check_stmt->store_result();
+
+    if ($check_stmt->num_rows === 0) {
+        // User is not a member, redirect them.
+        header("location: project.php?error=not_a_member");
+        exit;
+    }
+    $check_stmt->close();
+
+    // Fetch project details to display on the page
+    $project_stmt = $conn->prepare("SELECT Title, Description FROM projects WHERE Project_ID = ?");
+    $project_stmt->bind_param("i", $project_id);
+    $project_stmt->execute();
+    $project_result = $project_stmt->get_result();
+    $project = $project_result->fetch_assoc();
+    $project_stmt->close();
+
+    // Fetch tasks for the project
+    $task_stmt = $conn->prepare("SELECT * FROM tasks WHERE Project_ID = ? ORDER BY Task_Created_Date DESC");
+    $task_stmt->bind_param("i", $project_id);
+    $task_stmt->execute();
+    $tasks_result = $task_stmt->get_result();
+    $tasks = [];
+    while ($row = $tasks_result->fetch_assoc()) {
+        $tasks[] = $row;
+    }
+    $task_stmt->close();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -61,12 +92,72 @@
     </header>
 
     <main class="project-content">
+        <div class="project-header-container card">
+            <h2><?php echo htmlspecialchars($project['Title']); ?></h2>
+            <p><?php echo htmlspecialchars($project['Description']); ?></p>
+        </div>
+
         <div class="actions">
             <a href="project.php" class="primary">&larr; Back to All Projects</a>
+            <button id="newTaskBtn" class="primary">+ New Task</button>
         </div>
 
         <div id="task-list-container" class="list-view">
-            <!-- Tasks will be injected here by JavaScript -->
+            <?php if (count($tasks) > 0): ?>
+                <?php foreach ($tasks as $task): ?>
+                    <div class="task-card <?php echo ($task['Status'] === 'Done') ? 'completed' : ''; ?>" data-task-id="<?php echo $task['Task_ID']; ?>">
+                        <div class="task-card-header">
+                            <form action="Config/update_task_status.php" method="POST" class="task-status-form">
+                                <input type="hidden" name="taskId" value="<?php echo $task['Task_ID']; ?>">
+                                <input type="hidden" name="projectId" value="<?php echo $project_id; ?>">
+                                <input type="checkbox" name="status" class="task-checkbox" <?php echo ($task['Status'] === 'Done') ? 'checked' : ''; ?> onchange="this.form.submit()">
+                            </form>
+                            <h4 class="task-title"><?php echo htmlspecialchars($task['Title']); ?></h4>
+                        </div>
+                        <div class="task-card-body">
+                            <p><strong>Due Date:</strong> <?php echo htmlspecialchars($task['Task_End_Time'] ?? 'No due date'); ?></p>
+                        </div>
+                        <div class="task-card-footer">
+                            <div class="task-actions">
+                                <button class="btn-details">Details</button>
+                                <button class="btn-upload-file">📎</button>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <p>No tasks have been created for this project yet.</p>
+            <?php endif; ?>
+        </div>
+
+        <!-- Create/Edit Task Modal -->
+        <div id="taskModal" class="modal" aria-hidden="true">
+            <div class="modal-content">
+                <h3 id="taskModalTitle">New Task</h3>
+                <form id="taskForm" action="Config/create_task.php" method="POST">
+                    <input type="hidden" id="taskId" name="taskId">
+                    <input type="hidden" id="projectId" name="projectId" value="<?php echo $project_id; ?>">
+
+                    <label for="taskTitle">Title</label>
+                    <input id="taskTitle" type="text" name="title" required>
+                    
+                    <label for="taskDescription">Description</label>
+                    <textarea id="taskDescription" name="description"></textarea>
+                    
+                    <label for="taskEndDate">End Date</label>
+                    <input id="taskEndDate" type="date" name="endDate" required>
+
+                    <label for="assignee">Assign To</label>
+                    <select id="assignee" name="assigneeId">
+                        <!-- Options will be populated by JS -->
+                    </select>
+                    
+                    <div class="modal-actions">
+                        <button type="button" id="cancelTaskBtn">Cancel</button>
+                        <button type="submit" class="primary">Save Task</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </main>
 
