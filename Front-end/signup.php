@@ -84,7 +84,7 @@
             </div>
             <!-- * Add your site key in the data-sitekey attribute -->
             <div class="recaptcha-wrapper">
-                <div class="g-recaptcha" data-sitekey="6Lc_Xt8rAAAAAKzTskP3vJ51aMbIv5xht_l6dn3A"></div>
+                <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"></div>
             </div>
             <div class="input-box">
                 <input type="submit" class="submit" value="Register">
