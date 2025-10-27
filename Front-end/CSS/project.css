@@ -590,6 +590,42 @@ n}
     color: #9ca3af;
 }
 
+/* User Checkbox Container in Modal */
+.user-checkbox-container {
+    max-height: 150px;
+    overflow-y: auto;
+    border: 1px solid #e5e7eb;
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 8px;
+}
+
+.user-checkbox-container div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.user-checkbox-container input[type="checkbox"] {
+    width: auto;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.member-badge {
+    background-color: #dcfce7;
+    color: #166534;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
 /* Redesigned Project Header */
 .project-header-container {
     display: flex;
