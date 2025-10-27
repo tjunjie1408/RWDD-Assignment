@@ -15,19 +15,24 @@
         exit;
     }
 
-    // Security Check: Ensure the user is a member of this project.
+    // Determine if the user is an admin
+    $is_admin = isset($_SESSION['role']) && $_SESSION['role'] === 2;
     $user_id = $_SESSION['id'];
-    $check_stmt = $conn->prepare("SELECT Member_ID FROM project_members WHERE Project_ID = ? AND User_ID = ?");
-    $check_stmt->bind_param("ii", $project_id, $user_id);
-    $check_stmt->execute();
-    $check_stmt->store_result();
 
-    if ($check_stmt->num_rows === 0) {
-        // User is not a member, redirect them.
-        header("location: project.php?error=not_a_member");
-        exit;
+    // Security Check: Ensure the user is a member of this project, unless they are an admin.
+    if (!$is_admin) {
+        $check_stmt = $conn->prepare("SELECT Member_ID FROM project_members WHERE Project_ID = ? AND User_ID = ?");
+        $check_stmt->bind_param("ii", $project_id, $user_id);
+        $check_stmt->execute();
+        $check_stmt->store_result();
+
+        if ($check_stmt->num_rows === 0) {
+            // User is not a member, redirect them.
+            header("location: project.php?error=not_a_member");
+            exit;
+        }
+        $check_stmt->close();
     }
-    $check_stmt->close();
 
     // Fetch project details to display on the page
     $project_stmt = $conn->prepare("SELECT Title, Description FROM projects WHERE Project_ID = ?");

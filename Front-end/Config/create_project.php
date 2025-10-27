@@ -24,6 +24,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("sssssi", $title, $description, $start_date, $end_date, $status, $admin_id);
 
     if ($stmt->execute()) {
+        $project_id = $stmt->insert_id;
+
+        // Automatically add the admin as a member of the new project
+        $member_stmt = $conn->prepare("INSERT INTO project_members (Project_ID, User_ID) VALUES (?, ?)");
+        $member_stmt->bind_param("ii", $project_id, $admin_id);
+        $member_stmt->execute();
+        $member_stmt->close();
+
         header("Location: ../admin_project.php?success=created");
         exit();
     } else {
