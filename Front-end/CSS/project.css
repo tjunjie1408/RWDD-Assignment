@@ -611,6 +611,11 @@ n}
     width: auto;
 }
 
+.project-card-actions {
+    display: flex;
+    gap: 8px;
+}
+
 .header-actions {
     display: flex;
     align-items: center;

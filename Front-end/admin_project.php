@@ -175,9 +175,9 @@
                             echo '<div class="task-card" data-project-id="' . $row['Project_ID'] . '" data-title="' . htmlspecialchars($row['Title']) . '" data-description="' . htmlspecialchars($row['Description']) . '" data-start-date="' . $row['Project_Start_Date'] . '" data-end-date="' . $row['Project_End_Date'] . '" data-status="' . $row['Project_Status'] . '">';
                             echo '    <div class="task-header">';
                             echo '        <h4>' . htmlspecialchars($row['Title']) . '</h4>';
-                            echo '        <div>';
-                            echo '            <button onclick="event.preventDefault(); event.stopPropagation();" class="primary small-btn edit-project-btn">Edit</button>';
-                            echo '            <button onclick="event.preventDefault(); event.stopPropagation();" class="danger small-btn delete-project-btn">Delete</button>';
+                            echo '        <div class="project-card-actions">';
+                            echo '            <button class="primary small-btn edit-project-btn">Edit</button>';
+                            echo '            <button class="danger small-btn delete-project-btn">Delete</button>';
                             echo '            <a href="tasks.php?project_id=' . $row['Project_ID'] . '" class="primary small-btn">View Tasks</a>';
                             echo '        </div>';
                             echo '    </div>';
