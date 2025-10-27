@@ -17,6 +17,13 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0"/>
     <link rel="stylesheet" href="CSS/dashboard.css">
     <link rel="stylesheet" href="CSS/project.css">
+    <style>
+        .project-card-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+    </style>
 </head>
 <body>
     <!-- Mobile Sidebar Menu Button -->

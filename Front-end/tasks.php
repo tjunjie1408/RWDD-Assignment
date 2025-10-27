@@ -37,9 +37,24 @@
     $project = $project_result->fetch_assoc();
     $project_stmt->close();
 
-    // Fetch tasks for the project
-    $task_stmt = $conn->prepare("SELECT * FROM tasks WHERE Project_ID = ? ORDER BY Task_Created_Date DESC");
-    $task_stmt->bind_param("i", $project_id);
+    // Determine if the user is an admin
+    $is_admin = isset($_SESSION['role']) && $_SESSION['role'] === 2;
+
+    // Fetch tasks based on user role
+    $sql = "SELECT t.*, f.File_ID, f.File_Name FROM tasks t LEFT JOIN files f ON t.Task_ID = f.Task_ID WHERE t.Project_ID = ?";
+    if (!$is_admin) {
+        $sql .= " AND t.User_ID = ?";
+    }
+    $sql .= " ORDER BY t.Task_Created_Date DESC";
+
+    $task_stmt = $conn->prepare($sql);
+
+    if ($is_admin) {
+        $task_stmt->bind_param("i", $project_id);
+    } else {
+        $task_stmt->bind_param("ii", $project_id, $user_id);
+    }
+
     $task_stmt->execute();
     $tasks_result = $task_stmt->get_result();
     $tasks = [];
@@ -99,28 +114,39 @@
 
         <div class="actions">
             <a href="project.php" class="primary">&larr; Back to All Projects</a>
-            <button id="newTaskBtn" class="primary">+ New Task</button>
+            <?php if ($is_admin): ?>
+                <button id="newTaskBtn" class="primary">+ New Task</button>
+            <?php endif; ?>
         </div>
 
         <div id="task-list-container" class="list-view">
             <?php if (count($tasks) > 0): ?>
                 <?php foreach ($tasks as $task): ?>
-                    <div class="task-card <?php echo ($task['Status'] === 'Done') ? 'completed' : ''; ?>" data-task-id="<?php echo $task['Task_ID']; ?>">
+                    <div class="task-card <?php echo ($task['Status'] === 'Done') ? 'completed' : ''; ?>" data-task-id="<?php echo $task['Task_ID']; ?>" data-title="<?php echo htmlspecialchars($task['Title']); ?>" data-description="<?php echo htmlspecialchars($task['Description']); ?>" data-end-date="<?php echo $task['Task_End_Time']; ?>">
                         <div class="task-card-header">
-                            <form action="Config/update_task_status.php" method="POST" class="task-status-form">
+                            <form action="Config/update_task_status.php" method="POST" class="task-status-form" onsubmit="return confirm('Are you sure you want to mark this task as complete?');">
                                 <input type="hidden" name="taskId" value="<?php echo $task['Task_ID']; ?>">
                                 <input type="hidden" name="projectId" value="<?php echo $project_id; ?>">
                                 <input type="checkbox" name="status" class="task-checkbox" <?php echo ($task['Status'] === 'Done') ? 'checked' : ''; ?> onchange="this.form.submit()">
                             </form>
                             <h4 class="task-title"><?php echo htmlspecialchars($task['Title']); ?></h4>
+                            <div>
+                                <?php if ($is_admin): ?>
+                                    <button class="primary small-btn edit-task-btn">Edit</button>
+                                    <button class="danger small-btn delete-task-btn">Delete</button>
+                                <?php endif; ?>
+                                <button class="primary small-btn view-details-btn">Details</button>
+                            </div>
                         </div>
                         <div class="task-card-body">
                             <p><strong>Due Date:</strong> <?php echo htmlspecialchars($task['Task_End_Time'] ?? 'No due date'); ?></p>
                         </div>
                         <div class="task-card-footer">
                             <div class="task-actions">
-                                <button class="btn-details">Details</button>
-                                <button class="btn-upload-file">📎</button>
+                                <button class="btn-upload-file" data-task-id="<?php echo $task['Task_ID']; ?>">📎 Upload File</button>
+                                <?php if (!empty($task['File_ID'])): ?>
+                                    <a href="Config/download_file.php?file_id=<?php echo $task['File_ID']; ?>" class="download-link">⬇ Download "<?php echo htmlspecialchars($task['File_Name']); ?>"</a>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
@@ -155,6 +181,25 @@
                     <div class="modal-actions">
                         <button type="button" id="cancelTaskBtn">Cancel</button>
                         <button type="submit" class="primary">Save Task</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- File Upload Modal -->
+        <div id="fileUploadModal" class="modal" aria-hidden="true">
+            <div class="modal-content">
+                <h3>Upload File for Task</h3>
+                <form id="fileUploadForm" action="Config/upload_file.php" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" id="uploadTaskId" name="taskId">
+                    <input type="hidden" name="projectId" value="<?php echo $project_id; ?>">
+
+                    <label for="fileInput">Select File</label>
+                    <input type="file" id="fileInput" name="file" required>
+
+                    <div class="modal-actions">
+                        <button type="button" id="cancelUploadBtn">Cancel</button>
+                        <button type="submit" class="primary">Upload</button>
                     </div>
                 </form>
             </div>

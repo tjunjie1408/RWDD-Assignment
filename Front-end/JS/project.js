@@ -39,8 +39,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const progress = project.Progress_Percent || 0;
             
             const actionButton = project.is_member
-                ? `<button class="primary small-btn view-project-btn">View Tasks</button>`
-                : `<button class="primary small-btn join-project-btn">Join Project</button>`;
+                ? `<a href="tasks.php?project_id=${project.Project_ID}" class="primary small-btn">View Tasks</a>`
+                : `<button class.primary small-btn join-project-btn">Join Project</button>`;
+
+            const projectLink = document.createElement('a');
+            projectLink.href = `tasks.php?project_id=${project.Project_ID}`;
+            projectLink.classList.add('project-card-link');
 
             projectCard.innerHTML = `
                 <div class="task-header">
@@ -56,7 +60,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     <span class="progress-text">${progress}%</span>
                 </div>
             `;
-            projectListContainer.appendChild(projectCard);
+
+            projectLink.appendChild(projectCard);
+            projectListContainer.appendChild(projectLink);
         });
 
         // addProjectActionListeners function removed as it is no longer needed.

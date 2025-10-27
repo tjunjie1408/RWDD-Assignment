@@ -8,25 +8,24 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 2) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $taskId = $_POST['taskId'];
     $title = trim($_POST['title']);
     $description = trim($_POST['description']);
     $endDate = $_POST['endDate'];
-    $assigneeId = $_POST['assigneeId'];
     $projectId = $_POST['projectId'];
-    $assignerId = $_SESSION['id'];
 
     // Validation
-    if (empty($title) || empty($endDate) || empty($assigneeId) || empty($projectId)) {
+    if (empty($title) || empty($endDate) || empty($taskId) || empty($projectId)) {
         header("location: ../tasks.php?project_id=$projectId&error=validation");
         exit;
     }
 
-    $sql = "INSERT INTO tasks (Title, Description, Task_End_Time, User_ID, Project_ID, Assigner_ID, Status) VALUES (?, ?, ?, ?, ?, ?, 'Open')";
+    $sql = "UPDATE tasks SET Title = ?, Description = ?, Task_End_Time = ? WHERE Task_ID = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssiis", $title, $description, $endDate, $assigneeId, $projectId, $assignerId);
+    $stmt->bind_param("sssi", $title, $description, $endDate, $taskId);
 
     if ($stmt->execute()) {
-        header("location: ../tasks.php?project_id=$projectId&success=task_created");
+        header("location: ../tasks.php?project_id=$projectId&success=task_updated");
     } else {
         header("location: ../tasks.php?project_id=$projectId&error=db");
     }

@@ -23,6 +23,13 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0"/>
     <link rel="stylesheet" href="CSS/dashboard.css">
     <link rel="stylesheet" href="CSS/project.css">
+    <style>
+        .project-card-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+    </style>
 </head>
 <body>
     <!-- Mobile Sidebar Menu Button -->
@@ -164,12 +171,14 @@
                     if ($result->num_rows > 0) {
                         while($row = $result->fetch_assoc()) {
                             $progress = $row['Project_Status'] === 'Completed' ? 100 : ($row['Progress_Percent'] ?? 0);
+                            echo '<a href="tasks.php?project_id=' . $row['Project_ID'] . '" class="project-card-link">';
                             echo '<div class="task-card" data-project-id="' . $row['Project_ID'] . '" data-title="' . htmlspecialchars($row['Title']) . '" data-description="' . htmlspecialchars($row['Description']) . '" data-start-date="' . $row['Project_Start_Date'] . '" data-end-date="' . $row['Project_End_Date'] . '" data-status="' . $row['Project_Status'] . '">';
                             echo '    <div class="task-header">';
                             echo '        <h4>' . htmlspecialchars($row['Title']) . '</h4>';
                             echo '        <div>';
-                            echo '            <button class="primary small-btn edit-project-btn">Edit</button>';
-                            echo '            <button class="danger small-btn delete-project-btn">Delete</button>';
+                            echo '            <button onclick="event.preventDefault(); event.stopPropagation();" class="primary small-btn edit-project-btn">Edit</button>';
+                            echo '            <button onclick="event.preventDefault(); event.stopPropagation();" class="danger small-btn delete-project-btn">Delete</button>';
+                            echo '            <a href="tasks.php?project_id=' . $row['Project_ID'] . '" class="primary small-btn">View Tasks</a>';
                             echo '        </div>';
                             echo '    </div>';
                             echo '    <p class="task-desc">' . (htmlspecialchars($row['Description']) ?: 'No description.') . '</p>';
@@ -179,6 +188,7 @@
                             echo '        <span class="progress-text">' . $progress . '%</span>';
                             echo '    </div>';
                             echo '</div>';
+                            echo '</a>';
                         }
                     } else {
                         echo '<p>No projects found. Create one to get started!</p>';
