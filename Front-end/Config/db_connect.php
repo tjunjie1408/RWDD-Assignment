@@ -2,7 +2,7 @@
 session_start();
 
 $servername = "localhost";
-$username = "www-data";
+$username = "root";
 $password = "";
 $dbname = "rwdd";
 

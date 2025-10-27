@@ -2,11 +2,10 @@
 include 'db_connect.php';
 
 // This script handles both checking the email and updating the password.
-// WARNING: This is an insecure password reset flow. It allows anyone who knows a user's email to change their password.
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    // Action 2: Update the password
+    //Update the password
     if (isset($_POST['email']) && isset($_POST['password'])) {
         $email = $_POST['email'];
         $password = $_POST['password'];
@@ -24,8 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             header("location: ../forgot_password.php?email=" . urlencode($email) . "&error=updatefailed");
             exit();
         }
-
-    // Action 1: Check if the email exists
+    //check email exists    
     } elseif (isset($_POST['check_email'])) {
         $email = $_POST['check_email'];
         header("location: ../forgot_password.php?email=" . urlencode($email));

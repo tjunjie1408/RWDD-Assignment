@@ -20,17 +20,20 @@ if (!$file) {
     die("File not found.");
 }
 
-// Security check: Ensure user is a member of the project
-$project_id = $file['Project_ID'];
-$check_stmt = $conn->prepare("SELECT Member_ID FROM project_members WHERE Project_ID = ? AND User_ID = ?");
-$check_stmt->bind_param("ii", $project_id, $user_id);
-$check_stmt->execute();
-$check_stmt->store_result();
+// Security check: Ensure user is a member of the project, unless they are an admin.
+$is_admin = isset($_SESSION['role']) && $_SESSION['role'] === 2;
+if (!$is_admin) {
+    $project_id = $file['Project_ID'];
+    $check_stmt = $conn->prepare("SELECT Member_ID FROM project_members WHERE Project_ID = ? AND User_ID = ?");
+    $check_stmt->bind_param("ii", $project_id, $user_id);
+    $check_stmt->execute();
+    $check_stmt->store_result();
 
-if ($check_stmt->num_rows === 0) {
-    die("You do not have permission to access this file.");
+    if ($check_stmt->num_rows === 0) {
+        die("You do not have permission to access this file.");
+    }
+    $check_stmt->close();
 }
-$check_stmt->close();
 
 // Serve the file for download
 $file_path = $file['File_Path'];

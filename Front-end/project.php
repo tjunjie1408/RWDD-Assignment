@@ -221,6 +221,19 @@
 
 </main>
 
+    <!-- Project Details Modal -->
+    <div id="projectDetailsModal" class="modal" aria-hidden="true">
+        <div class="modal-content">
+            <h3 id="projectDetailsTitle"></h3>
+            <p><strong>Description:</strong></p>
+            <p id="projectDetailsDescription"></p>
+            <p><strong>Dates:</strong> <span id="projectDetailsDates"></span></p>
+            <div class="modal-actions">
+                <button type="button" id="closeProjectDetailsBtn">Close</button>
+            </div>
+        </div>
+    </div>
+
     <script src="JS/sidebar.js"></script>
     <script src="JS/user_avatar.js"></script>
     <script src="JS/project.js"></script>

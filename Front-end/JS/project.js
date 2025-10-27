@@ -35,21 +35,29 @@ document.addEventListener('DOMContentLoaded', () => {
             const projectCard = document.createElement('div');
             projectCard.classList.add('task-card');
             projectCard.dataset.projectId = project.Project_ID;
+            projectCard.dataset.title = project.Title;
+            projectCard.dataset.description = project.Description;
+            projectCard.dataset.startDate = project.Project_Start_Date;
+            projectCard.dataset.endDate = project.Project_End_Date;
 
             const progress = project.Progress_Percent || 0;
             
-            const actionButton = project.is_member
-                ? `<a href="tasks.php?project_id=${project.Project_ID}" class="primary small-btn">View Tasks</a>`
-                : `<button class.primary small-btn join-project-btn">Join Project</button>`;
-
-            const projectLink = document.createElement('a');
-            projectLink.href = `tasks.php?project_id=${project.Project_ID}`;
-            projectLink.classList.add('project-card-link');
+            let actionButton;
+            let memberBadge = '';
+            if (project.is_member) {
+                actionButton = `<a href="tasks.php?project_id=${project.Project_ID}" class="primary small-btn">View Tasks</a>`;
+                memberBadge = '<span class="member-badge">You are a member</span>';
+            } else {
+                actionButton = `<button class="secondary small-btn view-details-btn">View Details</button>`;
+            }
 
             projectCard.innerHTML = `
                 <div class="task-header">
                     <h4>${project.Title}</h4>
-                    ${actionButton}
+                    <div class="header-actions">
+                        ${memberBadge}
+                        ${actionButton}
+                    </div>
                 </div>
                 <p class="task-desc">${project.Description || "No description."}</p>
                 <div class="task-footer">
@@ -60,20 +68,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     <span class="progress-text">${progress}%</span>
                 </div>
             `;
-
-            projectLink.appendChild(projectCard);
-            projectListContainer.appendChild(projectLink);
+            projectListContainer.appendChild(projectCard);
         });
 
-        // addProjectActionListeners function removed as it is no longer needed.
-
-        document.querySelectorAll('.view-project-btn').forEach(button => {
+        // Add event listeners for the new "View Details" buttons
+        document.querySelectorAll('.view-details-btn').forEach(button => {
             button.addEventListener('click', (e) => {
-                e.stopPropagation();
                 const card = e.target.closest('.task-card');
-                const projectId = card.dataset.projectId;
-                // Redirect to the tasks page for this project
-                window.location.href = `tasks.php?project_id=${projectId}`;
+                showProjectDetailsModal(card);
             });
         });
     }
@@ -89,6 +91,23 @@ document.addEventListener('DOMContentLoaded', () => {
             renderProjects(filteredProjects);
         });
     }
+
+    // --- Modal Handling for Project Details ---
+    const projectDetailsModal = document.getElementById('projectDetailsModal');
+    const closeProjectDetailsBtn = document.getElementById('closeProjectDetailsBtn');
+
+    function showProjectDetailsModal(card) {
+        document.getElementById('projectDetailsTitle').textContent = card.dataset.title;
+        document.getElementById('projectDetailsDescription').textContent = card.dataset.description;
+        document.getElementById('projectDetailsDates').textContent = `${card.dataset.startDate} to ${card.dataset.endDate}`;
+        projectDetailsModal.style.display = 'flex';
+    }
+
+    function hideProjectDetailsModal() {
+        projectDetailsModal.style.display = 'none';
+    }
+
+    closeProjectDetailsBtn.addEventListener('click', hideProjectDetailsModal);
 
     // --- Initial Load ---
     fetchAndRenderProjects();

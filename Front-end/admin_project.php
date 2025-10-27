@@ -215,6 +215,24 @@
                 <label for="projectEndDate">End Date</label>
                 <input id="projectEndDate" type="date" name="endDate" required>
                 
+                <div class="form-group">
+                    <label>Add Members</label>
+                    <div class="user-checkbox-container">
+                        <?php
+                            $users_sql = "SELECT user_ID, username FROM users WHERE role = 1"; // Fetch only non-admin users
+                            $users_result = $conn->query($users_sql);
+                            if ($users_result->num_rows > 0) {
+                                while($user = $users_result->fetch_assoc()) {
+                                    echo '<div><input type="checkbox" name="members[]" value="' . $user['user_ID'] . '" id="user_' . $user['user_ID'] . '">';
+                                    echo '<label for="user_' . $user['user_ID'] . '">' . htmlspecialchars($user['username']) . '</label></div>';
+                                }
+                            } else {
+                                echo '<p>No users available to add.</p>';
+                            }
+                        ?>
+                    </div>
+                </div>
+
                 <div class="modal-actions">
                     <button type="button" id="cancelProjectBtn">Cancel</button>
                     <button type="submit" class="primary">Create Project</button>

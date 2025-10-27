@@ -15,33 +15,38 @@
         exit;
     }
 
-    // Security Check: Ensure the user is a member of this project.
+    // Determine if the user is an admin
+    $is_admin = isset($_SESSION['role']) && $_SESSION['role'] === 2;
     $user_id = $_SESSION['id'];
-    $check_stmt = $conn->prepare("SELECT Member_ID FROM project_members WHERE Project_ID = ? AND User_ID = ?");
-    $check_stmt->bind_param("ii", $project_id, $user_id);
-    $check_stmt->execute();
-    $check_stmt->store_result();
 
-    if ($check_stmt->num_rows === 0) {
-        // User is not a member, redirect them.
-        header("location: project.php?error=not_a_member");
-        exit;
+    // Security Check: Ensure the user is a member of this project, unless they are an admin.
+    if (!$is_admin) {
+        $check_stmt = $conn->prepare("SELECT Member_ID FROM project_members WHERE Project_ID = ? AND User_ID = ?");
+        $check_stmt->bind_param("ii", $project_id, $user_id);
+        $check_stmt->execute();
+        $check_stmt->store_result();
+
+        if ($check_stmt->num_rows === 0) {
+            // User is not a member, redirect them.
+            header("location: project.php?error=not_a_member");
+            exit;
+        }
+        $check_stmt->close();
     }
-    $check_stmt->close();
 
     // Fetch project details to display on the page
-    $project_stmt = $conn->prepare("SELECT Title, Description FROM projects WHERE Project_ID = ?");
+    $project_stmt = $conn->prepare("SELECT * FROM projects WHERE Project_ID = ?");
     $project_stmt->bind_param("i", $project_id);
     $project_stmt->execute();
     $project_result = $project_stmt->get_result();
     $project = $project_result->fetch_assoc();
     $project_stmt->close();
 
-    // Determine if the user is an admin
-    $is_admin = isset($_SESSION['role']) && $_SESSION['role'] === 2;
-
     // Fetch tasks based on user role
-    $sql = "SELECT t.*, f.File_ID, f.File_Name FROM tasks t LEFT JOIN files f ON t.Task_ID = f.Task_ID WHERE t.Project_ID = ?";
+    $sql = "SELECT t.*, f.File_ID, f.File_Name, u.username as assigned_to FROM tasks t
+            LEFT JOIN files f ON t.Task_ID = f.Task_ID
+            LEFT JOIN users u ON t.User_ID = u.user_ID
+            WHERE t.Project_ID = ?";
     if (!$is_admin) {
         $sql .= " AND t.User_ID = ?";
     }
@@ -108,8 +113,20 @@
 
     <main class="project-content">
         <div class="project-header-container card">
-            <h2><?php echo htmlspecialchars($project['Title']); ?></h2>
-            <p><?php echo htmlspecialchars($project['Description']); ?></p>
+            <div class="project-header-details">
+                <div class="project-title-status">
+                    <h2><?php echo htmlspecialchars($project['Title']); ?></h2>
+                    <span class="status-badge <?php echo strtolower(str_replace(' ', '-', $project['Project_Status'])); ?>"><?php echo htmlspecialchars($project['Project_Status']); ?></span>
+                </div>
+                <p class="project-dates">📅 <?php echo $project['Project_Start_Date']; ?> to <?php echo $project['Project_End_Date']; ?></p>
+                <p class="project-description"><?php echo htmlspecialchars($project['Description']); ?></p>
+            </div>
+            <div class="project-header-progress">
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" style="width: <?php echo $project['Progress_Percent']; ?>%;"></div>
+                </div>
+                <span class="progress-percentage"><?php echo $project['Progress_Percent']; ?>% Complete</span>
+            </div>
         </div>
 
         <div class="actions">
@@ -130,22 +147,28 @@
                                 <input type="checkbox" name="status" class="task-checkbox" <?php echo ($task['Status'] === 'Done') ? 'checked' : ''; ?> onchange="this.form.submit()">
                             </form>
                             <h4 class="task-title"><?php echo htmlspecialchars($task['Title']); ?></h4>
-                            <div>
+                            <div class="task-actions-header">
                                 <?php if ($is_admin): ?>
-                                    <button class="primary small-btn edit-task-btn">Edit</button>
-                                    <button class="danger small-btn delete-task-btn">Delete</button>
+                                    <button class="icon-btn edit-task-btn" title="Edit Task"><span class="material-symbols-rounded">edit</span></button>
+                                    <button class="icon-btn delete-task-btn" title="Delete Task"><span class="material-symbols-rounded">delete</span></button>
                                 <?php endif; ?>
-                                <button class="primary small-btn view-details-btn">Details</button>
+                                <button class="icon-btn view-details-btn" title="View Details"><span class="material-symbols-rounded">visibility</span></button>
                             </div>
                         </div>
                         <div class="task-card-body">
-                            <p><strong>Due Date:</strong> <?php echo htmlspecialchars($task['Task_End_Time'] ?? 'No due date'); ?></p>
+                            <div class="task-meta">
+                                <span class="task-assignee">Assigned to: <?php echo htmlspecialchars($task['assigned_to'] ?? 'N/A'); ?></span>
+                                <span class="task-due-date">Due: <?php echo htmlspecialchars($task['Task_End_Time'] ?? 'No due date'); ?></span>
+                            </div>
+                            <div class="task-status-container">
+                                <span class="status-tag <?php echo strtolower(str_replace(' ', '-', $task['Status'])); ?>"><?php echo htmlspecialchars($task['Status']); ?></span>
+                            </div>
                         </div>
                         <div class="task-card-footer">
                             <div class="task-actions">
-                                <button class="btn-upload-file" data-task-id="<?php echo $task['Task_ID']; ?>">📎 Upload File</button>
+                                <button class="btn-upload-file" data-task-id="<?php echo $task['Task_ID']; ?>"><span class="material-symbols-rounded">attach_file</span> Upload</button>
                                 <?php if (!empty($task['File_ID'])): ?>
-                                    <a href="Config/download_file.php?file_id=<?php echo $task['File_ID']; ?>" class="download-link">⬇ Download "<?php echo htmlspecialchars($task['File_Name']); ?>"</a>
+                                    <a href="Config/download_file.php?file_id=<?php echo $task['File_ID']; ?>" class="download-link"><span class="material-symbols-rounded">download</span> Download File</a>
                                 <?php endif; ?>
                             </div>
                         </div>
