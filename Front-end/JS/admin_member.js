@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Function to fetch and display members
     async function fetchAndDisplayMembers() {
         try {
-            const response = await fetch('Config/admin_fetch_members.php');
+            const response = await fetch('Config/get_all_users.php');
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -62,8 +62,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const memberCard = document.createElement('div');
             memberCard.classList.add('member-card');
             memberCard.dataset.memberId = member.user_ID;
+            const avatarSrc = member.avatar_url ? member.avatar_url : 'https://via.placeholder.com/50';
             memberCard.innerHTML = `
-                <img src="${member.avatar}" alt="${member.username}" class="member-avatar">
+                <img src="${avatarSrc}" alt="${member.username}" class="member-avatar">
                 <div class="member-info">
                     <h4>${member.username}</h4>
                     <p>${member.position} at ${member.company}</p>

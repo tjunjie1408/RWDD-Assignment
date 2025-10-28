@@ -1,97 +1,81 @@
-document.addEventListener("DOMContentLoaded", () => {
-  // Retrieve data from localStorage
-  const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-  const goals = JSON.parse(localStorage.getItem("calendarEvents")) || [];
-
-  // ====== Calculate Task & Project Stats ======
-  const totalTasks = tasks.length;
-  const completedTasks = tasks.filter(t => t.progress >= 100).length;
-  const overdueTasks = tasks.filter(t => t.progress < 100 && new Date(t.dueDate) < new Date()).length;
-  const inProgressTasks = totalTasks - completedTasks - overdueTasks;
-  const averageProgress = totalTasks
-    ? Math.round(tasks.reduce((sum, t) => sum + t.progress, 0) / totalTasks)
-    : 0;
-
-  // ====== Calculate Goal Stats ======
-  const goalGroups = {};
-  goals.forEach(g => {
-    if (!g.goalId) return;
-    if (!goalGroups[g.goalId]) goalGroups[g.goalId] = [];
-    goalGroups[g.goalId].push(g);
-  });
-
-  const totalGoals = Object.keys(goalGroups).length;
-  let completedGoals = 0;
-  Object.values(goalGroups).forEach(list => {
-    if (list.every(g => g.isCompleted)) completedGoals++;
-  });
-
-  // ====== Insert Charts ======
-  const chartContainers = document.querySelectorAll(".analysis-chart");
-
-  // 1️⃣ Project Completion Rate
-  const completionCanvas = document.createElement("canvas");
-  chartContainers[0].appendChild(completionCanvas);
-
-  new Chart(completionCanvas, {
-    type: "doughnut",
-    data: {
-      labels: ["Completed", "In Progress", "Overdue"],
-      datasets: [
-        {
-          data: [completedTasks, inProgressTasks, overdueTasks],
-          backgroundColor: ["#22c55e", "#fbbf24", "#ef4444"],
-          borderWidth: 1,
+document.addEventListener('DOMContentLoaded', () => {
+    // --- Project Completion Chart ---
+    const projectCtx = document.getElementById('projectChart').getContext('2d');
+    if (window.projectChart instanceof Chart) {
+        window.projectChart.destroy();
+    }
+    window.projectChart = new Chart(projectCtx, {
+        type: 'pie',
+        data: {
+            labels: projectLabels.map(label => label.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())),
+            datasets: [{
+                label: 'Project Status',
+                data: projectData,
+                backgroundColor: [
+                    'rgba(75, 192, 192, 0.7)', // Completed
+                    'rgba(54, 162, 235, 0.7)', // In Progress
+                    'rgba(201, 203, 207, 0.7)', // Not Started
+                    'rgba(255, 205, 86, 0.7)'  // On Hold
+                ],
+                borderColor: [
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(201, 203, 207, 1)',
+                    'rgba(255, 205, 86, 1)'
+                ],
+                borderWidth: 1
+            }]
         },
-      ],
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        title: { display: true, text: `Average Progress: ${averageProgress}%`, font: { size: 14 } },
-        legend: { position: "bottom" },
-      },
-      cutout: "70%",
-    },
-  });
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Distribution of Project Statuses'
+                }
+            }
+        }
+    });
 
-  // 2️⃣ Task Distribution (Goals vs Tasks)
-  const distributionCanvas = document.createElement("canvas");
-  chartContainers[1].appendChild(distributionCanvas);
-
-  new Chart(distributionCanvas, {
-    type: "bar",
-    data: {
-      labels: ["Total Tasks", "Completed Tasks", "Overdue Tasks", "Total Goals", "Completed Goals"],
-      datasets: [
-        {
-          label: "Count",
-          data: [totalTasks, completedTasks, overdueTasks, totalGoals, completedGoals],
-          backgroundColor: ["#3b82f6", "#22c55e", "#ef4444", "#8b5cf6", "#14b8a6"],
+    // --- Task Distribution Chart ---
+    const taskCtx = document.getElementById('taskChart').getContext('2d');
+    if (window.taskChart instanceof Chart) {
+        window.taskChart.destroy();
+    }
+    window.taskChart = new Chart(taskCtx, {
+        type: 'doughnut',
+        data: {
+            labels: taskLabels.map(label => label.charAt(0).toUpperCase() + label.slice(1)),
+            datasets: [{
+                label: 'Task Status',
+                data: taskData,
+                backgroundColor: [
+                    'rgba(75, 192, 192, 0.7)', // Done
+                    'rgba(255, 99, 132, 0.7)'  // Open
+                ],
+                borderColor: [
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(255, 99, 132, 1)'
+                ],
+                borderWidth: 1
+            }]
         },
-      ],
-    },
-    options: {
-      responsive: true,
-      scales: {
-        y: { beginAtZero: true, ticks: { stepSize: 1 } },
-      },
-      plugins: {
-        legend: { display: false },
-        title: { display: true, text: "Task & Goal Distribution", font: { size: 14 } },
-      },
-    },
-  });
-
-  // ====== Optional Console Log for Debugging ======
-  console.log("✅ Analysis Data Loaded");
-  console.log({
-    totalTasks,
-    completedTasks,
-    overdueTasks,
-    inProgressTasks,
-    averageProgress,
-    totalGoals,
-    completedGoals,
-  });
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Distribution of Task Statuses'
+                }
+            }
+        }
+    });
 });

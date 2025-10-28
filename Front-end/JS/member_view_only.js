@@ -10,10 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Function to fetch and display members
     async function fetchAndDisplayMembers() {
         try {
-            // This path assumes a PHP script to fetch members for regular users
-            // For simplicity, we'll assume it fetches all Role_ID=1 users.
-            // but without admin-specific data or checks.
-            const response = await fetch('Config/get_members_for_view.php'); // A new PHP script for regular users
+            const response = await fetch('Config/get_all_users.php');
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -44,8 +41,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const memberCard = document.createElement('div');
             memberCard.classList.add('member-card');
             memberCard.dataset.memberId = member.user_ID;
+            const avatarSrc = member.avatar_url ? member.avatar_url : 'https://via.placeholder.com/50';
             memberCard.innerHTML = `
-                <img src="https://via.placeholder.com/50" alt="${member.username}" class="member-avatar">
+                <img src="${avatarSrc}" alt="${member.username}" class="member-avatar">
                 <div class="member-info">
                     <h4>${member.username}</h4>
                     <p>${member.position} at ${member.company}</p>
@@ -58,28 +56,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to show member details in a modal
     async function showMemberDetails(memberId) {
-        try {
-            const response = await fetch(`Config/get_member_details_for_view.php?id=${memberId}`); // New PHP script
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            const data = await response.json();
+        // Find the member data from the already fetched allMembers array
+        const member = allMembers.find(m => m.user_ID == memberId);
 
-            if (data.success) {
-                const member = data.member;
-                memberDetailsDiv.innerHTML = `
-                    <p><strong>Username:</strong> ${member.username}</p>
-                    <p><strong>Email:</strong> ${member.email}</p>
-                    <p><strong>Company:</strong> ${member.company}</p>
-                    <p><strong>Position:</strong> ${member.position}</p>
-                `;
-                viewMemberModal.style.display = 'block';
-            } else {
-                alert('Failed to fetch member details: ' + data.error);
-            }
-        } catch (error) {
-            console.error('Error fetching member details:', error);
-            alert('An error occurred while fetching member details.');
+        if (member) {
+            memberDetailsDiv.innerHTML = `
+                <p><strong>Username:</strong> ${member.username}</p>
+                <p><strong>Email:</strong> ${member.email}</p>
+                <p><strong>Company:</strong> ${member.company}</p>
+                <p><strong>Position:</strong> ${member.position}</p>
+            `;
+            viewMemberModal.style.display = 'block';
+        } else {
+            alert('Could not find member details.');
         }
     }
 
