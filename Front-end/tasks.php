@@ -130,7 +130,7 @@
         </div>
 
         <div class="actions">
-            <a href="project.php" class="primary">&larr; Back to All Projects</a>
+            <a href="<?php echo $is_admin ? 'admin_project.php' : 'project.php'; ?>" class="primary">&larr; Back to All Projects</a>
             <?php if ($is_admin): ?>
                 <button id="newTaskBtn" class="primary">+ New Task</button>
             <?php endif; ?>
