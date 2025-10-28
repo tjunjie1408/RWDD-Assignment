@@ -19,9 +19,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit;
     }
 
-    // Update task status to 'Done'
-    $update_stmt = $conn->prepare("UPDATE tasks SET Status = 'Done' WHERE Task_ID = ?");
-    $update_stmt->bind_param("i", $taskId);
+    // Check current status and toggle it
+    $status_stmt = $conn->prepare("SELECT Status FROM tasks WHERE Task_ID = ?");
+    $status_stmt->bind_param("i", $taskId);
+    $status_stmt->execute();
+    $status_stmt->bind_result($current_status);
+    $status_stmt->fetch();
+    $status_stmt->close();
+
+    $new_status = ($current_status === 'Done') ? 'Open' : 'Done';
+
+    // Update task status
+    $update_stmt = $conn->prepare("UPDATE tasks SET Status = ? WHERE Task_ID = ?");
+    $update_stmt->bind_param("si", $new_status, $taskId);
 
     if ($update_stmt->execute()) {
         // Recalculate project progress
@@ -33,10 +43,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $total_tasks = $progress_result['total_tasks'];
         $completed_tasks = $progress_result['completed_tasks'];
 
-        $progress_percent = ($total_tasks > 0) ? ($completed_tasks / $total_tasks) * 100 : 0;
+        $progress_percent = ($total_tasks > 0) ? round(($completed_tasks / $total_tasks) * 100) : 0;
 
         $update_project_stmt = $conn->prepare("UPDATE projects SET Progress_Percent = ? WHERE Project_ID = ?");
-        $update_project_stmt->bind_param("di", $progress_percent, $projectId);
+        $update_project_stmt->bind_param("ii", $progress_percent, $projectId);
         $update_project_stmt->execute();
         $update_project_stmt->close();
 

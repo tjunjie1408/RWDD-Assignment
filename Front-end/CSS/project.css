@@ -754,6 +754,13 @@
 .task-meta span {
     display: block;
 }
+
+.task-description-display {
+    margin-top: 8px;
+    font-size: 14px;
+    color: #6b7280;
+}
+
 .task-assignee {
     font-weight: 500;
 }

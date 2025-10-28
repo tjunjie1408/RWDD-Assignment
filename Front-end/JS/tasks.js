@@ -87,18 +87,23 @@ document.addEventListener('DOMContentLoaded', () => {
         const target = e.target;
         const card = target.closest('.task-card');
 
-        if (target.classList.contains('edit-task-btn')) {
+        // Handle clicks on the icon buttons (and the span icons within them)
+        const editBtn = target.closest('.edit-task-btn');
+        const deleteBtn = target.closest('.delete-task-btn');
+        const uploadBtn = target.closest('.btn-upload-file');
+
+        if (editBtn) {
             showEditTaskModal(card);
         }
 
-        if (target.classList.contains('delete-task-btn')) {
+        if (deleteBtn) {
             if (confirm('Are you sure you want to delete this task?')) {
                 const taskId = card.dataset.taskId;
                 window.location.href = `Config/delete_task.php?task_id=${taskId}&project_id=${projectId}`;
             }
         }
 
-        if (target.classList.contains('btn-upload-file')) {
+        if (uploadBtn) {
             const taskId = card.dataset.taskId;
             showUploadModal(taskId);
         }

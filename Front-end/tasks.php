@@ -129,6 +129,12 @@
             </div>
         </div>
 
+    <?php if(isset($_GET['error']) && $_GET['error'] === 'permissions'): ?>
+        <div class="message error">
+            <strong>File Upload Failed:</strong> The server does not have permission to write to the 'uploads' directory. Please grant write permissions to the web server user (e.g., 'www-data', or by making the folder world-writable as a temporary fix) and try again.
+        </div>
+    <?php endif; ?>
+
         <div class="actions">
             <a href="<?php echo $is_admin ? 'admin_project.php' : 'project.php'; ?>" class="primary">&larr; Back to All Projects</a>
             <?php if ($is_admin): ?>
@@ -152,10 +158,10 @@
                                     <button class="icon-btn edit-task-btn" title="Edit Task"><span class="material-symbols-rounded">edit</span></button>
                                     <button class="icon-btn delete-task-btn" title="Delete Task"><span class="material-symbols-rounded">delete</span></button>
                                 <?php endif; ?>
-                                <button class="icon-btn view-details-btn" title="View Details"><span class="material-symbols-rounded">visibility</span></button>
                             </div>
                         </div>
                         <div class="task-card-body">
+                            <p class="task-description-display"><?php echo htmlspecialchars($task['Description'] ?: 'No description provided.'); ?></p>
                             <div class="task-meta">
                                 <span class="task-assignee">Assigned to: <?php echo htmlspecialchars($task['assigned_to'] ?? 'N/A'); ?></span>
                                 <span class="task-due-date">Due: <?php echo htmlspecialchars($task['Task_End_Time'] ?? 'No due date'); ?></span>

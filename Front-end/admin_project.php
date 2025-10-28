@@ -160,7 +160,7 @@
                 <h2>All Projects</h2>
                 <div class="project-actions">
                     <input id="searchInput" type="text" placeholder="Search projects...">
-                    <button id="newProjectBtn" class="primary">+ New Project</button>
+                    <button id="newProjectBtn" class="primary" onclick="document.getElementById('projectModal').classList.add('show')">+ New Project</button>
                 </div>
             </div>
             <div id="projectList">
@@ -173,10 +173,6 @@
                             $progress = $row['Project_Status'] === 'Completed' ? 100 : ($row['Progress_Percent'] ?? 0);
                             echo '<div class="task-card" data-project-id="' . $row['Project_ID'] . '" data-title="' . htmlspecialchars($row['Title']) . '" data-description="' . htmlspecialchars($row['Description']) . '" data-start-date="' . $row['Project_Start_Date'] . '" data-end-date="' . $row['Project_End_Date'] . '" data-status="' . $row['Project_Status'] . '">';
                             echo '    <div class="task-header">';
-                            echo '        <h4>' . htmlspecialchars($row['Title']) . '</h4>';
-                            echo '        <div class="project-card-actions">';
-                            echo '            <button class="primary small-btn edit-project-btn">Edit</button>';
-                            echo '            <button class="danger small-btn delete-project-btn">Delete</button>';
                             echo '        <h4><a href="tasks.php?project_id=' . $row['Project_ID'] . '" class="project-title-link">' . htmlspecialchars($row['Title']) . '</a></h4>';
                             echo '        <div class="project-card-actions">';
                             echo '            <button class="primary small-btn edit-project-btn">Edit</button>';
@@ -221,26 +217,7 @@
                     <label>Add Members</label>
                     <div class="user-checkbox-container">
                         <?php
-                            $users_sql = "SELECT user_ID, username FROM users WHERE role = 1"; // Fetch only non-admin users
-                            $users_result = $conn->query($users_sql);
-                            if ($users_result->num_rows > 0) {
-                                while($user = $users_result->fetch_assoc()) {
-                                    echo '<div><input type="checkbox" name="members[]" value="' . $user['user_ID'] . '" id="user_' . $user['user_ID'] . '">';
-                                    echo '<label for="user_' . $user['user_ID'] . '">' . htmlspecialchars($user['username']) . '</label></div>';
-                                }
-                            } else {
-                                echo '<p>No users available to add.</p>';
-                            }
-                        ?>
-                    </div>
-                </div>
-
-                
-                <div class="form-group">
-                    <label>Add Members</label>
-                    <div class="user-checkbox-container">
-                        <?php
-                            $users_sql = "SELECT user_ID, username FROM users WHERE role = 1"; // Fetch only non-admin users
+                            $users_sql = "SELECT user_ID, username FROM users WHERE Role_ID = 1"; // Fetch only non-admin users
                             $users_result = $conn->query($users_sql);
                             if ($users_result->num_rows > 0) {
                                 while($user = $users_result->fetch_assoc()) {

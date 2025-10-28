@@ -148,30 +148,6 @@
         </select>
     </div>
 
-        <!-- Kanban View -->
-        <div id="kanbanView" class="kanban-view">
-            <div class="kanban-columns">
-                <div class="kanban-column">
-                    <div class="kanban-header">
-                        <span class="kanban-title">In Progress</span>
-                        <span id="inProgressCount" class="kanban-count">0</span>
-                    </div>
-                </div>
-                <div class="kanban-column">
-                    <div class="kanban-header">
-                        <span class="kanban-title">Completed</span>
-                        <span id="completedCount" class="kanban-count">0</span>
-                </div>
-                </div>
-                <div class="kanban-column">
-                    <div class="kanban-header">
-                        <span class="kanban-title">Overdue</span>
-                        <span id="overdueCount" class="kanban-count">0</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <!-- List View -->
         <div id="listView" class="list-view">
             <section class="card">
@@ -184,7 +160,6 @@
             </section>
         </div>
     </main>
-
 
 
     <!-- Task Detail Modal -->

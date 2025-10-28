@@ -9,7 +9,7 @@ if (!$file_id) {
 }
 
 // Get file info
-$stmt = $conn->prepare("SELECT f.File_Name, f.File_Path, t.Project_ID FROM files f JOIN tasks t ON f.Task_ID = t.Task_ID WHERE f.File_ID = ?");
+$stmt = $conn->prepare("SELECT f.File_Name, f.File_URL, t.Project_ID FROM files f JOIN tasks t ON f.Task_ID = t.Task_ID WHERE f.File_ID = ?");
 $stmt->bind_param("i", $file_id);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -36,7 +36,7 @@ if (!$is_admin) {
 }
 
 // Serve the file for download
-$file_path = $file['File_Path'];
+$file_path = $file['File_URL'];
 if (file_exists($file_path)) {
     header('Content-Description: File Transfer');
     header('Content-Type: application/octet-stream');

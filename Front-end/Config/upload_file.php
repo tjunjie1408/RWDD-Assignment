@@ -24,9 +24,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
-            $sql = "INSERT INTO files (File_Name, File_Path, File_Type, Task_ID, User_ID) VALUES (?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO files (File_Name, File_URL, File_Type, Task_ID, Project_ID, User_ID) VALUES (?, ?, ?, ?, ?, ?)";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param("sssis", $safe_file_name, $target_file, $file_type, $taskId, $userId);
+            $stmt->bind_param("sssiii", $safe_file_name, $target_file, $file_type, $taskId, $projectId, $userId);
 
             if ($stmt->execute()) {
                 header("location: ../tasks.php?project_id=$projectId&success=file_uploaded");
