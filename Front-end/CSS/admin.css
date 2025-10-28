@@ -73,3 +73,10 @@
   color: #4e73df;
   text-decoration: none;
 }
+
+@media (max-width: 480px) {
+  .member-input-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
