@@ -113,7 +113,7 @@
         <div class="header-right">
             <div class="username" id="username">
                 <p class="hello">
-                    Hello, Admin <?php echo htmlspecialchars($_SESSION['username']); ?>
+                    Hello, <?php echo htmlspecialchars($_SESSION['username']); ?>
                 </p>
             </div>
             <a href="profile.php">
