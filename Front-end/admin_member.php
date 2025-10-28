@@ -88,7 +88,7 @@
             <!-- Secondary Bottom Nav -->
             <ul class="nav-list secondary-nav">
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="faq.php" class="nav-link">
                         <span class="material-symbols-rounded">help</span>
                         <span class="nav-label">Support</span>
                     </a>

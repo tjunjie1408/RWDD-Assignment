@@ -21,7 +21,7 @@
                 <li class="nav-item"><a href="#about" class="nav-link">About</a></li>
                 <li class="nav-item"><a href="#objective" class="nav-link">Objective</a></li>
                 <li class="nav-item"><a href="#product" class="nav-link">Product</a></li>
-                <li class="nav-item"><a href="#support" class="nav-link">Support</a></li>
+                <li class="nav-item"><a href="faq.php" class="nav-link">Support</a></li>
             </ul>
             <div class="header-actions">
                 <a href="signup.php" class="login-btn">Log in</a>
@@ -48,7 +48,7 @@
                     <p>TaskFlow was born from the idea that productivity software should be powerful, yet simple to use. We believe in continuous improvement and work closely with our users to deliver a product that truly meets their needs.</p>
                 </div>
                 <div class="about-image">
-                    <img src="Pictures/pic1.png" alt="Team working together">
+                    <img src="Pictures/dashboard.png" alt="Team working together">
                 </div>
             </div>
         </section>
@@ -75,28 +75,28 @@
                 </div>
                 <div class="product-grid">
                     <div class="product-card animated-card">
-                        <img src="Pictures/product1.png" alt="Product Screenshot 1" class="product-image">
+                        <img src="Pictures/project.png" alt="Product Screenshot 1" class="product-image">
                         <div class="product-content">
                             <h3>Visual Task Boards</h3>
                             <p>Organize your work visually with our drag-and-drop Kanban boards. See project progress at a glance and identify bottlenecks before they happen.</p>
                         </div>
                     </div>
                     <div class="product-card animated-card">
-                        <img src="Pictures/product1.png" alt="Product Screenshot 2" class="product-image">
+                        <img src="Pictures/analysis.png" alt="Product Screenshot 2" class="product-image">
                         <div class="product-content">
                             <h3>Insightful Analytics</h3>
                             <p>Gain valuable insights into your team's performance with our powerful analytics dashboard. Track time, monitor progress, and make data-driven decisions.</p>
                         </div>
                     </div>
                     <div class="product-card animated-card">
-                        <img src="Pictures/product1.png" alt="Product Screenshot 3" class="product-image">
+                        <img src="Pictures/member.png" alt="Product Screenshot 3" class="product-image">
                         <div class="product-content">
                             <h3>Team Collaboration</h3>
                             <p>Communicate with your team in real-time, share files, and keep everyone on the same page with integrated messaging and notifications.</p>
                         </div>
                     </div>
                     <div class="product-card animated-card">
-                        <img src="Pictures/product1.png" alt="Product Screenshot 4" class="product-image">
+                        <img src="Pictures/goal.png" alt="Product Screenshot 4" class="product-image">
                         <div class="product-content">
                             <h3>Goal Tracking</h3>
                             <p>Set, track, and achieve your goals with our goal management features. Align your team's efforts and celebrate your successes together.</p>

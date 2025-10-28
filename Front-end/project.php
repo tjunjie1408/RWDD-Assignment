@@ -103,7 +103,7 @@
             <!-- Secondary Bottom Nav -->
             <ul class="nav-list secondary-nav">
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="faq.php" class="nav-link">
                         <span class="material-symbols-rounded">help</span>
                         <span class="nav-label">Support</span>
                     </a>
@@ -155,7 +155,7 @@
                             $card_link = $is_member ? 'href="tasks.php?project_id=' . $row['Project_ID'] . '"' : 'style="cursor:pointer;" class="project-details-trigger"';
 
                             echo '<div class="task-card" data-project-id="' . $row['Project_ID'] . '" data-title="' . htmlspecialchars($row['Title']) . '" data-description="' . htmlspecialchars($row['Description']) . '" data-start-date="' . $row['Project_Start_Date'] . '" data-end-date="' . $row['Project_End_Date'] . '">';
-                            echo '    <a ' . $card_link . '>';
+                            echo '    <a ' . $card_link . ' style="text-decoration: none;">';
                             echo '        <div class="task-header">';
                             echo '            <h4>' . htmlspecialchars($row['Title']) . '</h4>';
                             if ($is_member) {

@@ -1,4 +1,4 @@
-/* ====== 主内容区 ====== */
+/* ====== Main Content Area ====== */
 .message {
     padding: 15px;
     margin-bottom: 20px;
@@ -29,7 +29,7 @@
     transition: margin-left 0.3s ease;
 }
 
-/* ====== Actions 区域 ====== */
+/* ====== Actions Area ====== */
 .actions {
   display: flex;
   justify-content: space-between;
@@ -79,7 +79,7 @@
   background: #dc2626; /* red-600 */
 }
 
-/* ====== Filter 区域 ====== */
+/* ====== Filter Area ====== */
 .filter-group {
   margin-bottom: 20px;
   display: flex;
@@ -205,42 +205,6 @@
   font-weight: 500;
 }
 
-/* ====== Kanban View ====== */
-.kanban-view {
-  margin-top: 24px;
-}
-
-.kanban-columns {
-  display: flex;
-  gap: 16px;
-}
-
-.kanban-column {
-  flex: 1;
-  background: #f9fafb;
-  border-radius: 10px;
-  padding: 12px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.kanban-header {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  font-weight: 600;
-  margin-bottom: 12px;
-}
-
-.kanban-count {
-  background: #4f46e5;
-  color: white;
-  border-radius: 50%;
-  padding: 4px 10px;
-  font-size: 13px;
-}
-
 /* ====== Modal ====== */
 .modal {
   position: fixed;
@@ -319,11 +283,11 @@
 
 @media (max-width: 1024px) {
     .project-content {
-        margin-left: 0; /* 小屏幕时内容自适应 */
+        margin-left: 0; /* Content adapts to smaller screens */
     }
 
     .search input {
-        width: 400px; /* 小屏幕时搜索框自适应 */
+        width: 400px; /* Search box adapts to small screens */
     }
 
     .list-view .card {
@@ -334,18 +298,14 @@
 
 @media (max-width: 600px) {
     .search input {
-        width: 100%; /* 超小屏幕时搜索框全宽 */
+        width: 100%; /* Search box adapts to extra small screens */
     }
 
     .primary {
-        width: 20%; /* 超小屏幕时按钮全宽 */
+        width: 20%; /* Button adapts to extra small screens */
         height: 40px;
         font-size: 7px;
         text-align: center;
-    }
-
-    .kanban-columns {
-        flex-direction: column; /* Kanban 列垂直排列 */
     }
 }
 
@@ -400,7 +360,7 @@
   color: #111827;
 }
 
-/* 内容区域 */
+/* Content Area */
 .task-detail {
   font-size: 14px;
   line-height: 1.6;
@@ -434,7 +394,7 @@
   display: inline-block;
 }
 
-/* ========= 通用弹窗背景 ========= */
+/* ========= Modal Background ========= */
 .modal {
   position: fixed;
   inset: 0;
@@ -450,7 +410,7 @@
   animation: fadeIn 0.25s ease;
 }
 
-/* ========= 弹窗容器 ========= */
+/* ========= Modal Container ========= */
 .modal-content {
   background: #fff;
   border-radius: 12px;
@@ -471,7 +431,7 @@
   padding-bottom: 10px;
 }
 
-/* ========= Task 信息部分 ========= */
+/* ========= Task Details Section ========= */
 .modal-content p {
   margin: 8px 0;
   font-size: 14px;
@@ -492,7 +452,7 @@
   border-radius: 8px;
 }
 
-/* ========= 提交表单部分 ========= */
+/* ========= Submission Section ========= */
 .submission-section {
   margin-top: 20px;
   padding-top: 15px;
@@ -538,7 +498,7 @@
   background: #1e40af;
 }
 
-/* ========= 底部关闭按钮 ========= */
+/* ========= Modal Actions ========= */
 .modal-actions {
   text-align: right;
   margin-top: 16px;

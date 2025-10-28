@@ -49,7 +49,7 @@
                 <li class="nav-item"><a href="goal.php" class="nav-link active"><span class="material-symbols-rounded">task_alt</span><span class="nav-label">Goal</span></a></li>
             </ul>
              <ul class="nav-list secondary-nav">
-                <li class="nav-item"><a href="#" class="nav-link"><span class="material-symbols-rounded">help</span><span class="nav-label">Support</span></a></li>
+                <li class="nav-item"><a href="faq.php" class="nav-link"><span class="material-symbols-rounded">help</span><span class="nav-label">Support</span></a></li>
                 <li class="nav-item"><a href="Config/logout.php" class="nav-link"><span class="material-symbols-rounded">logout</span><span class="nav-label">Sign Out</span></a></li>
             </ul>
         </nav>

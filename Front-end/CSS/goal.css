@@ -2,25 +2,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 /* ---Goal Page--- */
 
-/* 内容区域（排版） */
+/* Content Area (Layout) */
 .content {
-  padding: 100px 20px 40px;  /* 顶部留出 header 空间 */
-  margin-left: 260px;        /* 给 sidebar 留空间 */
+  padding: 100px 20px 40px;  /* Leave space for the header */
+  margin-left: 260px;        /* Leave space for the sidebar */
   transition: margin-left 0.4s ease;
 }
 
 .sidebar.collapsed ~ .content {
-  margin-left: 100px;        /* sidebar 折叠时，内容收缩 */
+  margin-left: 100px;        /* Sidebar collapsed, content shrinks */
 }
 
 @media (max-width: 1024px) {
   .content {
-    margin-left: 0;          /* 小屏幕 sidebar 覆盖时，内容自适应 */
-    padding-top: 80px;       /* header 高度 */
+    margin-left: 0;          /* When the sidebar overlaps on small screens, content adapts automatically. */
+    padding-top: 80px;       /* Header Height */
   }
 }
 
-/* ---Add Task 按钮--- */
+/* ---Add Task button--- */
 .goal-actions {
   margin-bottom: 20px;
   display: flex;
@@ -45,7 +45,7 @@
   transform: translateY(-2px);
 }
 
-/* ---Calendar 容器--- */
+/* ---Calendar container--- */
 #calendar {
   background: #fff;
   padding: 20px;
@@ -54,7 +54,7 @@
   min-height: 600px;
 }
 
-/* FullCalendar 标题区 */
+/* FullCalendar title area */
 .fc-toolbar-title {
   font-size: 1.5rem;
   font-weight: 600;
@@ -62,14 +62,14 @@
 }
 
 .completed-event {
-  background-color: #808080 !important; /* 灰色 */
-  color: #fff !important; /* 白色字体，增加对比度 */
-  border-color: #808080 !important; /* 灰色边框 */
-  text-decoration: line-through !important; /* 删除线 */
-  opacity: 0.7 !important; /* 半透明效果 */
+  background-color: #808080 !important; /* Gray */
+  color: #fff !important; /* White text for contrast */
+  border-color: #808080 !important; /* Gray border */
+  text-decoration: line-through !important; /* Strikethrough */
+  opacity: 0.7 !important; /* Semi-transparent */
 }
 
-/* 工具栏按钮 */
+/* Toolbar buttons */
 .fc-button {
   background: #151A2E;
   border: none;
@@ -83,12 +83,12 @@
   background: #2A2F4F;
 }
 
-/* 今天按钮高亮 */
+/* Today's button highlight */
 .fc-button.fc-button-today {
   background: #007bff;
 }
 
-/* 日历格子 */
+/* Calendar grid */
 .fc-daygrid-day {
   border: 1px solid #eee;
 }
@@ -99,7 +99,7 @@
   padding: 4px;
 }
 
-/* 事件样式 */
+/* Event styles */
 .fc-event {
   border-radius: 6px;
   height: 22px; /* shorter bar for neat look */
@@ -111,7 +111,7 @@
   opacity: 0.85;
 }
 
-/* ---Modal (Create Goal 弹窗)--- */
+/* ---Modal (Create Goal pop-up)--- */
 .goal.modal.hidden {
   display: none;
 }
@@ -167,7 +167,7 @@
   border-color: #007bff;
 }
 
-/* 弹窗按钮 */
+/* Pop-up button */
 .goal-modal-content button {
   margin-right: 10px;
   padding: 10px 14px;

@@ -9,7 +9,7 @@
     padding: 20px;
 }
 
-/* 图表容器 */
+/* Chart Container */
 .analysis-box {
     display: block;
     padding: 20px;
@@ -27,11 +27,11 @@
 }
 
 .sidebar.collapsed ~ .analysis-container {
-  margin-left: 100px;        /* sidebar 折叠时，内容收缩 */
+  margin-left: 100px;        /* When the sidebar is collapsed, content shrinks */
 }
 
 @media (max-width: 1024px) {
   .analysis-container {
-    margin-left: 0;          /* 小屏幕 sidebar 覆盖时，内容自适应 */
+    margin-left: 0;          /* When the sidebar overlaps on small screens, content adapts automatically. */
   }
 }
