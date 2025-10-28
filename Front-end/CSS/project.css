@@ -195,6 +195,7 @@
 
 .progress-fill {
   height: 100%;
+  background: #4f46e5; /* Main theme color */
   border-radius: 6px;
   transition: width 0.3s ease, background 0.3s ease;
 }

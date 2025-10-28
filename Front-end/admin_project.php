@@ -217,7 +217,7 @@
                     <label>Add Members</label>
                     <div class="user-checkbox-container">
                         <?php
-                            $users_sql = "SELECT user_ID, username FROM users WHERE role = 1"; // Fetch only non-admin users
+                            $users_sql = "SELECT user_ID, username FROM users WHERE Role_ID = 1"; // Fetch only non-admin users
                             $users_result = $conn->query($users_sql);
                             if ($users_result->num_rows > 0) {
                                 while($user = $users_result->fetch_assoc()) {

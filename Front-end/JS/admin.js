@@ -1,70 +1,47 @@
 document.addEventListener('DOMContentLoaded', () => {
-    console.log("admin.js loaded and executing."); // For debugging
-
-    // --- Modal Elements ---
-    const projectModal = document.getElementById('projectModal');
-    const editProjectModal = document.getElementById('editProjectModal');
-
-    // --- Button Elements ---
-    const newProjectBtn = document.getElementById('newProjectBtn');
-    const cancelProjectBtn = document.getElementById('cancelProjectBtn');
-    const cancelEditProjectBtn = document.getElementById('cancelEditProjectBtn');
-    
-    // --- Container for Event Delegation ---
+    // --- General Elements ---
     const projectListContainer = document.getElementById('projectList');
 
-    // --- Modal Display Functions ---
-    const showModal = (modal) => {
-        if (modal) modal.style.display = 'flex';
-    };
-    const hideModal = (modal) => {
-        if (modal) modal.style.display = 'none';
-    };
+    // --- Create Modal Elements ---
+    const newProjectBtn = document.getElementById('newProjectBtn');
+    const projectModal = document.getElementById('projectModal');
+    const cancelProjectBtn = document.getElementById('cancelProjectBtn');
+    const projectForm = document.getElementById('projectForm');
 
-    // --- "New Project" Modal Button Handlers ---
+    // --- Edit Modal Elements ---
+    const editProjectModal = document.getElementById('editProjectModal');
+    const cancelEditProjectBtn = document.getElementById('cancelEditProjectBtn');
+    const editProjectForm = document.getElementById('editProjectForm');
+
+    // --- Create Modal Handling ---
     if (newProjectBtn) {
-        newProjectBtn.addEventListener('click', () => showModal(projectModal));
+        newProjectBtn.addEventListener('click', () => projectModal.classList.add('show'));
     }
     if (cancelProjectBtn) {
-        cancelProjectBtn.addEventListener('click', () => hideModal(projectModal));
+        cancelProjectBtn.addEventListener('click', () => projectModal.classList.remove('show'));
     }
 
-    // --- "Edit Project" Modal Button Handler ---
+    // --- Edit Modal Handling ---
     if (cancelEditProjectBtn) {
-        cancelEditProjectBtn.addEventListener('click', () => hideModal(editProjectModal));
+        cancelEditProjectBtn.addEventListener('click', () => editProjectModal.classList.remove('show'));
     }
 
-    // --- Generic Modal Close (clicking outside) ---
+    // --- Generic Modal Close ---
     window.addEventListener('click', (event) => {
-        if (event.target === projectModal) hideModal(projectModal);
-        if (event.target === editProjectModal) hideModal(editProjectModal);
+        if (event.target === projectModal) projectModal.classList.remove('show');
+        if (event.target === editProjectModal) editProjectModal.classList.remove('show');
     });
 
-    // --- Event Delegation for All Project Card Clicks ---
-    if (projectListContainer) {
-        projectListContainer.addEventListener('click', async (e) => {
-            const target = e.target;
-            const card = target.closest('.task-card');
-            if (!card) return;
 
-            const projectId = card.dataset.projectId;
 
-            // Case 1: Click on EDIT button
-            if (target.closest('.edit-project-btn')) {
-                e.preventDefault();
-                document.getElementById('editProjectId').value = card.dataset.projectId;
-                document.getElementById('editProjectTitle').value = card.dataset.title;
-                document.getElementById('editProjectDescription').value = card.dataset.description;
-                document.getElementById('editProjectStartDate').value = card.dataset.startDate;
-                document.getElementById('editProjectEndDate').value = card.dataset.endDate;
-                document.getElementById('editProjectStatus').value = card.dataset.status;
-                showModal(editProjectModal);
-                return;
-            }
 
-            // Case 2: Click on DELETE button
-            if (target.closest('.delete-project-btn')) {
-                e.preventDefault();
+
+    function addProjectActionListeners() {
+        document.querySelectorAll('.delete-project-btn').forEach(btn => {
+            btn.addEventListener('click', async (e) => {
+                e.stopPropagation();
+                const card = e.target.closest('.task-card');
+                const projectId = card.dataset.projectId;
                 if (confirm('Are you sure you want to delete this project and all its tasks?')) {
                     const formData = new FormData();
                     formData.append('projectId', projectId);
@@ -72,47 +49,35 @@ document.addEventListener('DOMContentLoaded', () => {
                         const response = await fetch('Config/delete_project.php', { method: 'POST', body: formData });
                         const result = await response.json();
                         if (result.success) {
-                            alert('Project deleted successfully.');
+                            alert('Project deleted.');
                             card.remove();
                         } else {
-                            alert(`Error: ${result.error || 'Could not delete project.'}`);
+                            alert(`Error: ${result.error}`);
                         }
                     } catch (error) {
-                        console.error('Delete error:', error);
                         alert('A network error occurred.');
                     }
                 }
-                return;
-            }
-
-            // Case 3: Click on a link (like "View Tasks")
-            if (target.closest('a')) {
-                // Let the link do its default action (navigate)
-                return;
-            }
-
-            // Case 4: Click on the card itself (but not on a button or link)
-            if (projectId) {
-                window.location.href = `tasks.php?project_id=${projectId}`;
-            }
+            });
         });
-    }
 
-    // --- Search Functionality ---
-    const searchInput = document.getElementById('searchInput');
-    if (searchInput) {
-        searchInput.addEventListener('input', (e) => {
-            const searchTerm = e.target.value.toLowerCase();
-            document.querySelectorAll('.task-card').forEach(card => {
-                const title = (card.dataset.title || '').toLowerCase();
-                const description = (card.dataset.description || '').toLowerCase();
-                if (title.includes(searchTerm) || description.includes(searchTerm)) {
-                    card.style.display = 'block'; // Or whatever the default is
-                } else {
-                    card.style.display = 'none';
-                }
+        document.querySelectorAll('.edit-project-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const card = e.target.closest('.task-card');
+                
+                document.getElementById('editProjectId').value = card.dataset.projectId;
+                document.getElementById('editProjectTitle').value = card.dataset.title;
+                document.getElementById('editProjectDescription').value = card.dataset.description;
+                document.getElementById('editProjectStartDate').value = card.dataset.startDate;
+                document.getElementById('editProjectEndDate').value = card.dataset.endDate;
+                document.getElementById('editProjectStatus').value = card.dataset.status;
+                
+                editProjectModal.classList.add('show');
             });
         });
     }
-});
 
+    // Initial load
+    addProjectActionListeners();
+});

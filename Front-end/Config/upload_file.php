@@ -2,6 +2,12 @@
 include 'db_connect.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $target_dir = "../uploads/";
+    if (!is_writable($target_dir)) {
+        header("location: ../tasks.php?project_id=" . $_POST['projectId'] . "&error=permissions");
+        exit;
+    }
+
     $taskId = $_POST['taskId'];
     $projectId = $_POST['projectId'];
     $userId = $_SESSION['id'];

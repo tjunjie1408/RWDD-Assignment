@@ -27,14 +27,13 @@
         $check_stmt->store_result();
 
         if ($check_stmt->num_rows === 0) {
-            // User is not a member, redirect them.
             header("location: project.php?error=not_a_member");
             exit;
         }
         $check_stmt->close();
     }
 
-    // Fetch project details to display on the page
+    // Fetch project details
     $project_stmt = $conn->prepare("SELECT * FROM projects WHERE Project_ID = ?");
     $project_stmt->bind_param("i", $project_id);
     $project_stmt->execute();
@@ -42,29 +41,47 @@
     $project = $project_result->fetch_assoc();
     $project_stmt->close();
 
-    // Fetch tasks based on user role
-    $sql = "SELECT t.*, f.File_ID, f.File_Name, u.username as assigned_to FROM tasks t
+    // Fetch tasks and associated files
+    $sql = "SELECT t.*, f.File_ID, f.File_Name, u.username as assigned_to
+            FROM tasks t
             LEFT JOIN files f ON t.Task_ID = f.Task_ID
             LEFT JOIN users u ON t.User_ID = u.user_ID
             WHERE t.Project_ID = ?";
     if (!$is_admin) {
         $sql .= " AND t.User_ID = ?";
     }
-    $sql .= " ORDER BY t.Task_Created_Date DESC";
+    $sql .= " ORDER BY t.Task_Created_Date DESC, f.File_Upload_Time ASC";
 
     $task_stmt = $conn->prepare($sql);
-
     if ($is_admin) {
         $task_stmt->bind_param("i", $project_id);
     } else {
         $task_stmt->bind_param("ii", $project_id, $user_id);
     }
-
     $task_stmt->execute();
     $tasks_result = $task_stmt->get_result();
+
+    // Process the results to group files under each task
     $tasks = [];
     while ($row = $tasks_result->fetch_assoc()) {
-        $tasks[] = $row;
+        $task_id = $row['Task_ID'];
+        if (!isset($tasks[$task_id])) {
+            $tasks[$task_id] = [
+                'Task_ID' => $row['Task_ID'],
+                'Title' => $row['Title'],
+                'Description' => $row['Description'],
+                'Status' => $row['Status'],
+                'Task_End_Time' => $row['Task_End_Time'],
+                'assigned_to' => $row['assigned_to'],
+                'files' => []
+            ];
+        }
+        if ($row['File_ID']) {
+            $tasks[$task_id]['files'][] = [
+                'File_ID' => $row['File_ID'],
+                'File_Name' => $row['File_Name']
+            ];
+        }
     }
     $task_stmt->close();
 ?>
@@ -131,7 +148,7 @@
 
     <?php if(isset($_GET['error']) && $_GET['error'] === 'permissions'): ?>
         <div class="message error">
-            <strong>File Upload Failed:</strong> The server does not have permission to write to the 'uploads' directory. Please grant write permissions to the web server user (e.g., 'www-data', or by making the folder world-writable as a temporary fix) and try again.
+            <strong>File Upload Failed:</strong> The server does not have permission to write to the 'uploads' directory.
         </div>
     <?php endif; ?>
 
@@ -147,7 +164,7 @@
                 <?php foreach ($tasks as $task): ?>
                     <div class="task-card <?php echo ($task['Status'] === 'Done') ? 'completed' : ''; ?>" data-task-id="<?php echo $task['Task_ID']; ?>" data-title="<?php echo htmlspecialchars($task['Title']); ?>" data-description="<?php echo htmlspecialchars($task['Description']); ?>" data-end-date="<?php echo $task['Task_End_Time']; ?>">
                         <div class="task-card-header">
-                            <form action="Config/update_task_status.php" method="POST" class="task-status-form" onsubmit="return confirm('Are you sure you want to mark this task as complete?');">
+                            <form id="task-status-form-<?php echo $task['Task_ID']; ?>" action="Config/update_task_status.php" method="POST" class="task-status-form">
                                 <input type="hidden" name="taskId" value="<?php echo $task['Task_ID']; ?>">
                                 <input type="hidden" name="projectId" value="<?php echo $project_id; ?>">
                                 <input type="checkbox" name="status" class="task-checkbox" <?php echo ($task['Status'] === 'Done') ? 'checked' : ''; ?> onchange="this.form.submit()">
@@ -176,13 +193,15 @@
                             </div>
                         </div>
 
-                        <?php if (!empty($task['File_ID'])): ?>
+                        <?php if (!empty($task['files'])): ?>
                         <div class="task-card-files">
+                            <?php foreach ($task['files'] as $file): ?>
                             <div class="file-row">
                                 <span class="material-symbols-rounded">description</span>
-                                <span class="file-name"><?php echo htmlspecialchars($task['File_Name']); ?></span>
-                                <a href="Config/download_file.php?file_id=<?php echo $task['File_ID']; ?>" class="primary small-btn">Download</a>
+                                <span class="file-name"><?php echo htmlspecialchars($file['File_Name']); ?></span>
+                                <a href="Config/download_file.php?file_id=<?php echo $file['File_ID']; ?>" class="primary small-btn">Download</a>
                             </div>
+                            <?php endforeach; ?>
                         </div>
                         <?php endif; ?>
                     </div>
@@ -199,21 +218,14 @@
                 <form id="taskForm" action="Config/create_task.php" method="POST">
                     <input type="hidden" id="taskId" name="taskId">
                     <input type="hidden" id="projectId" name="projectId" value="<?php echo $project_id; ?>">
-
                     <label for="taskTitle">Title</label>
                     <input id="taskTitle" type="text" name="title" required>
-                    
                     <label for="taskDescription">Description</label>
                     <textarea id="taskDescription" name="description"></textarea>
-                    
                     <label for="taskEndDate">End Date</label>
                     <input id="taskEndDate" type="date" name="endDate" required>
-
                     <label for="assignee">Assign To</label>
-                    <select id="assignee" name="assigneeId">
-                        <!-- Options will be populated by JS -->
-                    </select>
-                    
+                    <select id="assignee" name="assigneeId"></select>
                     <div class="modal-actions">
                         <button type="button" id="cancelTaskBtn">Cancel</button>
                         <button type="submit" class="primary">Save Task</button>
@@ -229,10 +241,8 @@
                 <form id="fileUploadForm" action="Config/upload_file.php" method="POST" enctype="multipart/form-data">
                     <input type="hidden" id="uploadTaskId" name="taskId">
                     <input type="hidden" name="projectId" value="<?php echo $project_id; ?>">
-
                     <label for="fileInput">Select File</label>
                     <input type="file" id="fileInput" name="file" required>
-
                     <div class="modal-actions">
                         <button type="button" id="cancelUploadBtn">Cancel</button>
                         <button type="submit" class="primary">Upload</button>
