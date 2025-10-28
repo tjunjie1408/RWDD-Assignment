@@ -137,17 +137,6 @@
         </div>
     </div>
 
-        <!-- Filters and Sorting -->
-    <div class="filter-group">
-        <label>Filter:</label>
-        <select id="statusFilter">
-            <option value="all">All Tasks</option>
-            <option value="completed">Completed</option>
-            <option value="overdue">Overdue</option>
-            <option value="progress">Progress</option>
-        </select>
-    </div>
-
         <!-- List View -->
         <div id="listView" class="list-view">
             <section class="card">
