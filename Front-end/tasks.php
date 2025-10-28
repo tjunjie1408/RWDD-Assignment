@@ -173,11 +173,18 @@
                         <div class="task-card-footer">
                             <div class="task-actions">
                                 <button class="btn-upload-file" data-task-id="<?php echo $task['Task_ID']; ?>"><span class="material-symbols-rounded">attach_file</span> Upload</button>
-                                <?php if (!empty($task['File_ID'])): ?>
-                                    <a href="Config/download_file.php?file_id=<?php echo $task['File_ID']; ?>" class="download-link"><span class="material-symbols-rounded">download</span> Download File</a>
-                                <?php endif; ?>
                             </div>
                         </div>
+
+                        <?php if (!empty($task['File_ID'])): ?>
+                        <div class="task-card-files">
+                            <div class="file-row">
+                                <span class="material-symbols-rounded">description</span>
+                                <span class="file-name"><?php echo htmlspecialchars($task['File_Name']); ?></span>
+                                <a href="Config/download_file.php?file_id=<?php echo $task['File_ID']; ?>" class="primary small-btn">Download</a>
+                            </div>
+                        </div>
+                        <?php endif; ?>
                     </div>
                 <?php endforeach; ?>
             <?php else: ?>

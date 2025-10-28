@@ -812,3 +812,29 @@
 .task-card-footer .download-link:hover {
     background-color: #bbf7d0;
 }
+
+/* File Explorer Layout */
+.task-card-files {
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid #f3f4f6;
+}
+
+.file-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px;
+    background-color: #f9fafb;
+    border-radius: 8px;
+}
+
+.file-row .material-symbols-rounded {
+    color: #6b7280;
+}
+
+.file-row .file-name {
+    flex-grow: 1;
+    font-size: 14px;
+    color: #111827;
+}

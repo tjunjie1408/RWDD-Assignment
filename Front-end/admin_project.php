@@ -170,7 +170,7 @@
 
                     if ($result->num_rows > 0) {
                         while($row = $result->fetch_assoc()) {
-                            $progress = $row['Project_Status'] === 'Completed' ? 100 : ($row['Progress_Percent'] ?? 0);
+                            $progress = $row['Project_Status'] === 'Completed' ? 100 : $row['Progress_Percent'];
                             echo '<div class="task-card" data-project-id="' . $row['Project_ID'] . '" data-title="' . htmlspecialchars($row['Title']) . '" data-description="' . htmlspecialchars($row['Description']) . '" data-start-date="' . $row['Project_Start_Date'] . '" data-end-date="' . $row['Project_End_Date'] . '" data-status="' . $row['Project_Status'] . '">';
                             echo '    <div class="task-header">';
                             echo '        <h4><a href="tasks.php?project_id=' . $row['Project_ID'] . '" class="project-title-link">' . htmlspecialchars($row['Title']) . '</a></h4>';
@@ -217,7 +217,7 @@
                     <label>Add Members</label>
                     <div class="user-checkbox-container">
                         <?php
-                            $users_sql = "SELECT user_ID, username FROM users WHERE Role_ID = 1"; // Fetch only non-admin users
+                            $users_sql = "SELECT user_ID, username FROM users WHERE role = 1"; // Fetch only non-admin users
                             $users_result = $conn->query($users_sql);
                             if ($users_result->num_rows > 0) {
                                 while($user = $users_result->fetch_assoc()) {

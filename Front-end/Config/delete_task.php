@@ -16,13 +16,13 @@ if (!$taskId || !$projectId) {
 }
 
 // First, delete any associated files from the server and the database
-$stmt = $conn->prepare("SELECT File_Path FROM files WHERE Task_ID = ?");
+$stmt = $conn->prepare("SELECT File_URL FROM files WHERE Task_ID = ?");
 $stmt->bind_param("i", $taskId);
 $stmt->execute();
 $result = $stmt->get_result();
 while ($row = $result->fetch_assoc()) {
-    if (file_exists($row['File_Path'])) {
-        unlink($row['File_Path']);
+    if (file_exists($row['File_URL'])) {
+        unlink($row['File_URL']);
     }
 }
 $stmt->close();
