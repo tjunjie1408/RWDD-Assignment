@@ -1,7 +1,8 @@
 <?php
+    // Includes the database connection and session start.
+    // This is necessary for any potential database interactions on this page,
+    // though the primary logic is handled by the form submission scripts.
     include ('Config/db_connect.php');
-    
-
 ?>
 
 <!DOCTYPE html>

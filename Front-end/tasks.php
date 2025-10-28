@@ -1,25 +1,28 @@
 <?php
+    // Includes the database connection and session start.
     include 'Config/db_connect.php';
 
-    // Check if the user is logged in, if not then redirect to login page
+    // --- Authentication & Validation ---
+    // Checks if a user is logged in.
     if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
         header("location: signup.php");
         exit;
     }
 
-    // Get project ID from URL and validate it
+    // Gets the project ID from the URL and validates that it's an integer.
     $project_id = isset($_GET['project_id']) ? filter_var($_GET['project_id'], FILTER_VALIDATE_INT) : null;
-
     if (!$project_id) {
-        header("location: project.php"); // Redirect if no valid ID is provided
+        header("location: project.php"); // Redirect if no valid project ID is provided.
         exit;
     }
 
-    // Determine if the user is an admin
+    // --- Authorization ---
+    // Determines if the current user is an admin.
     $is_admin = isset($_SESSION['role']) && $_SESSION['role'] === 2;
     $user_id = $_SESSION['id'];
 
-    // Security Check: Ensure the user is a member of this project, unless they are an admin.
+    // Security Check: If the user is not an admin, this verifies they are a member of the project.
+    // This prevents users from accessing tasks of projects they don't belong to.
     if (!$is_admin) {
         $check_stmt = $conn->prepare("SELECT Member_ID FROM project_members WHERE Project_ID = ? AND User_ID = ?");
         $check_stmt->bind_param("ii", $project_id, $user_id);
@@ -33,7 +36,8 @@
         $check_stmt->close();
     }
 
-    // Fetch project details
+    // --- Data Fetching ---
+    // Fetches the details of the current project to display in the header.
     $project_stmt = $conn->prepare("SELECT * FROM projects WHERE Project_ID = ?");
     $project_stmt->bind_param("i", $project_id);
     $project_stmt->execute();
@@ -41,12 +45,13 @@
     $project = $project_result->fetch_assoc();
     $project_stmt->close();
 
-    // Fetch tasks and associated files
+    // Fetches all tasks for the project, along with any associated files and assignee names.
     $sql = "SELECT t.*, f.File_ID, f.File_Name, u.username as assigned_to
             FROM tasks t
             LEFT JOIN files f ON t.Task_ID = f.Task_ID
             LEFT JOIN users u ON t.User_ID = u.user_ID
             WHERE t.Project_ID = ?";
+    // If the user is not an admin, only their own tasks are fetched.
     if (!$is_admin) {
         $sql .= " AND t.User_ID = ?";
     }
@@ -61,7 +66,7 @@
     $task_stmt->execute();
     $tasks_result = $task_stmt->get_result();
 
-    // Process the results to group files under each task
+    // Processes the results to group multiple files under a single task.
     $tasks = [];
     while ($row = $tasks_result->fetch_assoc()) {
         $task_id = $row['Task_ID'];
@@ -76,6 +81,7 @@
                 'files' => []
             ];
         }
+        // If a file is associated with the task, add it to the task's 'files' array.
         if ($row['File_ID']) {
             $tasks[$task_id]['files'][] = [
                 'File_ID' => $row['File_ID'],

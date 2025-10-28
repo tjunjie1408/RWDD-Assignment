@@ -1,20 +1,26 @@
 <?php
+    // Includes the database connection and session start.
     include 'Config/db_connect.php';
 
-    // Check if the user is logged in
+    // --- Authentication ---
+    // Checks if a user is logged in. If not, they are redirected to the signup/login page.
     if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
         header("location: signup.php");
         exit;
     }
 
+    // --- Data Fetching ---
+    // Gets the current user's ID from the session.
     $user_id = $_SESSION['id'];
 
-    // Fetch goals for the current user
+    // Fetches all goals belonging to the currently logged-in user.
     $sql = "SELECT * FROM goals WHERE User_ID = ? ORDER BY Goal_Start_Time DESC";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $user_id);
     $stmt->execute();
     $result = $stmt->get_result();
+    
+    // Stores the fetched goals in an array to be displayed on the page.
     $goals = [];
     while ($row = $result->fetch_assoc()) {
         $goals[] = $row;

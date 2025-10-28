@@ -1,23 +1,28 @@
 <?php
+    // Includes the database connection and session start.
     include 'Config/db_connect.php';
 
-    // Check if the user is logged in
+    // --- Authentication and Authorization ---
+    // Checks if a user is logged in.
     if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
         header("location: signup.php");
         exit;
     }
 
+    // Determines the user's ID and if they are an admin. This is used to fetch the correct data.
     $user_id = $_SESSION['id'];
     $is_admin = isset($_SESSION['role']) && $_SESSION['role'] === 2;
 
-    // Initialize arrays to hold chart data
+    // --- Data Fetching for Charts ---
+    // Initializes arrays to hold the data for the charts.
     $project_completion_data = ['completed' => 0, 'in_progress' => 0, 'not_started' => 0, 'on_hold' => 0];
     $task_distribution_data = ['done' => 0, 'open' => 0];
 
-    // --- Fetch Project Data for Chart ---
+    // --- Fetch Project Data ---
+    // The base SQL query to count projects by their status.
     $project_sql = "SELECT Project_Status, COUNT(*) as count FROM projects";
     if (!$is_admin) {
-        // For non-admins, only count projects they are a member of
+        // If the user is not an admin, the query is modified to only count projects they are a member of.
         $project_sql .= " WHERE Project_ID IN (SELECT Project_ID FROM project_members WHERE User_ID = ?)";
     }
     $project_sql .= " GROUP BY Project_Status";
@@ -29,6 +34,7 @@
     $project_stmt->execute();
     $project_result = $project_stmt->get_result();
 
+    // Populates the data array with the results from the database.
     while ($row = $project_result->fetch_assoc()) {
         $status = strtolower(str_replace(' ', '_', $row['Project_Status']));
         if (array_key_exists($status, $project_completion_data)) {
@@ -37,10 +43,11 @@
     }
     $project_stmt->close();
 
-    // --- Fetch Task Data for Chart ---
+    // --- Fetch Task Data ---
+    // The base SQL query to count tasks by their status.
     $task_sql = "SELECT Status, COUNT(*) as count FROM tasks";
     if (!$is_admin) {
-        // For non-admins, only count tasks assigned to them
+        // If the user is not an admin, the query is modified to only count tasks assigned to them.
         $task_sql .= " WHERE User_ID = ?";
     }
     $task_sql .= " GROUP BY Status";
@@ -52,6 +59,7 @@
     $task_stmt->execute();
     $task_result = $task_stmt->get_result();
 
+    // Populates the data array with the results.
     while ($row = $task_result->fetch_assoc()) {
         $status = strtolower($row['Status']);
         if (array_key_exists($status, $task_distribution_data)) {

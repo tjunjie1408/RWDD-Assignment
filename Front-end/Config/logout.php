@@ -1,24 +1,24 @@
 <?php
-// Initialize the session.
+// Initializes the session to access session data.
 session_start();
 
-// Unset all of the session variables.
+// Unsets all session variables, effectively logging the user out from the application's perspective.
 $_SESSION = array();
 
-// If it's desired to kill the session, also delete the session cookie.
-// Note: This will destroy the session, and not just the session data!
+// Destroys the session cookie on the client side.
+// This is a robust way to ensure the session is fully terminated.
 if (ini_get("session.use_cookies")) {
     $params = session_get_cookie_params();
-    setcookie(session_name(), '', time() - 42000,
+    setcookie(session_name(), '', time() - 42000, // Sets the cookie's expiration time to the past.
         $params["path"], $params["domain"],
         $params["secure"], $params["httponly"]
     );
 }
 
-// Finally, destroy the session.
+// Destroys all data registered to a session on the server side.
 session_destroy();
 
-// Redirect to login page
+// Redirects the user back to the main signup/login page.
 header("location: ../signup.php");
 exit;
 ?>

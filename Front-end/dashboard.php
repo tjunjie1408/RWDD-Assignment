@@ -1,14 +1,18 @@
 <?php
+    // Includes the database connection and session start.
     include 'Config/db_connect.php';
 
-    // Check if the user is logged in, if not then redirect to login page
+    // --- Authentication ---
+    // Checks if a user is logged in. If not, they are redirected to the signup/login page.
     if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
         header("location: signup.php");
         exit;
     }
 
-    // Fetch projects for the current user
+    // --- Data Fetching ---
+    // Fetches the 5 most recent projects that the currently logged-in user is a member of.
     $user_id = $_SESSION['id'];
+    // The query joins the 'projects' and 'project_members' tables to filter projects by the user's ID.
     $projects_result = $conn->query("SELECT p.* FROM projects p JOIN project_members pm ON p.Project_ID = pm.Project_ID WHERE pm.User_ID = {$user_id} ORDER BY p.Project_Start_Date DESC LIMIT 5");
 ?>
 <!DOCTYPE html>

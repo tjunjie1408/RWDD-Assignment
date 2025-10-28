@@ -1,19 +1,23 @@
 <?php
+    // Includes the database connection and session start.
     include 'Config/db_connect.php';
 
-    // Check if the user is logged in, if not then redirect to login page
+    // --- Authentication and Authorization ---
+    // Checks if a user is logged in. If not, they are redirected to the signup/login page.
     if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
         header("location: signup.php");
         exit;
     }
 
-    // Check if the logged-in user has admin role (assuming Role_ID 2 is admin)
+    // Checks if the logged-in user has an admin role (Role_ID 2).
+    // If they are not an admin, they are redirected to the regular user dashboard.
     if (!isset($_SESSION['role']) || $_SESSION['role'] !== 2) {
-        header("location: dashboard.php"); // Redirect non-admins to their regular dashboard
+        header("location: dashboard.php"); 
         exit;
     }
 
-    // Fetch recent projects
+    // --- Data Fetching ---
+    // Fetches the 5 most recent projects to display on the dashboard.
     $projects_result = $conn->query("SELECT * FROM projects ORDER BY Project_Start_Date DESC LIMIT 5");
 ?>
 <!DOCTYPE html>

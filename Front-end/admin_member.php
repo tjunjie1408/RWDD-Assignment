@@ -1,15 +1,18 @@
 <?php
+    // Includes the database connection and session start.
     include 'Config/db_connect.php';
 
-    // Check if the user is logged in, if not then redirect to login page
+    // --- Authentication and Authorization ---
+    // Checks if a user is logged in. If not, they are redirected to the signup/login page.
     if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
         header("location: signup.php");
         exit;
     }
 
-    // Check if the logged-in user has admin role (assuming Role_ID 2 is admin)
+    // Checks if the logged-in user has an admin role (Role_ID 2).
+    // If they are not an admin, they are redirected to the regular user dashboard, as this page is for admins only.
     if (!isset($_SESSION['role']) || $_SESSION['role'] !== 2) {
-        header("location: dashboard.php"); // Redirect non-admins to their dashboard
+        header("location: dashboard.php");
         exit;
     }
 ?>

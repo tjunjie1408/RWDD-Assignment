@@ -1,5 +1,7 @@
 <?php
-    // Manually inlined db_connect.php to rule out include errors
+    // --- Database Connection and Session Start ---
+    // This block manually defines the database connection and starts the session.
+    // It appears to be a copy of 'Config/db_connect.php'.
     session_start();
 
     $servername = "localhost";
@@ -15,13 +17,15 @@
         die("Connection failed: " . $conn->connect_error);
     }
 
-    // Check if the user is logged in, if not then redirect to login page
+    // --- Authentication ---
+    // Checks if a user is logged in. If not, they are redirected to the signup/login page.
     if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
         header("location: signup.php");
         exit;
     }
 
-    // Fetch user data on the server side
+    // --- Data Fetching ---
+    // Fetches the profile data for the currently logged-in user to display on the page.
     $userId = $_SESSION['id'];
     $stmt = $conn->prepare("SELECT username, email, company, position FROM users WHERE user_ID = ?");
     $stmt->bind_param("i", $userId);
@@ -29,13 +33,14 @@
     $result = $stmt->get_result();
     $user = $result->fetch_assoc();
 
-    // Generate avatar URL
+    // --- Avatar Generation ---
+    // Generates a Gravatar URL for the user's avatar.
     if ($user) {
         $email = trim(strtolower($user['email']));
         $md5_email = md5($email);
         $avatar_url = "https://www.gravatar.com/avatar/{$md5_email}?d=mp";
     } else {
-        // Handle case where user is not found in DB, though session exists
+        // Handles the edge case where a user session exists but the user is not in the database.
         $user = ['username' => 'Not Found', 'email' => '', 'company' => '', 'position' => ''];
         $avatar_url = 'https://via.placeholder.com/150';
     }

@@ -1,6 +1,10 @@
 <?php
+    // Includes the database connection and session start.
     include 'Config/db_connect.php';
 
+    // --- Authentication ---
+    // Checks if a user is logged in. If not, they are redirected to the signup/login page.
+    // This ensures that only authenticated users can view the goal calendar.
     if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
         header("location: signup.php");
         exit;

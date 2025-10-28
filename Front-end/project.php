@@ -1,15 +1,21 @@
 <?php
+    // Includes the database connection and session start.
     include 'Config/db_connect.php';
 
-    // Check if the user is logged in, if not then redirect to login page
+    // --- Authentication ---
+    // Checks if a user is logged in.
     if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
         header("location: signup.php");
         exit;
     }
 
+    // --- Data Fetching ---
+    // Gets the current user's ID from the session.
     $current_user_id = $_SESSION['id'];
 
-    // Fetch all projects and check membership for the current user
+    // Fetches all projects from the database.
+    // It uses a LEFT JOIN with the 'project_members' table to determine if the current user
+    // is a member of each project. The result is a boolean flag called 'is_member'.
     $sql = "SELECT p.Project_ID, p.Title, p.Description, p.Project_Start_Date, p.Project_End_Date, p.Project_Status, p.Progress_Percent,
                    (pm.User_ID IS NOT NULL) AS is_member
             FROM projects p
@@ -19,6 +25,8 @@
     $stmt->bind_param("i", $current_user_id);
     $stmt->execute();
     $result = $stmt->get_result();
+    
+    // Stores the fetched projects in an array for display.
     $projects = [];
     while ($row = $result->fetch_assoc()) {
         $projects[] = $row;

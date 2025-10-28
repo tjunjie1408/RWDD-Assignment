@@ -1,7 +1,10 @@
 <?php
+    // Includes the database connection and session start.
     include 'Config/db_connect.php';
 
-    // Check if the user is logged in, if not then redirect to login page
+    // --- Authentication ---
+    // Checks if a user is logged in. If not, they are redirected to the signup/login page.
+    // This ensures that only authenticated users can view the members page.
     if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
         header("location: signup.php");
         exit;
