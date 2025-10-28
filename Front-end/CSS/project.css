@@ -611,6 +611,15 @@
     width: auto;
 }
 
+.project-title-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.project-title-link:hover {
+    text-decoration: underline;
+}
+
 .project-card-actions {
     display: flex;
     gap: 8px;

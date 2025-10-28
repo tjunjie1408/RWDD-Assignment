@@ -171,10 +171,13 @@
                     if ($result->num_rows > 0) {
                         while($row = $result->fetch_assoc()) {
                             $progress = $row['Project_Status'] === 'Completed' ? 100 : ($row['Progress_Percent'] ?? 0);
-                            echo '<a href="tasks.php?project_id=' . $row['Project_ID'] . '" class="project-card-link">';
                             echo '<div class="task-card" data-project-id="' . $row['Project_ID'] . '" data-title="' . htmlspecialchars($row['Title']) . '" data-description="' . htmlspecialchars($row['Description']) . '" data-start-date="' . $row['Project_Start_Date'] . '" data-end-date="' . $row['Project_End_Date'] . '" data-status="' . $row['Project_Status'] . '">';
                             echo '    <div class="task-header">';
                             echo '        <h4>' . htmlspecialchars($row['Title']) . '</h4>';
+                            echo '        <div class="project-card-actions">';
+                            echo '            <button class="primary small-btn edit-project-btn">Edit</button>';
+                            echo '            <button class="danger small-btn delete-project-btn">Delete</button>';
+                            echo '        <h4><a href="tasks.php?project_id=' . $row['Project_ID'] . '" class="project-title-link">' . htmlspecialchars($row['Title']) . '</a></h4>';
                             echo '        <div class="project-card-actions">';
                             echo '            <button class="primary small-btn edit-project-btn">Edit</button>';
                             echo '            <button class="danger small-btn delete-project-btn">Delete</button>';
@@ -188,7 +191,6 @@
                             echo '        <span class="progress-text">' . $progress . '%</span>';
                             echo '    </div>';
                             echo '</div>';
-                            echo '</a>';
                         }
                     } else {
                         echo '<p>No projects found. Create one to get started!</p>';
@@ -214,6 +216,25 @@
                 
                 <label for="projectEndDate">End Date</label>
                 <input id="projectEndDate" type="date" name="endDate" required>
+                
+                <div class="form-group">
+                    <label>Add Members</label>
+                    <div class="user-checkbox-container">
+                        <?php
+                            $users_sql = "SELECT user_ID, username FROM users WHERE role = 1"; // Fetch only non-admin users
+                            $users_result = $conn->query($users_sql);
+                            if ($users_result->num_rows > 0) {
+                                while($user = $users_result->fetch_assoc()) {
+                                    echo '<div><input type="checkbox" name="members[]" value="' . $user['user_ID'] . '" id="user_' . $user['user_ID'] . '">';
+                                    echo '<label for="user_' . $user['user_ID'] . '">' . htmlspecialchars($user['username']) . '</label></div>';
+                                }
+                            } else {
+                                echo '<p>No users available to add.</p>';
+                            }
+                        ?>
+                    </div>
+                </div>
+
                 
                 <div class="form-group">
                     <label>Add Members</label>
