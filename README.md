@@ -22,6 +22,7 @@
 
 - [✨ Key Features](#-key-features)
 - [📂 Project Structure](#-project-structure)
+- [🗄️ Database Schema](#️-database-schema)
 - [🛠️ Technology Stack](#️-technology-stack)
 - [📸 Screenshots](#-screenshots)
 - [🚀 Getting Started](#-getting-started)
@@ -32,20 +33,20 @@
 
 ## ✨ Key Features
 
-- 👤 **Role-Based Access Control:** Differentiated experience for **Admins** (Managers) and **Users** (Employees).
-- 🗂️ **Project Management:**
+-   👤 **Role-Based Access Control:** Differentiated experience for **Admins** (Managers) and **Users** (Employees).
+-   🗂️ **Project Management:**
     -   Admins can create, update, and delete projects.
     -   Users can view and join projects.
     -   Track project progress with percentage-based completion bars.
-- ✔️ **Task Management:**
+-   ✔️ **Task Management:**
     -   Assign tasks to specific project members.
     -   Track task status (Open, Done).
     -   Upload and download files associated with tasks.
-- 🎯 **Goal Setting:** Personal goal tracking with a dedicated list and calendar view.
-- 🤝 **Team Collaboration:** View a directory of all members and their roles.
-- 📊 **Reporting & Analysis:** Visualize project and task status distribution with interactive charts.
-- 🔒 **Secure Authentication:** Robust login, registration, and password reset functionality with Google reCAPTCHA protection.
-- 📱 **Responsive Design:** A seamless experience across desktop, tablet, and mobile devices.
+-   🎯 **Goal Setting:** Personal goal tracking with a dedicated list and calendar view.
+-   🤝 **Team Collaboration:** View a directory of all members and their roles.
+-   📊 **Reporting & Analysis:** Visualize project and task status distribution with interactive charts.
+-   🔒 **Secure Authentication:** Robust login, registration, and password reset functionality with Google reCAPTCHA protection.
+-   📱 **Responsive Design:** A seamless experience across desktop, tablet, and mobile devices.
 
 ---
 
@@ -65,12 +66,51 @@ The project is organized within the `Front-end/` directory, with a clear separat
 
 ---
 
+## 🗄️ Database Schema
+
+The application relies on a MySQL database named `rwdd`. The main tables are:
+
+-   **`users`**: Stores user information, credentials, and roles.
+    -   `user_ID` (Primary Key)
+    -   `username`, `email`, `password`
+    -   `company`, `position`
+    -   `Role_ID` (e.g., 1 for User, 2 for Admin)
+
+-   **`projects`**: Contains all project details.
+    -   `Project_ID` (Primary Key)
+    -   `Title`, `Description`
+    -   `Project_Start_Date`, `Project_End_Date`
+    -   `Project_Status`, `Progress_Percent`
+
+-   **`project_members`**: Links users to projects (many-to-many relationship).
+    -   `Project_ID` (Foreign Key to `projects`)
+    -   `User_ID` (Foreign Key to `users`)
+
+-   **`tasks`**: Stores tasks related to projects.
+    -   `Task_ID` (Primary Key)
+    -   `Title`, `Description`, `Status`
+    -   `Project_ID` (Foreign Key to `projects`)
+    -   `User_ID` (The user the task is assigned to)
+
+-   **`goals`**: Stores personal user goals.
+    -   `Goal_ID` (Primary Key)
+    -   `Title`, `Description`, `Status`
+    -   `Goal_Start_Time`, `Goal_End_Time`
+    -   `User_ID` (Foreign Key to `users`)
+
+-   **`files`**: Manages file uploads associated with tasks.
+    -   `File_ID` (Primary Key)
+    -   `File_Name`, `File_URL`
+    -   `Task_ID` (Foreign Key to `tasks`)
+
+---
+
 ## 🛠️ Technology Stack
 
-- **Backend:** PHP
-- **Frontend:** HTML, CSS, JavaScript
-- **Database:** MySQL
-- **JavaScript Libraries:**
+-   **Backend:** PHP
+-   **Frontend:** HTML, CSS, JavaScript
+-   **Database:** MySQL
+-   **JavaScript Libraries:**
     -   [Chart.js](https://www.chartjs.org/) for data visualization.
     -   [FullCalendar](https://fullcalendar.io/) for goal scheduling.
     -   [Particles.js](https://vincentgarreau.com/particles.js/) for homepage animations.
@@ -79,11 +119,15 @@ The project is organized within the `Front-end/` directory, with a clear separat
 
 ## 📸 Screenshots
 
-*A great way to show off your project is with screenshots! You can replace these placeholder images with your own.*
+Here's a glimpse into the TaskFlow platform, showcasing its clean interface and powerful features.
 
-| Dashboard | Project View |
+| Dashboard | Project Page | Member Management |
+| :---: | :---: | :---: |
+| <img src="Front-end/Pictures/dashboard.png" alt="TaskFlow Dashboard" width="400"> | <img src="Front-end/Pictures/project.png" alt="TaskFlow Project View" width="400"> | <img src="Front-end/Pictures/member.png" alt="TaskFlow Member View" width="400"> |
+
+| Goal Calendar | Report Analysis |
 | :---: | :---: |
-| <img src="Front-end/Pictures/product1.png" alt="Dashboard Screenshot" width="400"> | <img src="Front-end/Pictures/pic1.png" alt="Project View Screenshot" width="400"> |
+| <img src="Front-end/Pictures/goal.png" alt="TaskFlow Goal Calendar" width="400"> | <img src="Front-end/Pictures/analysis.png" alt="TaskFlow Analysis Chart" width="400"> |
 
 ---
 
@@ -93,8 +137,8 @@ Follow these instructions to get a copy of the project up and running on your lo
 
 ### Prerequisites
 
-- A local server environment like [XAMPP](https://www.apachefriends.org/index.html) or WAMP.
-- PHP & MySQL (included with XAMPP).
+-   A local server environment like [XAMPP](https://www.apachefriends.org/index.html) or WAMP.
+-   PHP & MySQL (included with XAMPP).
 
 ### Installation
 
@@ -109,8 +153,7 @@ Follow these instructions to get a copy of the project up and running on your lo
 3.  **Database Setup:**
     -   Open phpMyAdmin (usually at `http://localhost/phpmyadmin`).
     -   Create a new database named `rwdd`.
-    -   **Important:** You need to manually create the tables. The schema is described in `Front-end/specification.md`.
-    -   *(Suggestion: For easier setup, create a `database.sql` file with the table creation queries and add it to the repository. Users could then import this file directly.)*
+    -   **Important:** You need to manually create the tables based on the schema described above.
 
 4.  **Configuration:**
     -   Verify that the database credentials in `Front-end/Config/db_connect.php` match your local setup (default is user `root` with no password).
