@@ -50,3 +50,11 @@ Tasks
 Members
 Goals
 Analysis
+
+29/10/2025
+- Added new FAQ page (faq.php) to provide user support and information.
+- Replaced the previous support form with the new FAQ page.
+- Updated the design of the FAQ page to be more modern and user-friendly.
+- Corrected all "Support" navigation links in sidebars to point to faq.php.
+- Updated FAQ content to accurately describe Admin and User roles and permissions.
+- Adjusted homepage CSS for better image and grid presentation.
