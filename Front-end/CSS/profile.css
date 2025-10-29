@@ -46,7 +46,7 @@
 
 .name {
   display: flex;
-  gap: 60px; /* 两个输入框之间的间距 */
+  gap: 60px; /* The spacing between two input fields */
 }
 
 .name .form-group input {
@@ -103,45 +103,45 @@
 }
 
 
-/* 响应式 */
+/* Responsive */
 @media (min-width: 1024px) {
   .sidebar-header .sidebar-toggler {
-    display: none; /* 屏幕大于 1024px 时隐藏 */
+    display: none; /* Hide when screen is larger than 1024px */
   }
 }
 
-/* 小屏幕 sidebar 覆盖 header */
+/* Small screens sidebar covers header */
 @media (max-width: 1024px) {
   .sidebar {
-    left: -260px;   /* 默认隐藏 */
-    z-index: 200;   /* 确保覆盖 header */
+    left: -260px;   /* Hidden by default */
+    z-index: 200;   /* Ensure it covers header */
   }
 
   .sidebar.active {
-    left: 0;        /* 展开时显示 */
+    left: 0;        /* Show when active */
   }
 
   header {
     left: 0;
     width: 100%;
     padding: 10px;
-    z-index: 150;   /* 保证 header 在 sidebar 下方，但高于内容 */
+    z-index: 150;   /* Ensure header is below sidebar but above content */
   }
 
   .header-left h1 {
-    padding-left: 60px; /* 给左侧留出空间 */
+    padding-left: 60px; /* Give space on the left */
     font-size: 1.2rem;
   }
 
   .header-right {
-    margin-right: 20px; /* ⚡ 避免头像和通知贴到右边 */
+    margin-right: 20px; /* ⚡ Avoid avatar and notifications sticking to the right */
     gap: 15px;
   }
 
-  /* 始终显示 sidebar-menu-button */
+  /* Always show sidebar-menu-button */
   .sidebar-menu-button {
-    width: 40px;     /* 按钮宽度 */
-    height: 40px;    /* 按钮高度 */
+    width: 40px;     /* Button width */
+    height: 40px;    /* Button height */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -154,7 +154,7 @@
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     padding: 6px 10px;
     cursor: pointer;
-    z-index: 300; /* ⚡永远最高 */
+    z-index: 300; /* ⚡ Always on top */
   }
 
   .sidebar-menu-button span {
@@ -163,11 +163,11 @@
   }
 
   .profile-box {
-    margin: 80px auto;  /* 居中 */
+    margin: 80px auto;  /* Center */
   }
 
   .name .form-group input {
-    width: 300px;  /* 两个输入框各占 45% */
+    width: 300px;  /* Each input field takes 45% */
     gap: 50px;
   }
 }

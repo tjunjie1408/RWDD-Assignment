@@ -1,5 +1,4 @@
-
-/* ====== Add Member 区域 ====== */
+/* ====== Add Member Area ====== */
 .member-input-group {
   display: flex;
   gap: 8px;
@@ -72,4 +71,11 @@
 .submission-item a {
   color: #4e73df;
   text-decoration: none;
+}
+
+@media (max-width: 480px) {
+  .member-input-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
 }

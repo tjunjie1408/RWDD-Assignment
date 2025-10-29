@@ -3,24 +3,24 @@
 
 /* -------- Member Page Content -------- */
 .membercontent {
-  width: calc(100% - 260px);   /* 默认 sidebar 展开 */
+  width: calc(100% - 260px);   /* Sidebar expanded */
   margin-left: 260px;
-  margin-top: 70px;            /* 避开 header */
+  margin-top: 70px;            /* Avoid header */
   padding: 20px;
   transition: all 0.3s ease;
 }
 
 .sidebar.collapsed ~ .membercontent {
-  width: calc(100% - 85px);    /* sidebar 收起时 */
+  width: calc(100% - 85px);    /* Sidebar collapsed */
   margin-left: 85px;
 }
 
-/* 小屏幕时，内容全屏 */
+/* Small screens */
 @media (max-width: 1024px) {
   .membercontent {
     width: 100%;
     margin-left: 0;
-    margin-top: 70px; /* header 高度 */
+    margin-top: 70px; /* header height */
     padding: 15px;
   }
 }
@@ -40,12 +40,12 @@
   color: #151A2E;
 }
 
-/* 顶部搜索 + Add Member 按钮 */
+/* Top search + Add Member button */
 .team-controls {
   display: flex;
   gap: 10px;
   margin-bottom: 15px;
-  flex-wrap: wrap;  /* 小屏幕自动换行 */
+  flex-wrap: wrap;  /* Small screens automatically wrap */
 }
 
 .team-controls input {
@@ -80,7 +80,7 @@
   gap: 20px;
 }
 
-/* 成员卡片 */
+/* Member Card */
 .member-card {
   background: #f9f9f9;
   padding: 15px;
@@ -109,7 +109,7 @@
 
 /* -------- Modal (Add / View Member) -------- */
 .modal {
-  display: none; /* 默认隐藏，由 JS 控制 */
+  display: none; /* Hidden by default, controlled by JS */
   position: fixed;
   top: 0; left: 0;
   width: 100%; height: 100%;
@@ -172,9 +172,9 @@
 
 .member-modal-header {
   display: flex;
-  justify-content: space-between; /* 左右分布 */
-  align-items: center;           /* 垂直居中 */
-  margin-bottom: 15px;           /* 与表单内容保持间距 */
+  justify-content: space-between; /* Left-right distribution */
+  align-items: center;           /* Vertical centering */
+  margin-bottom: 15px;           /* Maintain spacing from form content */
 }
 
 .member-modal-content .member-close {

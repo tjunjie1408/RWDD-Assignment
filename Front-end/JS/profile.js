@@ -1,50 +1,29 @@
-document.addEventListener("DOMContentLoaded", function() {
-    fetchUserProfile();
-});
 
-function fetchUserProfile() {
-    fetch("PHP/get_profile.php")
-        .then(response => {
-            if (!response.ok) {
-                throw new Error("Not logged in or user not found");
-            }
-            return response.json();
-        })
-        .then(data => {
-            // Populate view mode
-            document.getElementById("v-username").textContent = data.username;
-            document.getElementById("v-email").textContent = data.email;
-            document.getElementById("v-password").textContent = "********";
-            document.getElementById("v-company").textContent = data.company;
-            document.getElementById("v-position").textContent = data.position;
-            document.getElementById("viewAvatar").src = data.avatar;
-            document.getElementById("userAvatar").src = data.avatar; // Update header avatar
 
-            // Populate edit mode
-            document.getElementById("e-username").value = data.username;
-            document.getElementById("e-email").value = data.email;
-            document.getElementById("e-company").value = data.company;
-            document.getElementById("e-position").value = data.position;
-            document.getElementById("editAvatarPreview").src = data.avatar;
-        })
-        .catch(error => {
-            console.error("Error fetching or populating profile:", error);
-            // Redirect to login if not authenticated
-            window.location.href = "signup.php";
-        });
-}
-
+/**
+ * Switches the profile page from view mode to edit mode.
+ * It hides the static profile information and shows the editable form fields.
+ */
 function switchToEdit() {
     document.getElementById("viewMode").classList.add("hidden");
     document.getElementById("editMode").classList.remove("hidden");
 }
 
+/**
+ * Cancels the edit operation and switches back to view mode.
+ * It hides the form fields and shows the static profile information.
+ */
 function cancelEdit() {
     document.getElementById("editMode").classList.add("hidden");
     document.getElementById("viewMode").classList.remove("hidden");
 }
 
+/**
+ * Saves the changes made to the user's profile.
+ * It collects the data from the form, sends it to the server, and handles the response.
+ */
 function saveChanges() {
+    // Collects the updated profile data from the input fields.
     const profileData = {
         username: document.getElementById("e-username").value,
         email: document.getElementById("e-email").value,
@@ -52,21 +31,27 @@ function saveChanges() {
         position: document.getElementById("e-position").value,
     };
 
-    fetch("PHP/update_profile.php", {
+    // Sends the updated data to the server using the Fetch API.
+    fetch("Config/update_profile.php", {
         method: "POST",
+        // Specifies that the request body is JSON.
         headers: { "Content-Type": "application/json" },
+        // Converts the JavaScript object to a JSON string.
         body: JSON.stringify(profileData),
     })
     .then(response => response.json())
     .then(data => {
+        // Handles the server's response.
         if (data.success) {
-            fetchUserProfile(); // Refresh profile data
-            cancelEdit(); // Switch back to view mode
+            // If the update was successful, reload the page to show the new data.
+            location.reload(); 
         } else {
-            alert("Error updating profile: " .concat(data.error));
+            // If there was an error, show an alert to the user.
+            alert("Error updating profile: " + data.error);
         }
     })
     .catch(error => {
+        // Handles network errors.
         console.error("Error saving changes:", error);
         alert("A network error occurred while saving the profile.");
     });

@@ -1,7 +1,8 @@
 <?php
+    // Includes the database connection and session start.
+    // This is necessary for any potential database interactions on this page,
+    // though the primary logic is handled by the form submission scripts.
     include ('Config/db_connect.php');
-    
-
 ?>
 
 <!DOCTYPE html>
@@ -10,7 +11,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="/RWDD-Assignment/Front-end/CSS/signup.css">
+    <link rel="stylesheet" href="CSS/signup.css">
     <title>Login & Sign Up</title>
     <!-- * Add your site key in the data-sitekey attribute -->
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
@@ -40,7 +41,7 @@
                 <i class="bx bx-lock-alt"></i>
             </div>
             <div class="recaptcha-wrapper">
-                <div class="g-recaptcha" data-sitekey="6Lc_Xt8rAAAAAKzTskP3vJ51aMbIv5xht_l6dn3A"></div>
+                <div class="g-recaptcha" data-sitekey="6LcYvPgrAAAAAMhtMolBuRQVfqv7y3i9yelGUk_L"></div>
             </div>
             <div class="input-box">
                 <input type="submit" class="submit" value="Sign In">
@@ -84,7 +85,7 @@
             </div>
             <!-- * Add your site key in the data-sitekey attribute -->
             <div class="recaptcha-wrapper">
-                <div class="g-recaptcha" data-sitekey="6Lc_Xt8rAAAAAKzTskP3vJ51aMbIv5xht_l6dn3A"></div>
+                <div class="g-recaptcha" data-sitekey="6LcYvPgrAAAAAMhtMolBuRQVfqv7y3i9yelGUk_L"></div>
             </div>
             <div class="input-box">
                 <input type="submit" class="submit" value="Register">
@@ -98,7 +99,7 @@
     </div>
 </div>   
 
-<script src="/RWDD-Assignment/Front-end/JS/signup.js"></script>
+<script src="JS/signup.js"></script>
 
 </body>
 </html>

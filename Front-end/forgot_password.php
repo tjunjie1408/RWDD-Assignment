@@ -1,36 +1,42 @@
 <?php
-include 'Config/db_connect.php';
+    // Includes the database connection and session start.
+    include 'Config/db_connect.php';
 
-$email_to_reset = '';
-$email_exists = false;
-$error_message = '';
+    // --- Page State Initialization ---
+    $email_to_reset = '';
+    $email_exists = false; // Flag to determine whether to show the email entry form or the password reset form.
+    $error_message = '';
 
-// Check if an email was passed in the URL to show the password reset form
-if (isset($_GET['email'])) {
-    $email_to_reset = $_GET['email'];
-    
-    // Verify the email actually exists in the database
-    $stmt = $conn->prepare("SELECT user_ID FROM users WHERE email = ?");
-    $stmt->bind_param("s", $email_to_reset);
-    $stmt->execute();
-    $stmt->store_result();
-    
-    if ($stmt->num_rows > 0) {
-        $email_exists = true;
-    } else {
-        $error_message = "Email not found. Please try again.";
+    // --- Email Verification ---
+    // This block runs when the user first submits their email address.
+    // The email is passed back to this same page as a GET parameter.
+    if (isset($_GET['email'])) {
+        $email_to_reset = $_GET['email'];
+        
+        // Verifies that the provided email exists in the database.
+        $stmt = $conn->prepare("SELECT user_ID FROM users WHERE email = ?");
+        $stmt->bind_param("s", $email_to_reset);
+        $stmt->execute();
+        $stmt->store_result();
+        
+        // If the email exists, set the flag to show the password reset form.
+        if ($stmt->num_rows > 0) {
+            $email_exists = true;
+        } else {
+            $error_message = "Email not found. Please try again.";
+        }
+        $stmt->close();
     }
-    $stmt->close();
-}
 
-// Handle other errors from URL
-if (isset($_GET['error'])) {
-    if ($_GET['error'] == 'updatefailed') {
-        $error_message = "Failed to update password. Please try again.";
+    // --- Error Handling ---
+    // Catches other error messages passed in the URL from the processing script.
+    if (isset($_GET['error'])) {
+        if ($_GET['error'] == 'updatefailed') {
+            $error_message = "Failed to update password. Please try again.";
+        }
     }
-}
 
-$conn->close();
+    $conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="en">

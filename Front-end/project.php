@@ -1,11 +1,37 @@
 <?php
+    // Includes the database connection and session start.
     include 'Config/db_connect.php';
 
-    // Check if the user is logged in, if not then redirect to login page
+    // --- Authentication ---
+    // Checks if a user is logged in.
     if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
         header("location: signup.php");
         exit;
     }
+
+    // --- Data Fetching ---
+    // Gets the current user's ID from the session.
+    $current_user_id = $_SESSION['id'];
+
+    // Fetches all projects from the database.
+    // It uses a LEFT JOIN with the 'project_members' table to determine if the current user
+    // is a member of each project. The result is a boolean flag called 'is_member'.
+    $sql = "SELECT p.Project_ID, p.Title, p.Description, p.Project_Start_Date, p.Project_End_Date, p.Project_Status, p.Progress_Percent,
+                   (pm.User_ID IS NOT NULL) AS is_member
+            FROM projects p
+            LEFT JOIN project_members pm ON p.Project_ID = pm.Project_ID AND pm.User_ID = ?
+            ORDER BY p.Project_Start_Date DESC";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $current_user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    // Stores the fetched projects in an array for display.
+    $projects = [];
+    while ($row = $result->fetch_assoc()) {
+        $projects[] = $row;
+    }
+    $stmt->close();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,15 +41,14 @@
     <title>Project</title>
     <!-- Linking Google Fonts for Icons -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0"/>
-    <link rel="stylesheet" href="/RWDD-Assignment/Front-end/CSS/dashboard.css">
-    <link rel="stylesheet" href="/RWDD-Assignment/Front-end/CSS/project.css">
+    <link rel="stylesheet" href="CSS/dashboard.css">
+    <link rel="stylesheet" href="CSS/project.css">
 </head>
 <body>
     <!-- Mobile Sidebar Menu Button -->
     <button class="sidebar-menu-button">
         <span class="material-symbols-rounded">menu</span>
     </button>
-
 
     <aside class="sidebar">
         <!-- Sidebar Header -->
@@ -47,7 +72,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="project.php" class="nav-link">
+                    <a href="project.php" class="nav-link active">
                         <span class="material-symbols-rounded">task</span>
                         <span class="nav-label">Project</span>
                     </a>
@@ -78,7 +103,7 @@
             <!-- Secondary Bottom Nav -->
             <ul class="nav-list secondary-nav">
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="faq.php" class="nav-link">
                         <span class="material-symbols-rounded">help</span>
                         <span class="nav-label">Support</span>
                     </a>
@@ -111,130 +136,87 @@
     </header>
 
     <main class="project-content">
-    <div class="actions">
-        <div class="search">
-            <input id="searchInput" type="text" placeholder="Search tasks...">
-        </div>
-        <button id="newTaskBtn" class="primary">+ New Task</button>
-    </div>
+        <?php if(isset($_GET['error']) && $_GET['error'] == 'not_a_member'): ?>
+            <div class="message error">You can only view tasks for projects you are a member of.</div>
+        <?php endif; ?>
 
-        <!-- Filters and Sorting -->
-    <div class="filter-group">
-        <label>Filter:</label>
-        <select id="statusFilter">
-            <option value="all">All Tasks</option>
-            <option value="completed">Completed</option>
-            <option value="overdue">Overdue</option>
-            <option value="progress">Progress</option>
-        </select>
-    </div>
-
-        <!-- Kanban View -->
-        <div id="kanbanView" class="kanban-view">
-            <div class="kanban-columns">
-                <div class="kanban-column">
-                    <div class="kanban-header">
-                        <span class="kanban-title">In Progress</span>
-                        <span id="inProgressCount" class="kanban-count">0</span>
-                    </div>
-                </div>
-                <div class="kanban-column">
-                    <div class="kanban-header">
-                        <span class="kanban-title">Completed</span>
-                        <span id="completedCount" class="kanban-count">0</span>
-                </div>
-                </div>
-                <div class="kanban-column">
-                    <div class="kanban-header">
-                        <span class="kanban-title">Overdue</span>
-                        <span id="overdueCount" class="kanban-count">0</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-
-        <!-- List View -->
-    <div id="listView" class="list-view">
         <section class="card">
             <div class="section-header">
-                <h2>All Tasks</h2>
-                <a class="view-all" href="#">View All</a>
+                <h2>Available Projects</h2>
             </div>
-            <div id="taskGroups">
-                <!-- Task groups will be injected here -->
+            <div id="projectList">
+                <?php
+                    if (count($projects) > 0) {
+                        foreach ($projects as $row) {
+                            $progress = $row['Project_Status'] === 'Completed' ? 100 : $row['Progress_Percent'];
+                            $is_member = (bool)$row['is_member'];
+
+                            // Define the link and actions based on membership
+                            $card_link = $is_member ? 'href="tasks.php?project_id=' . $row['Project_ID'] . '"' : 'style="cursor:pointer;" class="project-details-trigger"';
+
+                            echo '<div class="task-card" data-project-id="' . $row['Project_ID'] . '" data-title="' . htmlspecialchars($row['Title']) . '" data-description="' . htmlspecialchars($row['Description']) . '" data-start-date="' . $row['Project_Start_Date'] . '" data-end-date="' . $row['Project_End_Date'] . '">';
+                            echo '    <a ' . $card_link . ' style="text-decoration: none;">';
+                            echo '        <div class="task-header">';
+                            echo '            <h4>' . htmlspecialchars($row['Title']) . '</h4>';
+                            if ($is_member) {
+                                echo '            <span class="member-badge">You are a member</span>';
+                            }
+                            echo '        </div>';
+                            echo '        <p class="task-desc">' . (htmlspecialchars($row['Description']) ?: 'No description.') . '</p>';
+                            echo '        <div class="task-footer">';
+                            echo '            <span class="task-date">📅 ' . $row['Project_Start_Date'] . ' to ' . $row['Project_End_Date'] . '</span>';
+                            echo '            <div class="progress-bar"><div class="progress-fill" style="width: ' . $progress . '%;"></div></div>';
+                            echo '            <span class="progress-text">' . $progress . '%</span>';
+                            echo '        </div>';
+                            echo '    </a>';
+                            echo '</div>';
+                        }
+                    } else {
+                        echo '<p>No projects found.</p>';
+                    }
+                ?>
             </div>
         </section>
-    </div>
+    </main>
 
-    <div id="modal" class="modal" aria-hidden="true">
+    <!-- Project Details Modal -->
+    <div id="projectDetailsModal" class="modal" aria-hidden="true">
         <div class="modal-content">
-            <h3>Create Task</h3>
-            <label>Title
-                <input id="taskTitle" type="text" placeholder="e.g. Proposal for new project">
-            </label>
-            <label>Category
-                <select id="taskCategory">
-                    <option>Development</option>
-                    <option>Design</option>
-                    <option>Meetings</option>
-                    <option>Research</option>
-                </select>
-            </label>
-            <label>Due Date
-                <input id="taskDate" type="date">
-            </label>
-            <label>Progress (%)
-                <input id="taskProgress" type="number" min="0" max="100" value="0" placeholder="0">
-            </label>
-            <label>Description
-                <textarea id="taskDescription" placeholder="Task description..."></textarea>
-            </label>
+            <h3 id="projectDetailsTitle"></h3>
+            <p><strong>Description:</strong></p>
+            <p id="projectDetailsDescription"></p>
+            <p><strong>Dates:</strong> <span id="projectDetailsDates"></span></p>
             <div class="modal-actions">
-                <button id="cancelBtn">Cancel</button>
-                <button id="createBtn" class="primary">Create</button>
+                <button type="button" id="closeProjectDetailsBtn">Close</button>
             </div>
         </div>
     </div>
 
-    <!-- Task Detail Modal -->
-    <div id="taskDetailModal" class="modal" aria-hidden="true">
-    <div class="modal-content">
-        <h3 id="detailTitle">Task Title</h3>
-        <p><strong>Category:</strong> <span id="detailCategory"></span></p>
-        <p><strong>Due Date:</strong> <span id="detailDate"></span></p>
-        <p><strong>Progress:</strong> <span id="detailProgress"></span>%</p>
-        <p><strong>Description:</strong></p>
-        <p id="detailDescription"></p>
-        <p><strong>Members:</strong></p>
-        <ul id="detailMembers"></ul>
+    <script src="JS/sidebar.js"></script>
+    <script src="JS/user_avatar.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const modal = document.getElementById('projectDetailsModal');
+            const closeBtn = document.getElementById('closeProjectDetailsBtn');
 
-        <!-- 提交工作内容 -->
-        <div class="submission-section">
-        <h4>Submit Your Work</h4>
-        <form id="submissionForm">
-            <label for="submissionDescription">Description:</label>
-            <textarea id="submissionDescription" rows="4" placeholder="Describe your work..." required></textarea>
+            document.querySelectorAll('.project-details-trigger').forEach(trigger => {
+                trigger.addEventListener('click', () => {
+                    const card = trigger.closest('.task-card');
+                    document.getElementById('projectDetailsTitle').textContent = card.dataset.title;
+                    document.getElementById('projectDetailsDescription').textContent = card.dataset.description;
+                    document.getElementById('projectDetailsDates').textContent = `${card.dataset.startDate} to ${card.dataset.endDate}`;
+                    modal.classList.add('show');
+                });
+            });
 
-            <label for="submissionFile">Upload File:</label>
-            <input type="file" id="submissionFile" required>
-
-            <button type="submit">Submit</button>
-        </form>
-        </div>
-
-        <div class="modal-actions">
-        <button id="closeDetailBtn">Close</button>
-        </div>
-    </div>
-    </div>
-
-</main>
-
-    <script src="/RWDD-Assignment/Front-end/JS/dashboard.js"></script>
-    <script src="/RWDD-Assignment/Front-end/JS/sidebar.js"></script>
-    <script src="/RWDD-Assignment/Front-end/JS/notification_button.js"></script>
-    <script src="/RWDD-Assignment/Front-end/JS/user_avatar.js"></script>
-    <script src="/RWDD-Assignment/Front-end/JS/project.js"></script>
+            const closeModal = () => modal.classList.remove('show');
+            closeBtn.addEventListener('click', closeModal);
+            window.addEventListener('click', (event) => {
+                if (event.target === modal) {
+                    closeModal();
+                }
+            });
+        });
+    </script>
 </body>
 </html>
