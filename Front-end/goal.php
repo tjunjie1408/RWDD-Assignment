@@ -83,9 +83,11 @@
             <div class="section-header">
                 <h2>My Goals</h2>
                 <div class="header-actions">
+                    <div class="calendar-container">
                     <a href="goal_calendar.php" id="viewCalendarBtn" class="icon-btn" title="View Calendar">
                         <span class="material-symbols-rounded">calendar_month</span>
                     </a>
+                    </div>
                     <button id="newGoalBtn" class="primary">+ New Goal</button>
                 </div>
             </div>
