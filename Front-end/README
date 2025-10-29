@@ -6,7 +6,7 @@ homepage.js    //already rebuild
 Signup Page:
 signup.html
 signup.css
-signup.js
+signup.js  //adjust from script.js
 ---------------------------------------------------------
 Dashboard Page:
 dashboard.html

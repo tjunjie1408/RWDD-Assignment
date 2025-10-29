@@ -1,54 +1,73 @@
-    // ------------------------------
-    // 切换到编辑模式
-    // ------------------------------
-function switchToEdit() {
-    // 隐藏查看模式
-    document.getElementById("viewMode").classList.add("hidden");
-    // 显示编辑模式
-    document.getElementById("editMode").classList.remove("hidden");
-    }
+document.addEventListener("DOMContentLoaded", function() {
+    fetchUserProfile();
+});
 
-    // ------------------------------
-    // 取消编辑，回到查看模式
-    // ------------------------------
+function fetchUserProfile() {
+    fetch("PHP/get_profile.php")
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Not logged in or user not found");
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Populate view mode
+            document.getElementById("v-username").textContent = data.username;
+            document.getElementById("v-email").textContent = data.email;
+            document.getElementById("v-password").textContent = "********";
+            document.getElementById("v-company").textContent = data.company;
+            document.getElementById("v-position").textContent = data.position;
+            document.getElementById("viewAvatar").src = data.avatar;
+            document.getElementById("userAvatar").src = data.avatar; // Update header avatar
+
+            // Populate edit mode
+            document.getElementById("e-username").value = data.username;
+            document.getElementById("e-email").value = data.email;
+            document.getElementById("e-company").value = data.company;
+            document.getElementById("e-position").value = data.position;
+            document.getElementById("editAvatarPreview").src = data.avatar;
+        })
+        .catch(error => {
+            console.error("Error fetching or populating profile:", error);
+            // Redirect to login if not authenticated
+            window.location.href = "signup.php";
+        });
+}
+
+function switchToEdit() {
+    document.getElementById("viewMode").classList.add("hidden");
+    document.getElementById("editMode").classList.remove("hidden");
+}
+
 function cancelEdit() {
     document.getElementById("editMode").classList.add("hidden");
     document.getElementById("viewMode").classList.remove("hidden");
-    }
-
-    // ------------------------------
-    // 保存修改后的信息
-    // ------------------------------
-function saveChanges() {
-    // 这里只是UI切换，数据保存逻辑以后由PHP + MySQL处理
-    document.getElementById("v-first").textContent = document.getElementById("e-first").value;
-    document.getElementById("v-last").textContent = document.getElementById("e-last").value;
-    document.getElementById("v-email").textContent = document.getElementById("e-email").value;
-    document.getElementById("v-password").textContent = "******"; // 出于安全考虑，不显示真实密码
-    document.getElementById("v-company").textContent = document.getElementById("e-company").value;
-    document.getElementById("v-position").textContent = document.getElementById("e-position").value;
-
-    // 更新头像（从 Edit Mode 的预览图获取）
-const newAvatar = document.getElementById("editAvatarPreview").src;
-    document.getElementById("userAvatar").src = newAvatar; // header 头像
-    document.getElementById("viewAvatar").src = newAvatar; // profile 页面查看模式头像
-
-  // 切回查看模式
-    cancelEdit();
 }
 
-// ------------------------------
-// 头像上传 & 预览功能
-// ------------------------------
-// 监听 input type="file" 的变化
-document.getElementById("avatarInput").addEventListener("change", function(event) {
-  const file = event.target.files[0]; // 获取上传的文件
-  if (file) {
-    const reader = new FileReader(); // FileReader 可以把文件读取为 base64 格式
-    reader.onload = function(e) {
-      // 把读取到的图片数据放到预览 img 上
-      document.getElementById("editAvatarPreview").src = e.target.result;
+function saveChanges() {
+    const profileData = {
+        username: document.getElementById("e-username").value,
+        email: document.getElementById("e-email").value,
+        company: document.getElementById("e-company").value,
+        position: document.getElementById("e-position").value,
     };
-    reader.readAsDataURL(file); // 把文件读取成 Data URL（base64）
-  }
-});
+
+    fetch("PHP/update_profile.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(profileData),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            fetchUserProfile(); // Refresh profile data
+            cancelEdit(); // Switch back to view mode
+        } else {
+            alert("Error updating profile: " .concat(data.error));
+        }
+    })
+    .catch(error => {
+        console.error("Error saving changes:", error);
+        alert("A network error occurred while saving the profile.");
+    });
+}

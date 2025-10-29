@@ -1,0 +1,75 @@
+
+/* ====== Add Member 区域 ====== */
+.member-input-group {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.member-input-group input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.member-input-group .secondary {
+  background: #e5e7eb;
+  color: #111827;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.member-input-group .secondary:hover {
+  background: #d1d5db;
+}
+
+.member-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.member-list li {
+  background: #f3f4f6;
+  border-radius: 20px;
+  padding: 6px 10px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.member-list .remove-member {
+  cursor: pointer;
+  color: #ef4444;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.submission-section {
+  margin-top: 1rem;
+  border-top: 1px solid #ccc;
+  padding-top: 1rem;
+}
+
+.submission-item {
+  background: #f8f9fa;
+  padding: 0.8rem;
+  border-radius: 6px;
+  margin-bottom: 0.8rem;
+  border-left: 4px solid #4e73df;
+}
+
+.submission-item a {
+  color: #4e73df;
+  text-decoration: none;
+}
