@@ -6,7 +6,7 @@
     <title>TaskFlow - Enhance Your Workflow</title>
     <meta name="description" content="Boost your productivity with our all-in-one platform for task management, time tracking, goal setting, and team collaboration.">
     
-    <link rel="icon" href="Pictures/logo.png">
+    <link rel="icon" href="Pictures/icon.png">
     <link rel="stylesheet" href="CSS/homepage.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
