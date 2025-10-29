@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 29, 2025 at 01:00 AM
+-- Generation Time: Oct 29, 2025 at 01:14 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -209,8 +209,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_ID`, `username`, `password`, `email`, `full_name`, `company`, `position`, `profile_picture`, `description`, `working_hours`, `account_creation_date`, `last_login_time`, `last_logout_time`, `subscription_tier`, `Role_ID`) VALUES
-(1, 'Teo Jun Jie', '$2y$10$dZOdilJ7zAzgGaYqK6Oe2uLq8yYMeL9eBzolXZjAzTuuHkqJUZ7TC', 'jasonteo1408@gmail.com', NULL, 'Asia Pacific University', 'Manager', NULL, NULL, 0, '2025-10-26 00:01:11', NULL, NULL, NULL, 2),
-(7, 'tjjjjjjjjjtttt', '$2y$10$6HgA8LySordvPWlmMDPrtOiaaIG111OdPmh1ZxFWIrTdO0Kgjzc/C', 'teojunjie1408@gmail.com', NULL, 'Asia Pacific University', 'Phd. Dc', NULL, NULL, 0, '2025-10-16 11:27:34', NULL, NULL, NULL, 1),
+(1, 'Admin', '$2y$10$dZOdilJ7zAzgGaYqK6Oe2uLq8yYMeL9eBzolXZjAzTuuHkqJUZ7TC', 'jasonteo1408@gmail.com', NULL, 'Asia Pacific University', 'Manager', NULL, NULL, 0, '2025-10-26 00:01:11', NULL, NULL, NULL, 2),
+(7, 'Jason', '$2y$10$6HgA8LySordvPWlmMDPrtOiaaIG111OdPmh1ZxFWIrTdO0Kgjzc/C', 'teojunjie1408@gmail.com', NULL, 'Asia Pacific University', 'Phd. Dc', NULL, NULL, 0, '2025-10-16 11:27:34', NULL, NULL, NULL, 1),
 (9, 'Vera', '$2y$10$Dth1smLV72Myt1T/97/zbu64Ov8ezUDyRv5n7tsqPjcosBZXsB4r2', 'tianxin0406@gmail.com', NULL, 'Asia Pacific University', 'Lecturer', NULL, NULL, 0, '2025-10-28 23:09:24', NULL, NULL, NULL, 1);
 
 --
