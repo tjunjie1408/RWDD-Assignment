@@ -3,22 +3,27 @@
     include 'Config/db_connect.php';
 
     // --- Authentication and Authorization ---
-    // Checks if a user is logged in. If not, they are redirected to the signup/login page.
     if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
         header("location: signup.php");
         exit;
     }
-
-    // Checks if the logged-in user has an admin role (Role_ID 2).
-    // If they are not an admin, they are redirected to the regular user dashboard.
     if (!isset($_SESSION['role']) || $_SESSION['role'] !== 2) {
         header("location: dashboard.php"); 
         exit;
     }
 
     // --- Data Fetching ---
-    // Fetches the 5 most recent projects to display on the dashboard.
+    // KPI Stats
+    $total_projects = $conn->query("SELECT COUNT(Project_ID) as total FROM projects")->fetch_assoc()['total'];
+    $total_members = $conn->query("SELECT COUNT(User_ID) as total FROM users WHERE Role_ID = 1")->fetch_assoc()['total'];
+    $open_tasks = $conn->query("SELECT COUNT(Task_ID) as total FROM tasks")->fetch_assoc()['total'];
+    $completed_tasks = $conn->query("SELECT COUNT(Task_ID) as total FROM tasks WHERE Status = 'Done'")->fetch_assoc()['total'];
+
+    // Recent Projects
     $projects_result = $conn->query("SELECT * FROM projects ORDER BY Project_Start_Date DESC LIMIT 5");
+
+    // Recent Members
+    $members_result = $conn->query("SELECT Username, Email, account_creation_date FROM users WHERE Role_ID = 1 ORDER BY account_creation_date DESC LIMIT 5");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -37,7 +42,6 @@
     <button class="sidebar-menu-button">
         <span class="material-symbols-rounded">menu</span>
     </button>
-
 
     <aside class="sidebar">
         <!-- Sidebar Header -->
@@ -59,35 +63,30 @@
                         <span class="nav-label">Dashboard</span>
                     </a>
                 </li>
-
                 <li class="nav-item">
                     <a href="admin_project.php" class="nav-link">
                         <span class="material-symbols-rounded">task</span>
                         <span class="nav-label">Project</span>
                     </a>
                 </li>
-
                 <li class="nav-item">
                     <a href="admin_member.php" class="nav-link">
                         <span class="material-symbols-rounded">group</span>
                         <span class="nav-label">Member</span>
                     </a>
                 </li>
-
                 <li class="nav-item">
                     <a href="analysis.php" class="nav-link">
                         <span class="material-symbols-rounded">bar_chart_4_bars</span>
                         <span class="nav-label">Report Analysis</span>
                     </a>
                 </li>
-
                 <li class="nav-item">
                     <a href="goal.php" class="nav-link">
                         <span class="material-symbols-rounded">task_alt</span>
                         <span class="nav-label">Goal</span>
                     </a>
                 </li>
-
             </ul>
 
             <!-- Secondary Bottom Nav -->
@@ -98,7 +97,6 @@
                         <span class="nav-label">Support</span>
                     </a>
                 </li>
-
                 <li class="nav-item">
                     <a href="Config/logout.php" class="nav-link">
                         <span class="material-symbols-rounded">logout</span>
@@ -110,52 +108,103 @@
     </aside>
 
     <header>
-    <div class="header-left">
-      <h1>Admin Dashboard</h1>
-    </div>
-    <div class="header-right">
-      <div class="username" id="username">
-        <p class="hello">
-            Hello, <?php echo htmlspecialchars($_SESSION['username']); ?>
-        </p>
-      </div>
-      <a href="profile.php">
-        <img src="https://via.placeholder.com/150"  class="user-avatar" id="userAvatar">
-      </a>
-    </div>
-  </header>
+        <div class="header-left">
+          <h1>Admin Dashboard</h1>
+        </div>
+        <div class="header-right">
+          <div class="username" id="username">
+            <p class="hello">
+                Hello, <?php echo htmlspecialchars($_SESSION['username']); ?>
+            </p>
+          </div>
+          <a href="profile.php">
+            <img src="https://via.placeholder.com/150"  class="user-avatar" id="userAvatar">
+          </a>
+        </div>
+    </header>
 
-    <main class="project-content"> <!-- Use class from project.css for layout -->
-        <div class="real-time-clock" id="realTimeClock">000000</div>
+    <main class="dashboard-content">
+        <div class="top-dashboard-row">
+            <div class="real-time-clock" id="realTimeClock">000000</div>
+            <!-- Quick Actions (moved to top right) -->
+            <div class="quick-actions-top-right">
+                <a href="admin_project.php" class="action-button">+ Create New Project</a>
+                <a href="admin_member.php" class="action-button">+ Add New Member</a>
+            </div>
+        </div>
 
-        <section class="card">
-            <div class="section-header">
-                <h2>Recent Projects</h2>
-                <a href="admin_project.php" class="view-all">View All</a>
+        <!-- KPI Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Total Projects</h3>
+                <p><?php echo $total_projects; ?></p>
             </div>
-            <div id="projectList">
-                <?php
-                    if ($projects_result && $projects_result->num_rows > 0) {
-                        while($row = $projects_result->fetch_assoc()) {
-                            $progress = $row['Project_Status'] === 'Completed' ? 100 : ($row['Progress_Percent'] ?? 0);
-                            echo '<div class="task-card">';
-                            echo '    <div class="task-header">';
-                            echo '        <h4>' . htmlspecialchars($row['Title']) . '</h4>';
-                            echo '    </div>';
-                            echo '    <p class="task-desc">' . (htmlspecialchars($row['Description']) ?: 'No description.') . '</p>';
-                            echo '    <div class="task-footer">';
-                            echo '        <span class="task-date">📅 ' . $row['Project_Start_Date'] . ' to ' . $row['Project_End_Date'] . '</span>';
-                            echo '        <div class="progress-bar"><div class="progress-fill" style="width: ' . $progress . '%;"></div></div>';
-                            echo '        <span class="progress-text">' . $progress . '%</span>';
-                            echo '    </div>';
-                            echo '</div>';
-                        }
-                    } else {
-                        echo '<p>No projects found.</p>';
-                    }
-                ?>
+            <div class="stat-card">
+                <h3>Total Members</h3>
+                <p><?php echo $total_members; ?></p>
             </div>
-        </section>
+            <div class="stat-card">
+                <h3>Open Tasks</h3>
+                <p><?php echo $open_tasks; ?></p>
+            </div>
+            <div class="stat-card">
+                <h3>Completed Tasks</h3>
+                <p><?php echo $completed_tasks; ?></p>
+            </div>
+        </div>
+
+        <!-- Main Grid -->
+        <div class="dashboard-grid">
+            <div class="dashboard-column-left">
+                <!-- Recent Projects Card -->
+                <section class="card">
+                    <div class="section-header">
+                        <h2>Recent Projects</h2>
+                        <a href="admin_project.php" class="view-all">Manage All Projects</a>
+                    </div>
+                    <div id="projectList" class="card-content">
+                        <?php
+                            if ($projects_result && $projects_result->num_rows > 0) {
+                                while($row = $projects_result->fetch_assoc()) {
+                                    $progress = $row['Project_Status'] === 'Completed' ? 100 : ($row['Progress_Percent'] ?? 0);
+                                    echo '<div class="task-card-summary">';
+                                    echo '    <h4>' . htmlspecialchars($row['Title']) . '</h4>';
+                                    echo '    <div class="progress-bar"><div class="progress-fill" style="width: ' . $progress . '%;"></div></div>';
+                                    echo '    <span class="progress-text">' . $progress . '%</span>';
+                                    echo '</div>';
+                                }
+                            } else {
+                                echo '<p>No projects found.</p>';
+                            }
+                        ?>
+                    </div>
+                </section>
+            </div>
+            <div class="dashboard-column-right">
+                <!-- Recent Members Card -->
+                <section class="card">
+                    <div class="section-header">
+                        <h2>Recent Members</h2>
+                        <a href="admin_member.php" class="view-all">Manage All Members</a>
+                    </div>
+                    <div class="card-content">
+                        <?php if ($members_result && $members_result->num_rows > 0): ?>
+                            <ul>
+                                <?php while($member = $members_result->fetch_assoc()): ?>
+                                    <li>
+                                        <strong><?php echo htmlspecialchars($member['Username']); ?></strong>
+                                        <br>
+                                        <small>Email: <?php echo htmlspecialchars($member['Email']); ?> | Joined: <?php echo htmlspecialchars(date('Y-m-d', strtotime($member['account_creation_date']))); ?></small>
+                                    </li>
+                                <?php endwhile; ?>
+                            </ul>
+                        <?php else: ?>
+                            <p>No new members found.</p>
+                        <?php endif; ?>
+                    </div>
+                </section>
+            </div>
+        </div>
     </main>
 
     <script src="JS/RTclock_Calendar.js"></script>

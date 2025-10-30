@@ -48,7 +48,7 @@
                     <p>TaskFlow was born from the idea that productivity software should be powerful, yet simple to use. We believe in continuous improvement and work closely with our users to deliver a product that truly meets their needs.</p>
                 </div>
                 <div class="about-image">
-                    <img src="Pictures/dashboard.png" alt="Team working together">
+                    <img src="Pictures/dashboard2.png" alt="Team working together">
                 </div>
             </div>
         </section>

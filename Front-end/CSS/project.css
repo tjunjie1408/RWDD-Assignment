@@ -691,24 +691,36 @@
     gap: 8px;
 }
 
-.calendar-container {
-    background-color: #4f46e5;
+.header-actions .calendar-container {
+    background-color: #4f46e5; 
     display: flex;
     align-items: center;
     z-index: 10;
-    padding: 4px 8px;
+    padding: 6px 8px;
     border-radius: 8px;
+    transition: background-color 0.2s;
 }
 
-.icon-btn {
+
+.header-actions .calendar-container:hover {
+    background: #4338ca;
+}
+
+.header-actions .calendar-container .icon-btn {
     background: transparent;
     cursor: pointer;
-    color: #fff;
+    color: #fff !important;
     padding: 4px;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background-color 0.2s, color 0.2s;
+    border: none;
+    text-decoration: none;
+}
+
+.header-actions .calendar-container .icon-btn span {
+    color: #fff !important;
+    font-size: 20px;
 }
 .calendar-container:hover {
     background: #4338ca;
