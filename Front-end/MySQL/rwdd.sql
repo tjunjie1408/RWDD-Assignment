@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 29, 2025 at 01:14 AM
+-- Generation Time: Oct 31, 2025 at 04:27 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `rwdd`
 --
+CREATE DATABASE IF NOT EXISTS `rwdd` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `rwdd`;
 
 -- --------------------------------------------------------
 
@@ -45,7 +47,8 @@ CREATE TABLE `files` (
 INSERT INTO `files` (`File_ID`, `File_Name`, `File_URL`, `File_Type`, `File_Upload_Time`, `Task_ID`, `Project_ID`, `User_ID`) VALUES
 (4, 'AssignmentProposal.docx', '../uploads/1761664023_AssignmentProposal.docx', 'application/vnd.openxmlformats-officedocument.word', '2025-10-28 23:07:03', 2, 5, 1),
 (5, 'AAPP012-4-2-RWDD-AssignmentUCDF2405ICT.pdf', '../uploads/1761664036_AAPP012-4-2-RWDD-AssignmentUCDF2405ICT.pdf', 'application/pdf', '2025-10-28 23:07:16', 2, 5, 1),
-(6, '01.Introduction-To-Internet--WWW.pdf', '../uploads/1761664067_01.Introduction-To-Internet--WWW.pdf', 'application/pdf', '2025-10-28 23:07:47', 3, 5, 1);
+(6, '01.Introduction-To-Internet--WWW.pdf', '../uploads/1761664067_01.Introduction-To-Internet--WWW.pdf', 'application/pdf', '2025-10-28 23:07:47', 3, 5, 1),
+(7, 'ERD.png', '../uploads/1761836456_ERD.png', 'image/png', '2025-10-30 23:00:56', 4, 8, 7);
 
 -- --------------------------------------------------------
 
@@ -100,7 +103,8 @@ CREATE TABLE `projects` (
 
 INSERT INTO `projects` (`Project_ID`, `Title`, `Description`, `Reminder_Time`, `Project_Start_Date`, `Project_End_Date`, `Project_Status`, `User_ID`, `Progress_Percent`) VALUES
 (5, 'Web Design', 'HTML, CSS, JS', NULL, '2025-10-28', '2025-10-31', 'Completed', 1, 100),
-(7, 'Mobile App Development', 'Flutter and Firebase', NULL, '2025-10-29', '2025-11-05', 'In Progress', 1, 0);
+(7, 'Mobile App Development', 'Flutter and Firebase', NULL, '2025-10-29', '2025-11-05', 'In Progress', 1, 0),
+(8, 'CRUD Development', 'Including file handling, error catching and databse management', NULL, '2025-10-30', '2025-11-02', 'Not Started', 1, 100);
 
 -- --------------------------------------------------------
 
@@ -125,7 +129,10 @@ INSERT INTO `project_members` (`Member_ID`, `Member_Position`, `Member_Join_Date
 (6, NULL, '2025-10-28', 7, 5),
 (8, NULL, '2025-10-29', 1, 7),
 (9, NULL, '2025-10-29', 7, 7),
-(10, NULL, '2025-10-29', 9, 7);
+(10, NULL, '2025-10-29', 9, 7),
+(11, NULL, '2025-10-30', 1, 8),
+(12, NULL, '2025-10-30', 7, 8),
+(13, NULL, '2025-10-30', 9, 8);
 
 -- --------------------------------------------------------
 
@@ -178,7 +185,10 @@ CREATE TABLE `tasks` (
 
 INSERT INTO `tasks` (`Task_ID`, `Title`, `Description`, `Category`, `Priority`, `Status`, `Reminder_Time`, `Task_Start_Time`, `Task_End_Time`, `Task_Created_Date`, `Task_Completed_Date`, `User_ID`, `Project_ID`, `Assigner_ID`) VALUES
 (2, 'UIUX', 'Layout and Button', NULL, 'Medium', 'Done', NULL, NULL, '2025-10-31 00:00:00', '2025-10-28 23:06:51', NULL, 7, 5, 1),
-(3, 'Back end', 'PHP', NULL, 'Medium', 'Done', NULL, NULL, '2025-10-31 00:00:00', '2025-10-28 23:07:36', NULL, 7, 5, 1);
+(3, 'Back end', 'PHP', NULL, 'Medium', 'Done', NULL, NULL, '2025-10-31 00:00:00', '2025-10-28 23:07:36', NULL, 7, 5, 1),
+(4, 'Design a ERD', 'ERD for business rules then create dabatase then export it', NULL, 'Medium', 'Done', NULL, NULL, '2025-10-31 00:00:00', '2025-10-30 22:42:56', NULL, 7, 8, 1),
+(5, 'Requirements Engineering', 'Functional Requirements and non functional requirements', NULL, 'Medium', 'Open', NULL, NULL, '2025-11-03 00:00:00', '2025-10-30 22:53:16', NULL, 9, 7, 1),
+(6, 'Init Firebase', 'Prepare and follow the requirements for firebase', NULL, 'Medium', 'Open', NULL, NULL, '2025-11-02 00:00:00', '2025-10-30 23:16:27', NULL, 7, 7, 1);
 
 -- --------------------------------------------------------
 
@@ -279,7 +289,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `files`
 --
 ALTER TABLE `files`
-  MODIFY `File_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `File_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `goals`
@@ -291,19 +301,19 @@ ALTER TABLE `goals`
 -- AUTO_INCREMENT for table `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `Project_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `Project_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `project_members`
 --
 ALTER TABLE `project_members`
-  MODIFY `Member_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `Member_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `tasks`
 --
 ALTER TABLE `tasks`
-  MODIFY `Task_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `Task_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `users`
