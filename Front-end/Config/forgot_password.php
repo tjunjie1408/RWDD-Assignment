@@ -22,7 +22,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($stmt->execute()) {
             // On success, redirects to the main signup/login page with a success indicator.
-            header("location: ../signup.php?reset=success");
+            $_SESSION['flash_message'] = "Password has been changed successfully.";
+            header("location: ../signup.php");
             exit();
         } else {
             // If the update fails, redirects back to the forgot password page with an error.

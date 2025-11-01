@@ -62,11 +62,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit();
         } else {
             // If the password is incorrect, redirects with an invalid password error.
-            header("location: ../signup.php?error=invalidpwd");
+            $_SESSION['flash_message'] = "Invalid username or password.";
+            header("location: ../signup.php");
         }
     } else {
         // If no user is found with the given username/email, redirects with a 'no user' error.
-        header("location: ../signup.php?error=nouser");
+        $_SESSION['flash_message'] = "Invalid username or password.";
+        header("location: ../signup.php");
     }
     $stmt->close();
     $conn->close();

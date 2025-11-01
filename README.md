@@ -123,7 +123,7 @@ Here's a glimpse into the TaskFlow platform, showcasing its clean interface and 
 
 | Dashboard | Project Page | Member Management |
 | :---: | :---: | :---: |
-| <img src="Front-end/Pictures/dashboard.png" alt="TaskFlow Dashboard" width="400"> | <img src="Front-end/Pictures/project.png" alt="TaskFlow Project View" width="400"> | <img src="Front-end/Pictures/member.png" alt="TaskFlow Member View" width="400"> |
+| <img src="Front-end/Pictures/dashboard2.png" alt="TaskFlow Dashboard" width="400"> | <img src="Front-end/Pictures/project.png" alt="TaskFlow Project View" width="400"> | <img src="Front-end/Pictures/member.png" alt="TaskFlow Member View" width="400"> |
 
 | Goal Calendar | Report Analysis |
 | :---: | :---: |

@@ -33,6 +33,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Goals</title>
+    <link rel="icon" href="Pictures/icon.png">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0"/>
     <link rel="stylesheet" href="CSS/dashboard.css">
     <link rel="stylesheet" href="CSS/project.css"> <!-- Reusing project.css for similar card layout -->
@@ -83,9 +84,11 @@
             <div class="section-header">
                 <h2>My Goals</h2>
                 <div class="header-actions">
+                    <div class="calendar-container">
                     <a href="goal_calendar.php" id="viewCalendarBtn" class="icon-btn" title="View Calendar">
                         <span class="material-symbols-rounded">calendar_month</span>
                     </a>
+                    </div>
                     <button id="newGoalBtn" class="primary">+ New Goal</button>
                 </div>
             </div>
