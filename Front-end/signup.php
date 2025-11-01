@@ -16,6 +16,15 @@
     <title>Login & Sign Up</title>
     <!-- * Add your site key in the data-sitekey attribute -->
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <?php
+        // This block checks for a session-based flash message, displays it once, and then clears it.
+        if (isset($_SESSION['flash_message'])) {
+            echo '<script>
+                document.addEventListener("DOMContentLoaded", function() { alert("' . addslashes($_SESSION['flash_message']) . '"); });
+            </script>';
+            unset($_SESSION['flash_message']); // Clear the message so it doesn't show on refresh.
+        }
+    ?>
 </head>
 <body>
  <div class="wrapper">

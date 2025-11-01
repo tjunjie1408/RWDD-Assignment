@@ -13,15 +13,21 @@
     if (isset($_GET['email'])) {
         $email_to_reset = $_GET['email'];
         
-        // Verifies that the provided email exists in the database.
-        $stmt = $conn->prepare("SELECT user_ID FROM users WHERE email = ?");
+        // Verifies that the provided email exists and does not belong to an admin.
+        $stmt = $conn->prepare("SELECT user_ID, Role_ID FROM users WHERE email = ?");
         $stmt->bind_param("s", $email_to_reset);
         $stmt->execute();
         $stmt->store_result();
         
-        // If the email exists, set the flag to show the password reset form.
         if ($stmt->num_rows > 0) {
-            $email_exists = true;
+            $stmt->bind_result($user_id, $role_id);
+            $stmt->fetch();
+            // If the email belongs to an admin, show an error.
+            if ($role_id == 2) {
+                $error_message = "Invalid process.";
+            } else {
+                $email_exists = true; // If it's a regular user, show the password reset form.
+            }
         } else {
             $error_message = "Email not found. Please try again.";
         }
