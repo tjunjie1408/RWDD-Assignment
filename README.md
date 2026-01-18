@@ -1,7 +1,7 @@
 # TaskFlow - Project Management & Collaboration Platform
 
 <p align="center">
-  <img src="Front-end/Pictures/logo.png" alt="TaskFlow Logo" width="150"/>
+  <img src="TaskFlow/Pictures/logo.png" alt="TaskFlow Logo" width="150"/>
 </p>
 
 <p align="center">
@@ -123,11 +123,11 @@ Here's a glimpse into the TaskFlow platform, showcasing its clean interface and 
 
 | Dashboard | Project Page | Member Management |
 | :---: | :---: | :---: |
-| <img src="Front-end/Pictures/dashboard2.png" alt="TaskFlow Dashboard" width="400"> | <img src="Front-end/Pictures/project.png" alt="TaskFlow Project View" width="400"> | <img src="Front-end/Pictures/member.png" alt="TaskFlow Member View" width="400"> |
+| <img src="TaskFlow/Pictures/dashboard2.png" alt="TaskFlow Dashboard" width="400"> | <img src="TaskFlow/Pictures/project.png" alt="TaskFlow Project View" width="400"> | <img src="TaskFlow/Pictures/member.png" alt="TaskFlow Member View" width="400"> |
 
 | Goal Calendar | Report Analysis |
 | :---: | :---: |
-| <img src="Front-end/Pictures/goal.png" alt="TaskFlow Goal Calendar" width="400"> | <img src="Front-end/Pictures/analysis.png" alt="TaskFlow Analysis Chart" width="400"> |
+| <img src="TaskFlow/Pictures/goal.png" alt="TaskFlow Goal Calendar" width="400"> | <img src="TaskFlow/Pictures/analysis.png" alt="TaskFlow Analysis Chart" width="400"> |
 
 ---
 
